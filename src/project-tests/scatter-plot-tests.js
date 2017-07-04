@@ -67,10 +67,38 @@ export default function createScatterPlotTests() {
                 const sortedDots = dots.sort(function(a, b) {
                     return a.getAttribute("data-xvalue") - b.getAttribute("data-xvalue")
                 });
-
-                //check to see if the x locations of the new sorted array are in ascending order
-                for (var i = 0; i < sortedDots.length - 1; ++i) {
-                    FCC_Global.assert.isAtMost(+sortedDots[i].cx.baseVal.value, +sortedDots[i + 1].cx.baseVal.value, "x values don't line up with x locations ");
+                var xAxisQuery = document.querySelector('#x-axis path');
+                //x-axis path x coordinates from d
+                var xAxisLeft = xAxisQuery.getAttribute('d').split(',')[0].split('M')[1]
+                var xAxisRight = xAxisQuery.getAttribute('d').split(',')[1].split('H')[1].split('V')[0]
+                //get label (year)
+                var xAxisTicks = document.querySelectorAll('#x-axis .tick');
+                var xAxisTicksText = document.querySelectorAll('#x-axis .tick text');
+                //width of x-axis in pixels
+                var xRange = xAxisRight - xAxisLeft;
+                for (var i = 0; i < xAxisTicksText.length - 1; i++) {
+                    //years
+                    var xAxisLabel = xAxisTicksText.item(i).innerHTML;
+                    var xAxisLabelNext = xAxisTicksText.item(i+1).innerHTML;
+                    var xAxisYear = parseInt(xAxisLabel, 10);
+                    var xAxisYearNext = parseInt(xAxisLabelNext, 10);
+                    //px
+                    var xAxisPx = xAxisTicks.item(i).getAttribute('transform').split(',')[0].split('(')[1];
+                    var xAxisPxNext = xAxisTicks.item(i+1).getAttribute('transform').split(',')[0].split('(')[1];
+                    //percent of x-axis width
+                    var xAxisPercent = ((xAxisPx-xAxisLeft)*100)/xRange; 
+                    var xAxisPercentNext = ((xAxisPxNext-xAxisLeft)*100)/xRange;
+                    //check to see if the dot x locations line up with x ticks
+                    for (var j = 0; j < sortedDots.length - 1; j++) {
+                        var dotYear = new Date(sortedDots[j].getAttribute('data-xvalue')).getFullYear();
+                        var dotPx = +sortedDots[j].cx.baseVal.value;
+                        var dotPercent = ((dotPx-xAxisLeft)*100)/xRange;
+                        //if given dot year falls between axis year (i) and (i+1)
+                        if (dotYear >= xAxisYear && dotYear <= xAxisYearNext) {
+                            //Assert that the dot is roughly at the same percent of the axis width as the average of axis percent (i) and (i+1)
+                            FCC_Global.assert.approximately(dotPercent, (xAxisPercentNext + xAxisPercent)/2, 10, "x values don't line up with x locations ")
+                        }
+                    }
                 }
             });
 
@@ -84,9 +112,38 @@ export default function createScatterPlotTests() {
                     return new Date(a.getAttribute("data-yvalue")) - new Date(b.getAttribute("data-yvalue"));
                 });
 
-                //check to see if the y locations of the new sorted array are in ascending order
-                for (var i = 0; i < sortedDots.length - 1; ++i) {
-                    FCC_Global.assert.isAtMost(+sortedDots[i].cy.baseVal.value, +sortedDots[i + 1].cy.baseVal.value, "y values don't line up with y locations ");
+                var yAxisQuery = document.querySelector('#y-axis path');
+                //y-axis path y coordinates from d
+                var yAxisTop = yAxisQuery.getAttribute('d').split(',')[1].split('H')[0];
+                var yAxisBottom = yAxisQuery.getAttribute('d').split(',')[1].split('V')[1].split('H')[0];
+                //get label (mm:ss)
+                var yAxisTicks = document.querySelectorAll('#y-axis .tick');
+                var yAxisTicksText = document.querySelectorAll('#y-axis .tick text');
+                //height of y-axis in pixels
+                var yRange = yAxisBottom - yAxisTop;
+                for (var i = 0; i < yAxisTicksText.length - 1; i++) {
+                    //min
+                    var yAxisLabel = yAxisTicksText.item(i).innerHTML;
+                    var yAxisLabelNext = yAxisTicksText.item(i+1).innerHTML;
+                    var yAxisMins = (parseInt(yAxisLabel.split(':')[0], 10)+(parseInt(yAxisLabel.split(':')[1], 10)/60));
+                    var yAxisMinsNext = (parseInt(yAxisLabelNext.split(':')[0], 10)+(parseInt(yAxisLabelNext.split(':')[1], 10)/60));
+                    //px
+                    var yAxisPx = yAxisTicks.item(i).getAttribute('transform').split(',')[1].split(')')[0];
+                    var yAxisPxNext = yAxisTicks.item(i+1).getAttribute('transform').split(',')[1].split(')')[0];
+                    //percent of y-axis height
+                    var yAxisPercent = ((yAxisPx-yAxisTop)*100)/yRange; 
+                    var yAxisPercentNext = ((yAxisPxNext-yAxisTop)*100)/yRange;
+                    //check to see if the dot y locations line up with the y ticks
+                    for (var j = 0; j < sortedDots.length - 1; j++) {
+                        var dotMins = new Date(sortedDots[j].getAttribute('data-yvalue')).getMinutes()+(new Date(sortedDots[j].getAttribute('data-yvalue')).getSeconds())/60
+                        var dotPx = +sortedDots[j].cy.baseVal.value;
+                        var dotPercent = ((dotPx-yAxisTop)*100)/yRange;
+                        //if given dot decimal minutes fall between axis minutes (i) and (i+1)
+                        if (dotMins >= yAxisMins && dotMins <= yAxisMinsNext) {
+                            //Assert that the dot is roughly at the same percent of the axis height as the average of axis percent (i) and (i+1)	
+                            FCC_Global.assert.approximately(dotPercent, (yAxisPercentNext + yAxisPercent)/2, 10, "y values don't line up with y locations ")
+                        }
+                    }
                 }
             });
 
