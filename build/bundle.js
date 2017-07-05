@@ -20951,6 +20951,132 @@ var FCC_Global =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//for given axis x or y, return width or height, begin and end coords, and arrays of tick elements and labels (for values)
+	var thisAxis = function thisAxis(x, y) {
+	    var begin, end, axis;
+	    if (x !== null) {
+	        axis = x;
+	        //x-axis path x coordinate from d
+	        //ex: M80.5,6V0.5H780.5V6 where 
+	        //M establishes beginning coordinates of a line (80.5, 6). It should be the only comma so we can split there. We only need the x coordinate.
+	        begin = axis.querySelector('path').getAttribute('d').split(',')[0].split('M')[1];
+	        //H establishes a horizontal line from the last coordinate. That is the width of the axis.
+	        //V means vertical lines. In this case, those demarcate line endings. We just need M and H.
+	        end = axis.querySelector('path').getAttribute('d').split(',')[1].split('H')[1].split('V')[0];
+	    } else {
+	        axis = y;
+	        //y-axis path y coordinate from d
+	        //ex: M-6,420.5H0.5V40.5H-6 
+	        //M begins at bottom and is drawn up vertically, but we want the lower number for var begin (40.5)
+	        begin = axis.querySelector('path').getAttribute('d').split(',')[1].split('V')[1].split('H')[0];
+	        //ex 420.5
+	        end = axis.querySelector('path').getAttribute('d').split(',')[1].split('H')[0];
+	    }
+	    return {
+	        size: end - begin,
+	        begin: begin,
+	        end: end,
+	        ticks: axis.querySelectorAll('.tick'),
+	        text: axis.querySelectorAll('.tick text')
+	    };
+	};
+
+	//for given tick, return value and x or y position
+	var thisTick = function thisTick(x, y, i) {
+	    if (x !== null) {
+	        return {
+	            text: x.querySelector('text').innerHTML,
+	            //isolate x coordinate from "translate(x,y)"
+	            px: x.getAttribute('transform').split(',')[0].split('(')[1]
+	        };
+	    } else {
+	        return {
+	            text: y.querySelector('text').innerHTML,
+	            px: y.getAttribute('transform').split(',')[1].split(')')[0]
+	        };
+	    }
+	};
+
+	//for given feature, get values and coordinates from feature attributes
+	var thisFeature = function thisFeature(type, feature, i) {
+	    var obj = {};
+	    switch (type) {
+	        case 'dot':
+	            obj = {
+	                xValue: feature.getAttribute('data-xvalue'),
+	                yValue: feature.getAttribute('data-yvalue'),
+	                x: feature.getAttribute('cx'),
+	                y: feature.getAttribute('cy')
+	            };
+	            break;
+	        /*case 'rect':
+	            obj = {
+	                xValue: feature.getAttribute('data-xvalue'),
+	                yValue: feature.getAttribute('data-yvalue'),
+	                x: feature.getAttribute('x') ...,
+	                y: feature.getAttribute('y') ...
+	            }
+	            break;*/
+	        //other feature types here ...
+	    }
+	    return obj;
+	};
+
+	//count should return 0
+	var checkAlignment = function checkAlignment(axis, collection, type, align, units) {
+	    var count = 0;
+	    for (var i = 0; i < axis.ticks.length - 1; i++) {
+	        //get values for given tick and subsequent tick
+	        var axisTick, axisNextTick, coord, val;
+	        switch (align) {
+	            case 'horizontal':
+	                axisTick = thisTick(axis.ticks[i], null, i);
+	                axisNextTick = thisTick(axis.ticks[i + 1], null, i + 1);
+	                coord = 'x';
+	                val = 'xValue';
+	                break;
+	            case 'vertical':
+	                axisTick = thisTick(null, axis.ticks[i], i);
+	                axisNextTick = thisTick(null, axis.ticks[i + 1], i + 1);
+	                coord = 'y';
+	                val = 'yValue';
+	                break;
+	        }
+	        var tickVal, tickNextVal;
+	        switch (units) {
+	            case 'minutes':
+	                //labels come in as strings of 'mm:ss', so convert to decimal
+	                tickVal = parseInt(axisTick.text.split(':')[0], 10) + parseInt(axisTick.text.split(':')[1], 10) / 60;
+	                tickNextVal = parseInt(axisNextTick.text.split(':')[0], 10) + parseInt(axisNextTick.text.split(':')[1], 10) / 60;
+	                break;
+	            case 'years':
+	                tickVal = parseInt(axisTick.text, 10);
+	                tickNextVal = parseInt(axisNextTick.text, 10);
+	                break;
+	        }
+	        var tickPx = parseInt(axisTick.px, 10),
+	            tickNextPx = parseInt(axisNextTick.px, 10),
+	            tickPercent = (tickPx - axis.begin) * 100 / axis.size,
+	            tickNextPercent = (tickNextPx - axis.begin) * 100 / axis.size;
+	        //check to see if the dot x locations fall between the given tick (i) and subsequent tick (i+1)               
+	        for (var j = 0; j < collection.length - 1; j++) {
+	            //get values for given feature (j)
+	            var feature = thisFeature(type, collection.item(j), j),
+
+	            //if minutes, convert to decimal, else parseInt
+	            featureVal = units === 'minutes' ? new Date(feature[val]).getMinutes() + new Date(feature[val]).getSeconds() / 60 : parseInt(feature[val], 10);
+	            //if given feature (j) value falls between given tick (i) and subsequent tick (i+1) values
+	            if (featureVal >= tickVal && featureVal <= tickNextVal) {
+	                //If a feature is not positioned roughly at the same percent of the axis width as the average of axis percent (i) and (i+1), count up
+	                if (Math.abs((feature[coord] - axis.begin) * 100 / axis.size - (tickPercent + tickNextPercent) / 2) > 10) {
+	                    count++;
+	                }
+	            }
+	        }
+	    }
+	    return count;
+	};
+
 	function createScatterPlotTests() {
 
 	    describe('#ScatterPlotTests', function () {
@@ -21010,91 +21136,22 @@ var FCC_Global =
 
 	            it('7. The data-xvalue and its corresponding dot should align with the corresponding point/value on the x-axis.', function () {
 	                var dotsCollection = document.getElementsByClassName('dot');
-	                //convert to array
-	                var dots = [].slice.call(dotsCollection);
-	                FCC_Global.assert.isAbove(dots.length, 0, 'there are no elements with the class of "dot" ');
-	                //sort the dots based on xvalue in ascending order
-	                var sortedDots = dots.sort(function (a, b) {
-	                    return a.getAttribute("data-xvalue") - b.getAttribute("data-xvalue");
-	                });
-	                var xAxisQuery = document.querySelector('#x-axis path');
-	                //x-axis path x coordinates from d
-	                var xAxisLeft = xAxisQuery.getAttribute('d').split(',')[0].split('M')[1];
-	                var xAxisRight = xAxisQuery.getAttribute('d').split(',')[1].split('H')[1].split('V')[0];
-	                //get label (year)
-	                var xAxisTicks = document.querySelectorAll('#x-axis .tick');
-	                var xAxisTicksText = document.querySelectorAll('#x-axis .tick text');
-	                //width of x-axis in pixels
-	                var xRange = xAxisRight - xAxisLeft;
-	                for (var i = 0; i < xAxisTicksText.length - 1; i++) {
-	                    //years
-	                    var xAxisLabel = xAxisTicksText.item(i).innerHTML;
-	                    var xAxisLabelNext = xAxisTicksText.item(i + 1).innerHTML;
-	                    var xAxisYear = parseInt(xAxisLabel, 10);
-	                    var xAxisYearNext = parseInt(xAxisLabelNext, 10);
-	                    //px
-	                    var xAxisPx = xAxisTicks.item(i).getAttribute('transform').split(',')[0].split('(')[1];
-	                    var xAxisPxNext = xAxisTicks.item(i + 1).getAttribute('transform').split(',')[0].split('(')[1];
-	                    //percent of x-axis width
-	                    var xAxisPercent = (xAxisPx - xAxisLeft) * 100 / xRange;
-	                    var xAxisPercentNext = (xAxisPxNext - xAxisLeft) * 100 / xRange;
-	                    //check to see if the dot x locations line up with x ticks
-	                    for (var j = 0; j < sortedDots.length - 1; j++) {
-	                        var dotYear = new Date(sortedDots[j].getAttribute('data-xvalue')).getFullYear();
-	                        var dotPx = +sortedDots[j].cx.baseVal.value;
-	                        var dotPercent = (dotPx - xAxisLeft) * 100 / xRange;
-	                        //if given dot year falls between axis year (i) and (i+1)
-	                        if (dotYear >= xAxisYear && dotYear <= xAxisYearNext) {
-	                            //Assert that the dot is roughly at the same percent of the axis width as the average of axis percent (i) and (i+1)
-	                            FCC_Global.assert.approximately(dotPercent, (xAxisPercentNext + xAxisPercent) / 2, 10, "x values don't line up with x locations ");
-	                        }
-	                    }
-	                }
+	                FCC_Global.assert.isAbove(dotsCollection.length, 0, 'there are no elements with the class of "dot" ');
+
+	                var xAxis = document.querySelector('#x-axis'),
+	                    x = thisAxis(xAxis, null);
+	                //checkAlignment returns 1 or greater if a feature doesn't align. 0 if all align.
+	                FCC_Global.assert.isBelow(checkAlignment(x, dotsCollection, 'dot', 'horizontal', 'years'), 1, "x values don't line up with x locations ");
 	            });
 
 	            it('8. The data-yvalue and its corresponding dot should align with the corresponding point/value on the y-axis.', function () {
 	                var dotsCollection = document.getElementsByClassName('dot');
-	                //convert to array
-	                var dots = [].slice.call(dotsCollection);
-	                FCC_Global.assert.isAbove(dots.length, 0, 'there are no elements with the class of "dot" ');
-	                //sort the dots based on yvalue in ascending order
-	                var sortedDots = dots.sort(function (a, b) {
-	                    return new Date(a.getAttribute("data-yvalue")) - new Date(b.getAttribute("data-yvalue"));
-	                });
+	                FCC_Global.assert.isAbove(dotsCollection.length, 0, 'there are no elements with the class of "dot" ');
 
-	                var yAxisQuery = document.querySelector('#y-axis path');
-	                //y-axis path y coordinates from d
-	                var yAxisTop = yAxisQuery.getAttribute('d').split(',')[1].split('H')[0];
-	                var yAxisBottom = yAxisQuery.getAttribute('d').split(',')[1].split('V')[1].split('H')[0];
-	                //get label (mm:ss)
-	                var yAxisTicks = document.querySelectorAll('#y-axis .tick');
-	                var yAxisTicksText = document.querySelectorAll('#y-axis .tick text');
-	                //height of y-axis in pixels
-	                var yRange = yAxisBottom - yAxisTop;
-	                for (var i = 0; i < yAxisTicksText.length - 1; i++) {
-	                    //min
-	                    var yAxisLabel = yAxisTicksText.item(i).innerHTML;
-	                    var yAxisLabelNext = yAxisTicksText.item(i + 1).innerHTML;
-	                    var yAxisMins = parseInt(yAxisLabel.split(':')[0], 10) + parseInt(yAxisLabel.split(':')[1], 10) / 60;
-	                    var yAxisMinsNext = parseInt(yAxisLabelNext.split(':')[0], 10) + parseInt(yAxisLabelNext.split(':')[1], 10) / 60;
-	                    //px
-	                    var yAxisPx = yAxisTicks.item(i).getAttribute('transform').split(',')[1].split(')')[0];
-	                    var yAxisPxNext = yAxisTicks.item(i + 1).getAttribute('transform').split(',')[1].split(')')[0];
-	                    //percent of y-axis height
-	                    var yAxisPercent = (yAxisPx - yAxisTop) * 100 / yRange;
-	                    var yAxisPercentNext = (yAxisPxNext - yAxisTop) * 100 / yRange;
-	                    //check to see if the dot y locations line up with the y ticks
-	                    for (var j = 0; j < sortedDots.length - 1; j++) {
-	                        var dotMins = new Date(sortedDots[j].getAttribute('data-yvalue')).getMinutes() + new Date(sortedDots[j].getAttribute('data-yvalue')).getSeconds() / 60;
-	                        var dotPx = +sortedDots[j].cy.baseVal.value;
-	                        var dotPercent = (dotPx - yAxisTop) * 100 / yRange;
-	                        //if given dot decimal minutes fall between axis minutes (i) and (i+1)
-	                        if (dotMins >= yAxisMins && dotMins <= yAxisMinsNext) {
-	                            //Assert that the dot is roughly at the same percent of the axis height as the average of axis percent (i) and (i+1)	
-	                            FCC_Global.assert.approximately(dotPercent, (yAxisPercentNext + yAxisPercent) / 2, 10, "y values don't line up with y locations ");
-	                        }
-	                    }
-	                }
+	                var yAxis = document.querySelector('#y-axis'),
+	                    y = thisAxis(null, yAxis);
+	                //checkAlignment returns 1 or greater if a feature doesn't align. 0 if all align.
+	                FCC_Global.assert.isBelow(checkAlignment(y, dotsCollection, 'dot', 'vertical', 'minutes'), 1, "x values don't line up with x locations ");
 	            });
 
 	            it('9. I can see multiple tick labels on the y-axis with "%M:%S" time  format.', function () {
