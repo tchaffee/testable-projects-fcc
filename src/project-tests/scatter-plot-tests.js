@@ -59,17 +59,6 @@ var getXAxisInfo = function(xAxis) {
   return getAxisInfo(xAxis, getXBegin, getXEnd);
 };
 
-
-// for given tick, return value and x or y position
-var getTickInfo = function(tick, getTickLocation) {
-
-  return {
-    text: tick.querySelector('text').innerHTML,
-    px: getTickLocation(tick)
-  };
-
-};
-
 var getYTickLocation = function(tick) {
   return tick.getAttribute('transform').split(',')[1].split(')')[0];
 };
@@ -79,23 +68,10 @@ var getXTickLocation = function(tick) {
 };
 
 
-var getTickCalcParamsVertical = function(axis, i) {
-  return {
-    axisTick: getTickInfo(axis.ticks[i], getYTickLocation),
-    axisNextTick: getTickInfo(axis.ticks[i + 1], getYTickLocation)
-  };
+var getTickValueMinutes = function(axisTick) {
+  return parseInt(axisTick.split(':')[0], 10) +
+      (parseInt(axisTick.split(':')[1], 10) / 60);
 };
-
-
-var getTickValuesMinutes = function(axisTick, axisNextTick) {
-  return {
-    current: parseInt(axisTick.text.split(':')[0], 10) +
-      (parseInt(axisTick.text.split(':')[1], 10) / 60),
-    next: parseInt(axisNextTick.text.split(':')[0], 10) +
-      (parseInt(axisNextTick.text.split(':')[1], 10) / 60)
-  };
-};
-
 
 var getFeatureValueMinutes = function(feature) {
 
@@ -112,18 +88,15 @@ var getFeatureValueYears = function(feature) {
 };
 
 var getMisalignmentCount = function(
-  params,
-  tickVal,
+  tickPercentAvg,
+  tickValCur,
+  tickValNext,
   axis,
   collection,
   getFeatureValue,
   getFeatureCoord
 ) {
-  var tickPx = parseInt(params.axisTick.px, 10),
-      tickNextPx = parseInt(params.axisNextTick.px, 10),
-      tickPercent = ((tickPx - axis.begin) * 100) / axis.size,
-      tickNextPercent = ((tickNextPx - axis.begin) * 100) / axis.size,
-      count = 0;
+  var count = 0;
   // check to see if the dot x locations fall between the given tick (i)
   // and subsequent tick (i+1)
   for (var j = 0; j < collection.length - 1; j++) {
@@ -133,13 +106,12 @@ var getMisalignmentCount = function(
       // if given feature (j) value falls between given tick (i) and subsequent
       // tick (i+1) values
       // TODO: Why this check? I need Tracey to explain this to me.
-      if (featureVal >= tickVal.current && featureVal <= tickVal.next) {
+      if (featureVal >= tickValCur && featureVal <= tickValNext) {
           // If a feature is not positioned roughly at the same percent of
           // the axis width as the average of axis percent (i) and (i+1),
           // count up
           if (Math.abs(
-            ((featureCoord - axis.begin) * 100) / axis.size -
-            (tickPercent + tickNextPercent) / 2
+            ((featureCoord - axis.begin) * 100) / axis.size - tickPercentAvg
             ) > 10) {
               count++;
           }
@@ -158,52 +130,77 @@ var getYFeatureCoord = function(feature) {
   return feature.getAttribute('cy');
 };
 
-var getTickCalcParamsHorizontal = function(axis, i) {
-  return {
-    axisTick: getTickInfo(axis.ticks[i], getXTickLocation),
-    axisNextTick: getTickInfo(axis.ticks[i + 1], getXTickLocation)
-  };
+var getTickValueYears = function(axisTick) {
+  return parseInt(axisTick.text, 10);
 };
 
-var getTickValuesYears = function(axisTick, axisNextTick) {
-  return {
-    current: parseInt(axisTick.text, 10),
-    next: parseInt(axisNextTick.text, 10)
-  };
+var getTickText = function(axisTick) {
+  return axisTick.querySelector('text').innerHTML;
+};
+
+var calcTickPercentAvg = function(axis, i) {
+  var tickPx = parseInt(getXTickLocation(axis.ticks[i]), 10),
+    tickNextPx = parseInt(getXTickLocation(axis.ticks[i + 1]), 10),
+    tickPercent = ((tickPx - axis.begin) * 100) / axis.size,
+    tickNextPercent = ((tickNextPx - axis.begin) * 100) / axis.size,
+    tickPercentAvg = (tickPercent + tickNextPercent) / 2;
+
+  return tickPercentAvg;
+};
+
+var getMisalignmentCountCaller = function(
+  getTickValue,
+  axis,
+  collection,
+  i,
+  getFeatureValue,
+  getFeatureCoord
+) {
+  var tickValCur = getTickValue(getTickText(axis.ticks[i])),
+    tickValNext = getTickValue(getTickText(axis.ticks[i + 1])),
+    tickPercentAvg = calcTickPercentAvg(axis, i); // TODO: Does this var need a better name?
+
+  return getMisalignmentCount(
+    tickPercentAvg,
+    tickValCur,
+    tickValNext,
+    axis,
+    collection,
+    getFeatureValue,
+    getFeatureCoord
+  );
 };
 
 var getXMisalignmentCount = function(axis, collection, i) {
-
-  var params = getTickCalcParamsHorizontal(axis, i),
-    tickVal = getTickValuesYears(params.axisTick, params.axisNextTick);
-
-  return getMisalignmentCount(
-    params,
-    tickVal,
+  return getMisalignmentCountCaller(
+    getTickValueYears,
     axis,
     collection,
+    i,
     getFeatureValueYears,
     getXFeatureCoord
   );
-
 };
 
 var getYMisalignmentCount = function(axis, collection, i) {
 
-  var params = getTickCalcParamsVertical(axis, i),
-    tickVal = getTickValuesMinutes(params.axisTick, params.axisNextTick);
+  var count = -1;
 
-  return getMisalignmentCount(
-    params,
-    tickVal,
+  count = getMisalignmentCountCaller(
+    getTickValueMinutes,
     axis,
     collection,
+    i,
     getFeatureValueMinutes,
     getYFeatureCoord
   );
 
-};
+  console.log('getYMisalignmentCount');
+  console.log(count);
 
+  return count;
+
+};
 
 // returns true if the given Axis is aligned with all data points, false
 // otherwise.
