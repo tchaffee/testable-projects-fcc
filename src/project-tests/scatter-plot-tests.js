@@ -6,13 +6,13 @@ import { testToolTip } from '../assets/globalD3Tests';
 // case is the height of the Y axis.
 // "M-6,0.5H0.5V500.5H-6"
 var getYBegin = function(pathDesc) {
-  var begin = pathDesc.split(',')[1].split('V')[1].split('H')[0];
+  var begin = pathDesc.split(',')[1].split('H')[0];
 
   return begin;
 };
 
 var getYEnd = function(pathDesc) {
-  var end = pathDesc.split(',')[1].split('H')[0];
+  var end = pathDesc.split(',')[1].split('V')[1].split('H')[0];
 
   return end;
 };
@@ -87,6 +87,12 @@ var getFeatureValueYears = function(feature) {
   return parseInt(value, 10);
 };
 
+var isFeatureAligned = function(featureCoord, axis, tickPercentAvg) {
+  return Math.abs(
+    (((featureCoord - axis.begin) * 100) / axis.size) - tickPercentAvg
+  ) < 10;
+};
+
 var getMisalignmentCount = function(
   tickPercentAvg,
   tickValCur,
@@ -99,6 +105,7 @@ var getMisalignmentCount = function(
   var count = 0;
   // check to see if the dot x locations fall between the given tick (i)
   // and subsequent tick (i+1)
+
   for (var j = 0; j < collection.length - 1; j++) {
       // get values for given feature (j)
       var featureVal = getFeatureValue(collection.item(j)),
@@ -106,13 +113,12 @@ var getMisalignmentCount = function(
       // if given feature (j) value falls between given tick (i) and subsequent
       // tick (i+1) values
       // TODO: Why this check? I need Tracey to explain this to me.
+
       if (featureVal >= tickValCur && featureVal <= tickValNext) {
           // If a feature is not positioned roughly at the same percent of
           // the axis width as the average of axis percent (i) and (i+1),
           // count up
-          if (Math.abs(
-            ((featureCoord - axis.begin) * 100) / axis.size - tickPercentAvg
-            ) > 10) {
+          if (!isFeatureAligned(featureCoord, axis, tickPercentAvg)) {
               count++;
           }
       }
@@ -131,16 +137,16 @@ var getYFeatureCoord = function(feature) {
 };
 
 var getTickValueYears = function(axisTick) {
-  return parseInt(axisTick.text, 10);
+  return parseInt(axisTick, 10);
 };
 
 var getTickText = function(axisTick) {
   return axisTick.querySelector('text').innerHTML;
 };
 
-var calcTickPercentAvg = function(axis, i) {
-  var tickPx = parseInt(getXTickLocation(axis.ticks[i]), 10),
-    tickNextPx = parseInt(getXTickLocation(axis.ticks[i + 1]), 10),
+var calcTickPercentAvg = function(getTickLocation, axis, i) {
+  var tickPx = parseInt(getTickLocation(axis.ticks[i]), 10),
+    tickNextPx = parseInt(getTickLocation(axis.ticks[i + 1]), 10),
     tickPercent = ((tickPx - axis.begin) * 100) / axis.size,
     tickNextPercent = ((tickNextPx - axis.begin) * 100) / axis.size,
     tickPercentAvg = (tickPercent + tickNextPercent) / 2;
@@ -149,6 +155,7 @@ var calcTickPercentAvg = function(axis, i) {
 };
 
 var getMisalignmentCountCaller = function(
+  getTickLocation,
   getTickValue,
   axis,
   collection,
@@ -158,7 +165,7 @@ var getMisalignmentCountCaller = function(
 ) {
   var tickValCur = getTickValue(getTickText(axis.ticks[i])),
     tickValNext = getTickValue(getTickText(axis.ticks[i + 1])),
-    tickPercentAvg = calcTickPercentAvg(axis, i); // TODO: Does this var need a better name?
+    tickPercentAvg = calcTickPercentAvg(getTickLocation, axis, i); // TODO: Does this var need a better name?
 
   return getMisalignmentCount(
     tickPercentAvg,
@@ -172,7 +179,8 @@ var getMisalignmentCountCaller = function(
 };
 
 var getXMisalignmentCount = function(axis, collection, i) {
-  return getMisalignmentCountCaller(
+  var count = getMisalignmentCountCaller(
+    getXTickLocation,
     getTickValueYears,
     axis,
     collection,
@@ -180,13 +188,14 @@ var getXMisalignmentCount = function(axis, collection, i) {
     getFeatureValueYears,
     getXFeatureCoord
   );
+
+  return count;
+
 };
 
 var getYMisalignmentCount = function(axis, collection, i) {
-
-  var count = -1;
-
-  count = getMisalignmentCountCaller(
+  var count = getMisalignmentCountCaller(
+    getYTickLocation,
     getTickValueMinutes,
     axis,
     collection,
@@ -195,11 +204,7 @@ var getYMisalignmentCount = function(axis, collection, i) {
     getYFeatureCoord
   );
 
-  console.log('getYMisalignmentCount');
-  console.log(count);
-
   return count;
-
 };
 
 // returns true if the given Axis is aligned with all data points, false
