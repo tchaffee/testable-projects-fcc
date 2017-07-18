@@ -1,3 +1,6 @@
+/* global isMacOS, bundleUrl, browserMaxWidth, browserMaxHeight, screenshotDir
+*/
+
 /*
  * Automates testing of a testable project. In a nutshell, it does everything
  * you would do if you had to test a testable FCC CodePen project manually.
@@ -15,12 +18,14 @@
 // download and install the executable from Google along with setting the path.
 /* eslint no-unused-vars: ["error", { "varsIgnorePattern": "chromedriver" }] */
 var chromedriver = require('chromedriver');
+
 var webdriver = require('selenium-webdriver'),
     By = webdriver.By,
     until = webdriver.until;
 
 // Used to save screenshots.
 var fs = require('fs');
+var path = require('path');
 
 exports.doesProjectPassTests = function(name, URL) {
 
@@ -36,9 +41,10 @@ exports.doesProjectPassTests = function(name, URL) {
 
   let chrome = require('selenium-webdriver/chrome');
 
-  // TODO: We should change this to the generic driver build instead of using
-  // the chrome specific code. The chrome specific code was just to capture
+  // TODO: delete the chrome specific code below on the next commit.
+  // The chrome specific code was just to capture
   // the log file when we were getting js injection errors.
+  /*
   let service = new chrome.ServiceBuilder()
     .loggingTo('./chromedrive.log')
     .enableVerboseLogging()
@@ -49,20 +55,47 @@ exports.doesProjectPassTests = function(name, URL) {
   options.addArguments('start-maximized');
 
   let driver = chrome.Driver.createSession(options, service);
-
-  // Create the browser, load the page, and give it some time to complete.
-  /*
-  var driver = new webdriver.Builder()
-    .forBrowser('chrome')
-    .setChromeOptions()
-    .build();
   */
 
-  driver.get(URL);
-  driver.sleep(5000);
+  // Set up Chrome options.
+  let options = new chrome.Options();
+  options.addArguments('start-maximized');
 
-  // This next section removes bundle.js, and then injects our local version
-  // of bundle.js.
+  // Create the browser, load the page, and give it some time to complete.
+  var driver = new webdriver.Builder()
+    .forBrowser('chrome')
+    .setChromeOptions(options)
+    .build();
+
+  // Mac OS for some reason doesn't like the 'start-maximized' flag, so we
+  // maximize the window based on the Mocha setup.js file.
+  if (isMacOS) {
+    driver.manage().window().setPosition(0, 0);
+    driver.manage().window().setSize(browserMaxWidth, browserMaxHeight);
+  }
+
+  // Get the specified URL.
+  driver.get(URL);
+
+  // Change the CodePen view to put the editor on the left side, so it is easier
+  // to see the project tests output.
+  driver.wait(
+    until.elementLocated(By.id('view-switcher-button')),
+    elementTimeout
+  ).click();
+
+  driver.wait(
+    until.elementLocated(By.id('left-layout')),
+    elementTimeout
+  ).click();
+
+  // Need to click again to hide the view switcher.
+  driver.wait(
+    until.elementLocated(By.id('view-switcher-button')),
+    elementTimeout
+  ).click();
+
+  // Now we need to change some settings.
 
   // Click on the "Edit Settings" button.
   driver.wait(
@@ -82,8 +115,9 @@ exports.doesProjectPassTests = function(name, URL) {
     elementTimeout
   ).click();
 
-  // Make sure "Auto-Updating Preview" is checked. With it checked, we do not
-  // need to click the "Run" button after making changes.
+  // Make sure "Auto-Updating Preview" is not checked. This means we will need
+  // to click the "Run" button after making changes. This is more reliable than
+  // waiting for the page to refresh on its own.
   var elementAutoRun = driver.wait(
     until.elementLocated(By.id('auto-run')),
     elementTimeout
@@ -91,12 +125,14 @@ exports.doesProjectPassTests = function(name, URL) {
 
   elementAutoRun.getAttribute('checked')
   .then(function(checked) {
-    if (!checked) {
+    if (checked) {
       elementAutoRun.click();
     }
   });
 
-  driver.sleep(5000);
+  // This next section changes the javascript settings to remove the CDN
+  // bundle.js and use our local bundle.js from the URL specified in the Mocha
+  // setup.js file.
 
   // Click on javascript settings.
   driver.wait(
@@ -116,71 +152,46 @@ exports.doesProjectPassTests = function(name, URL) {
       value.then(function(val) {
         if (val.includes('bundle.js', 0)) {
           elem.clear();
-          elem.sendKeys('https://127.0.0.1:8080/bundle.js');
+          elem.sendKeys(bundleUrl);
         }
       });
     });
   });
 
-  driver.sleep(5000);
-
-  // Close the modal.
+  // We are done changing the settings. Close the modal.
   driver.wait(
     until.elementLocated(By.id('close-settings')),
     elementTimeout
   ).click();
 
-  driver.sleep(5000);
+  // Re-run the web page and detect when is reloaded. The way we do this is a
+  // little tricky. We get the id of the current "results" iframe and then
+  // detect when it is no longer present. Which means the new iframe is
+  // available.
 
-  // Re-run the web page.
-  /*
+  let iframeElem = driver.wait(
+    until.elementLocated(By.className('result-iframe')),
+    elementTimeout
+  );
+
+  // Now we click the run button...
   driver.wait(
     until.elementLocated(By.id('run')),
     elementTimeout
   ).click();
-  */
 
-  // Inject the local version of bundle.js.
-  /*
-  var bundleScript = fs.readFileSync(
-    './build/bundle.js',
-    'utf8'
+  // And wait for the current iframe to no longer exist.
+  driver.wait(
+    until.stalenessOf(iframeElem),
+    elementTimeout
   );
 
-  driver.sleep(5000);
-
-  driver.executeScript(bundleScript)
-  .then(function(returnVal) {
-    console.log('executeScript returnVal');
-    console.log(returnVal);
-  });
-
-  driver.sleep(10000);
-  */
-
-  // Change the CodePen view to put the editor on the left side, so it is easier
-  // to see errors. And give the page a couple seconds to adjust the layout.
-  driver.wait(
-    until.elementLocated(By.id('view-switcher-button')),
-    elementTimeout
-  ).click();
-
-  driver.wait(
-    until.elementLocated(By.id('left-layout')),
-    elementTimeout
-  ).click();
-
-  driver.wait(
-    until.elementLocated(By.id('view-switcher-button')),
-    elementTimeout
-  ).click();
-
-  driver.sleep(2000);
-
   // Switch to the CodePen output frame. This is the frame where the
-  // project web page is displayed.
-  driver.switchTo().frame(0);
-  driver.sleep(2000);
+  // newly refreshed project web page is displayed.
+  driver.wait(
+    until.ableToSwitchToFrame(0),
+    elementTimeout
+  );
 
   // Run the tests by clicking the test button after the element appears.
   driver.wait(
@@ -222,7 +233,7 @@ exports.doesProjectPassTests = function(name, URL) {
   .then(function(data) {
     var base64Data = data.replace(/^data:image\/png;base64,/, '');
     fs.writeFile(
-      fileName,
+      path.join(screenshotDir, fileName),
       base64Data,
       'base64',
       function(err) {

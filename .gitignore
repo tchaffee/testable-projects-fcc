@@ -36,6 +36,9 @@ config/server.crt
 config/server.csr
 config/server.key
 
+# Screenshots from tests.
+test/screenshots
+
 # Optional npm cache directory
 .npm
 
