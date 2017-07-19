@@ -105,7 +105,7 @@ exports.doesProjectPassTests = function(name, URL) {
 
   // Wait for the item settings modal.
   driver.wait(
-    until.elementLocated(By.id('item-settings-modal')),
+    until.elementLocated(By.css('#item-settings-modal.open')),
     elementTimeout
   );
 
@@ -114,6 +114,12 @@ exports.doesProjectPassTests = function(name, URL) {
     until.elementLocated(By.id('settings-behavior-tab')),
     elementTimeout
   ).click();
+
+  // Wait until it is the active tab.
+  driver.wait(
+    until.elementLocated(By.css('#settings-behavior.active')),
+    elementTimeout
+  );
 
   // Make sure "Auto-Updating Preview" is not checked. This means we will need
   // to click the "Run" button after making changes. This is more reliable than
@@ -215,17 +221,23 @@ exports.doesProjectPassTests = function(name, URL) {
     success = classes.includes('fcc_test_btn-success', 0);
   });
 
-  // Click the "Tests" button to show the detailed results.
   element.click();
+  // Click the "Tests" button to show the detailed results.
 
-  // Wait for the test results modal.
+  // Wait for the test results modal. The message box fades in, so we wait for
+  // opacity of 1 before grabbing the screenshot.
   driver.wait(until.elementLocated(
     By.className('fcc_test_message-box-shown')),
     elementTimeout
-  );
-
-  // Message box fades in, so wait a little before grabbing the screenshot.
-  driver.sleep(1000);
+  )
+  .then(function(elem) {
+    driver.wait(function() {
+      return elem.getCssValue('opacity')
+      .then(function(opacity) {
+        return opacity === '1';
+      });
+    });
+  });
 
   // Grab a screenshot and write to disk.
   // TODO: Do we want to grab screenshots for success?

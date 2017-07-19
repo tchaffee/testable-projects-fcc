@@ -35,9 +35,7 @@ config/live-server-https.js
 config/server.crt
 config/server.csr
 config/server.key
-
-# Screenshots from tests.
-test/screenshots
+test/setup.js
 
 # Optional npm cache directory
 .npm

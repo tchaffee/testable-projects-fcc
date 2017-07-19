@@ -1,5 +1,7 @@
 /**
- * Mocha setup.
+ * Mocha setup example.
+ *
+ * Move this file to setup.js and change as needed.
  *
  */
 
@@ -11,7 +13,7 @@ global.bundleUrl = 'https://127.0.0.1:8080/bundle.js';
 // Where to save screenshots.
 global.screenshotDir = 'test/screenshots';
 
-// If you are on a Mac, the Chrome --start-maximized argument is ignored, so
+// If you are on a Mac, the Chrome argument "--start-maximized" is ignored, so
 // you'll need to set isMacOS to true and specify your maximum screen size.
 global.isMacOS = false;
 global.browserMaxWidth = 1920;
