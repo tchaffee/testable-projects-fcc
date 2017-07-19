@@ -23,9 +23,11 @@
     "selenium-webdriver": "^3.4.0"
   },
   "scripts": {
+    "lint-js": "eslint --ext=.js,.jsx src/ test/",
+    "lint": "npm run lint-js",
     "live-serve-build": "live-server --no-browser --https=config/live-server-https build",
-    "pretest": "npm run lint",
-    "test": "mocha",
+    "pretest": "echo \"skipping npm run lint\"",
+    "test": "mocha -g Tribute",
     "start": "webpack --watch --config webpack.config.dev.js",
     "build": "webpack"
   },
