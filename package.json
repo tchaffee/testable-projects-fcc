@@ -10,12 +10,20 @@
     "webpack": "^1.14.0"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
     "chai": "^3.5.0",
+    "eslint": "^3.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-prefer-object-spread": "^1.2.1",
+    "eslint-plugin-react": "^7.1.0",
     "jquery": "^3.1.1",
     "live-server": "^1.1.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint-js": "eslint --ext=.js,.jsx src/ test/",
+    "lint": "npm run lint-js",
+    "pretest": "npm run lint",
+    "test": "echo \"No tests yet!\"",
     "start": "webpack --watch --config webpack.config.dev.js",
     "build": "webpack"
   },
