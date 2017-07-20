@@ -27,7 +27,7 @@
     "lint": "npm run lint-js",
     "live-serve-build": "live-server --no-browser --https=config/live-server-https build",
     "pretest": "echo \"skipping npm run lint\"",
-    "test": "mocha -g Tribute",
+    "test": "mocha",
     "start": "webpack --watch --config webpack.config.dev.js",
     "build": "webpack"
   },
