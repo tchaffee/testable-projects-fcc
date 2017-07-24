@@ -1,9 +1,17 @@
 /**
  * Mocha setup example.
  *
- * Move this file to setup.js and change as needed.
+ * Copy this file to setup.js and change as needed.
  *
  */
+
+// Location of chrome binary. Uncomment one of the below. The first is for
+// Ubuntu (might work for other Linux flavors). The second is for Mac. Please
+// feel free to add other examples here if you find something that works for
+// another platform.
+// global.chromeBinaryPath = '/usr/bin/google-chrome-stable';
+// global.chromeBinaryPath =
+//     '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 
 // The URL you want to be used for the bundle.js when running local tests.
 // The below value is typically used when you are using:
@@ -13,8 +21,9 @@ global.bundleUrl = 'https://127.0.0.1:8080/bundle.js';
 // Where to save screenshots.
 global.screenshotDir = 'test/screenshots';
 
-// If you are on a Mac, the Chrome argument "--start-maximized" is ignored, so
-// you'll need to set isMacOS to true and specify your maximum screen size.
-global.isMacOS = false;
+// Specify your maximum screen size.
+// If you are on a Mac (and now it seems like headless Chrome also has this
+// problem) the Chrome argument "--start-maximized" is ignored. So we just set
+// the screen size manually.
 global.browserMaxWidth = 1920;
 global.browserMaxHeight = 1080;

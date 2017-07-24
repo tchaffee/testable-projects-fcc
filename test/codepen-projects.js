@@ -30,7 +30,7 @@ var seleniumMocha = require('selenium-webdriver/testing'),
     describe = seleniumMocha.describe,
     it = seleniumMocha.it;
 
-describe('All CodePen Page Tests', function() {
+describe('CodePen Page Tests', function() {
 
   var tests = [
     {
