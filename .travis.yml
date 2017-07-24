@@ -13,8 +13,6 @@ before_script:
   # Same as what we specified for Xvfb.
   - "export DISPLAY=:99.0"
   - cp test/setup.js.travis test/setup.js
-script:
-  - whereis google-chrome-stable  
 cache:
   directories:
     - node_modules
