@@ -1,6 +1,7 @@
 
 export function isAxisAlignedWithDataPoints(
   axis,
+  dimension,
   dataShapes,
   getShapeValue,
   getTickValue
@@ -8,7 +9,14 @@ export function isAxisAlignedWithDataPoints(
   const dataShapesArray = [].slice.call(dataShapes);
 
   const outside = dataShapesArray.every(shape =>
-    isShapeAlignedWithAxis(shape, axis, getShapeValue, getTickValue));
+    isShapeAlignedWithAxis(
+      shape,
+      axis,
+      dimension,
+      getShapeValue,
+      getTickValue
+    )
+  );
 
   return outside;
 }
@@ -16,6 +24,7 @@ export function isAxisAlignedWithDataPoints(
 export function isShapeAlignedWithAxis(
   shape,
   axis,
+  dimension,
   getShapeValue,
   getTickValue
 ) {
@@ -24,7 +33,11 @@ export function isShapeAlignedWithAxis(
 
   const allTicks = axis.querySelectorAll('.tick');
 
-  const alignedTicks = getAlignedTicksFromPosition(allTicks, position);
+  const alignedTicks = getAlignedTicksFromPosition(
+    allTicks,
+    dimension,
+    position
+  );
 
   return isShapeValueWithinTickValues(
     shape,
@@ -57,30 +70,43 @@ export function getShapePosition(shape) {
   return { x: x, y: y};
 }
 
-
-export function getAlignedTicksFromPosition(ticksList, position) {
+// TODO: This doesn't work when there is no beforeTick. I.e. sometimes some
+// of the small values appear before the first tick.
+export function getAlignedTicksFromPosition(ticksList, dimension, position) {
 
   const ticks = [].slice.call(ticksList);
 
+  console.log('getAlignedTicksFromPosition');
+  console.log('dimension');
+  console.log(dimension);
+
+  console.log('position[dimension]');
+  console.log(position[dimension]);
+
   // Handle Y axis.
   let beforeTicks = ticks.filter(tick => {
-    return getTickPosition(tick).y <= position.y;
+    return getTickPosition(tick)[dimension] <= position[dimension];
   });
 
+  console.log('beforeTicks');
+  console.log(beforeTicks);
+
   let beforeTick = beforeTicks.reduce((prev, tick) => {
-    const position = getTickPosition(tick).y;
-    if (prev && (getTickPosition(prev).y > position)) {
+    const position = getTickPosition(tick)[dimension];
+    if (prev && (getTickPosition(prev)[dimension] > position)) {
       return prev;
     }
     return tick;
   }, null);
 
 
-  let afterTicks = ticks.filter(tick => getTickPosition(tick).y > position.y);
+  let afterTicks = ticks.filter(tick =>
+    getTickPosition(tick)[dimension] > position[dimension]
+  );
 
   let afterTick = afterTicks.reduce((prev, tick) => {
-    const position = getTickPosition(tick).y;
-    if (prev && (getTickPosition(prev).y < position)) {
+    const position = getTickPosition(tick)[dimension];
+    if (prev && (getTickPosition(prev)[dimension] < position)) {
       return prev;
     }
     return tick;
@@ -102,4 +128,18 @@ export function isShapeValueWithinTickValues(
   const afterTickValue = getTickValue(ticks[1]);
 
   return beforeTickValue <= shapeValue <= afterTickValue;
+}
+
+// TODO: Eventually delete this.
+function debugHTMLUknownElement (elem) {
+
+  for (var propName in elem) {
+    // if ({}.hasOwnProperty.call(ticks[0], propName)) {
+      let propValue = elem[propName];
+
+      console.log('propName, propValue:');
+      console.log(propName, propValue);
+    // }
+  }
+
 }

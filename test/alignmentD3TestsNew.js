@@ -30,8 +30,23 @@ const dom = new JSDOM(`
         <line x2="-10" y2="0"></line>
         <text dy=".32em" x="-13" y="0" style="text-anchor: end;">April</text>
       </g>
-      <path class="domain" d="M-1,0H0V396H-1"></path>
     </g>
+
+    <g class="x-axis" id="x-axis" transform="translate(144,412)">
+      <g class="tick" transform="translate(37.5,0)" style="opacity: 1;">
+        <line y2="10" x2="0"></line>
+        <text dy=".71em" y="13" x="0" style="text-anchor: middle;">1760</text>
+      </g>
+      <g class="tick" transform="translate(87.5,0)" style="opacity: 1;">
+        <line y2="10" x2="0"></line>
+        <text dy=".71em" y="13" x="0" style="text-anchor: middle;">1770</text>
+      </g>
+      <g class="tick" transform="translate(137.5,0)" style="opacity: 1;">
+        <line y2="10" x2="0"></line>
+        <text dy=".71em" y="13" x="0" style="text-anchor: middle;">1780</text>
+      </g>
+    </g>
+
     <rect class="cell" data-month="0" data-year="1753"
       data-temp="7.2940000000000005" x="0" y="0" width="5" height="33"
       fill="#ffffbf">
@@ -54,9 +69,13 @@ const months = [
   'december'
 ];
 
-function getTickValue(tick) {
+function getTickValueMonth(tick) {
   const value = tick.querySelector('text').innerHTML.toLowerCase();
   return months.indexOf(value);
+}
+
+function getTickValueYear(tick) {
+  return parseInt(tick.querySelector('text').innerHTML, 10);
 }
 
 function getShapeValue(shape) {
@@ -90,7 +109,7 @@ describe('D3 Alignment module Tests', function() {
       shape,
       [tick1, tick2],
       getShapeValue,
-      getTickValue
+      getTickValueMonth
     ));
   });
 
@@ -99,7 +118,7 @@ describe('D3 Alignment module Tests', function() {
     let position = { x: 2.5, y: 50 };
     const ticks = dom.window.document.querySelectorAll('.tick');
 
-    const alignedTicks = getAlignedTicksFromPosition(ticks, position);
+    const alignedTicks = getAlignedTicksFromPosition(ticks, 'y', position);
 
     assert.strictEqual(
       alignedTicks[0].getAttribute('transform'),
@@ -117,7 +136,7 @@ describe('D3 Alignment module Tests', function() {
     let position = { x: 2.5, y: 16.5 };
     const ticks = dom.window.document.querySelectorAll('.tick');
 
-    const alignedTicks = getAlignedTicksFromPosition(ticks, position);
+    const alignedTicks = getAlignedTicksFromPosition(ticks, 'y', position);
 
     assert.strictEqual(
       alignedTicks[0].getAttribute('transform'),
@@ -154,25 +173,43 @@ describe('D3 Alignment module Tests', function() {
       assert.isTrue(isShapeAlignedWithAxis(
         shape,
         axis,
+        'y',
         getShapeValue,
-        getTickValue
+        getTickValueMonth
       ));
     });
   });
 
   describe('isAxisAlignedWithDataPoints function', function() {
-    it('should return true when datapoints are aligned with an axis',
+    it('should return true when datapoints are aligned with a y axis',
     function() {
       const axis = dom.window.document.querySelector('#y-axis'),
         dataPoints = dom.window.document.querySelectorAll('.cell');
 
       assert.isTrue(isAxisAlignedWithDataPoints(
         axis,
+        'y',
         dataPoints,
         getShapeValue,
-        getTickValue
+        getTickValueMonth
       ));
     });
+
+    it('should return true when datapoints are aligned with a x axis',
+    function() {
+      const axis = dom.window.document.querySelector('#x-axis'),
+        dataPoints = dom.window.document.querySelectorAll('.cell');
+
+      assert.isTrue(isAxisAlignedWithDataPoints(
+        axis,
+        'x',
+        dataPoints,
+        getShapeValue,
+        getTickValueYear
+      ));
+
+    });
+
   });
 
 });
