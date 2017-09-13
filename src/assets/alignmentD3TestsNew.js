@@ -4,7 +4,8 @@ export function isAxisAlignedWithDataPoints(
   dimension,
   dataShapes,
   getShapeValue,
-  getTickValue
+  getTickValue,
+  getShapePosition
 ) {
   const dataShapesArray = [].slice.call(dataShapes);
 
@@ -14,7 +15,8 @@ export function isAxisAlignedWithDataPoints(
       axis,
       dimension,
       getShapeValue,
-      getTickValue
+      getTickValue,
+      getShapePosition
     )
   );
 
@@ -26,7 +28,8 @@ export function isShapeAlignedWithAxis(
   axis,
   dimension,
   getShapeValue,
-  getTickValue
+  getTickValue,
+  getShapePosition
 ) {
 
   const position = getShapePosition(shape);
@@ -56,40 +59,17 @@ export function getTickPosition(tick) {
   return { x: x, y: y};
 }
 
-export function getShapePosition(shape) {
-  // the x, y attributes for each rect are from the top-left of the shape.
-  // compute the mid-value for a coordinate to compare to axis tick
-  let half, x, y;
-
-  half = parseFloat(shape.getAttribute('width')) / 2;
-  x = parseFloat(shape.getAttribute('x')) + half;
-
-  half = parseFloat(shape.getAttribute('height')) / 2;
-  y = parseFloat(shape.getAttribute('y')) + half;
-
-  return { x: x, y: y};
-}
-
-// TODO: This doesn't work when there is no beforeTick. I.e. sometimes some
-// of the small values appear before the first tick.
+// This also works when there is no beforeTick or afterTick. I.e. sometimes some
+// of the small values appear before the first tick, or the largest values
+// appear after the last tick. In those cases it will return null for the
+// tick in question.
 export function getAlignedTicksFromPosition(ticksList, dimension, position) {
 
   const ticks = [].slice.call(ticksList);
 
-  console.log('getAlignedTicksFromPosition');
-  console.log('dimension');
-  console.log(dimension);
-
-  console.log('position[dimension]');
-  console.log(position[dimension]);
-
-  // Handle Y axis.
   let beforeTicks = ticks.filter(tick => {
     return getTickPosition(tick)[dimension] <= position[dimension];
   });
-
-  console.log('beforeTicks');
-  console.log(beforeTicks);
 
   let beforeTick = beforeTicks.reduce((prev, tick) => {
     const position = getTickPosition(tick)[dimension];
@@ -98,7 +78,6 @@ export function getAlignedTicksFromPosition(ticksList, dimension, position) {
     }
     return tick;
   }, null);
-
 
   let afterTicks = ticks.filter(tick =>
     getTickPosition(tick)[dimension] > position[dimension]
@@ -124,14 +103,28 @@ export function isShapeValueWithinTickValues(
 
   const shapeValue = getShapeValue(shape);
 
-  const beforeTickValue = getTickValue(ticks[0]);
-  const afterTickValue = getTickValue(ticks[1]);
+  let beforeTickValue;
+  let afterTickValue;
+  let returnValue;
 
-  return beforeTickValue <= shapeValue <= afterTickValue;
+  // The beforeTick or afterTick might be null.
+  if (!ticks[0]) {
+    afterTickValue = getTickValue(ticks[1]);
+    returnValue = shapeValue <= afterTickValue;
+  } else if (!ticks[0]) {
+    beforeTickValue = getTickValue(ticks[0]);
+    returnValue = beforeTickValue <= shapeValue;
+  } else {
+    beforeTickValue = getTickValue(ticks[0]);
+    afterTickValue = getTickValue(ticks[1]);
+    returnValue = beforeTickValue <= shapeValue <= afterTickValue;
+  }
+
+  return returnValue;
 }
 
 // TODO: Eventually delete this.
-function debugHTMLUknownElement (elem) {
+function debugHTMLUknownElement(elem) {
 
   for (var propName in elem) {
     // if ({}.hasOwnProperty.call(ticks[0], propName)) {
