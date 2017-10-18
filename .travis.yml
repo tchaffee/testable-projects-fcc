@@ -16,6 +16,9 @@ before_script:
   # Start https server (and sleep) so we can get the local bundle.js via https.
   - npm run serve-https-local > /dev/null 2>&1 &
   - sleep 3
+  # Temporary, get some version numbers to try to understand Chrome issues.
+  - /usr/bin/google-chrome-stable --version
+  - node_modules/chromedriver/bin/chromedriver --version
 cache:
   directories:
     - node_modules
