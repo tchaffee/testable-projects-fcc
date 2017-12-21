@@ -71,117 +71,85 @@ var FCC_Global =
 
 	var _chai2 = _interopRequireDefault(_chai);
 
-	var _fccTestSuiteSkeleton = __webpack_require__(42);
+	var _testSuiteSkeleton = __webpack_require__(42);
 
-	var _fccTestSuiteSkeleton2 = _interopRequireDefault(_fccTestSuiteSkeleton);
+	var _testSuiteSkeleton2 = _interopRequireDefault(_testSuiteSkeleton);
 
-	var _fccTestTogglerSkeleton = __webpack_require__(43);
+	var _style = __webpack_require__(43);
 
-	var _fccTestTogglerSkeleton2 = _interopRequireDefault(_fccTestTogglerSkeleton);
+	var _style2 = _interopRequireDefault(_style);
 
-	var _mochaModalSkeleton = __webpack_require__(44);
-
-	var _mochaModalSkeleton2 = _interopRequireDefault(_mochaModalSkeleton);
-
-	var _fccTestUi = __webpack_require__(45);
-
-	var _fccTestUi2 = _interopRequireDefault(_fccTestUi);
-
-	var _mochaModal = __webpack_require__(50);
-
-	var _mochaModal2 = _interopRequireDefault(_mochaModal);
-
-	var _fccTestToggler = __webpack_require__(52);
-
-	var _fccTestToggler2 = _interopRequireDefault(_fccTestToggler);
-
-	var _drumMachineTests = __webpack_require__(54);
+	var _drumMachineTests = __webpack_require__(48);
 
 	var _drumMachineTests2 = _interopRequireDefault(_drumMachineTests);
 
-	var _markdownPreviewerTests = __webpack_require__(56);
+	var _markdownPreviewerTests = __webpack_require__(50);
 
 	var _markdownPreviewerTests2 = _interopRequireDefault(_markdownPreviewerTests);
 
-	var _calculatorTests = __webpack_require__(57);
+	var _calculatorTests = __webpack_require__(51);
 
 	var _calculatorTests2 = _interopRequireDefault(_calculatorTests);
 
-	var _pomodoroClockTests = __webpack_require__(59);
+	var _pomodoroClockTests = __webpack_require__(53);
 
 	var _pomodoroClockTests2 = _interopRequireDefault(_pomodoroClockTests);
 
-	var _tributePageTests = __webpack_require__(60);
+	var _tributePageTests = __webpack_require__(54);
 
 	var _tributePageTests2 = _interopRequireDefault(_tributePageTests);
 
-	var _portfolioTests = __webpack_require__(61);
+	var _portfolioTests = __webpack_require__(55);
 
 	var _portfolioTests2 = _interopRequireDefault(_portfolioTests);
 
-	var _productLandingPageTests = __webpack_require__(63);
+	var _productLandingPageTests = __webpack_require__(57);
 
 	var _productLandingPageTests2 = _interopRequireDefault(_productLandingPageTests);
 
-	var _surveyFormTests = __webpack_require__(64);
+	var _surveyFormTests = __webpack_require__(58);
 
 	var _surveyFormTests2 = _interopRequireDefault(_surveyFormTests);
 
-	var _technicalDocsTests = __webpack_require__(65);
+	var _technicalDocsTests = __webpack_require__(59);
 
 	var _technicalDocsTests2 = _interopRequireDefault(_technicalDocsTests);
 
-	var _barChartTests = __webpack_require__(66);
+	var _barChartTests = __webpack_require__(60);
 
 	var _barChartTests2 = _interopRequireDefault(_barChartTests);
 
-	var _scatterPlotTests = __webpack_require__(70);
+	var _scatterPlotTests = __webpack_require__(62);
 
 	var _scatterPlotTests2 = _interopRequireDefault(_scatterPlotTests);
 
-	var _choroplethTests = __webpack_require__(71);
+	var _choroplethTests = __webpack_require__(65);
 
 	var _choroplethTests2 = _interopRequireDefault(_choroplethTests);
 
-	var _treeMapTests = __webpack_require__(73);
+	var _treeMapTests = __webpack_require__(67);
 
 	var _treeMapTests2 = _interopRequireDefault(_treeMapTests);
 
-	var _quoteMachineTests = __webpack_require__(74);
+	var _quoteMachineTests = __webpack_require__(68);
 
 	var _quoteMachineTests2 = _interopRequireDefault(_quoteMachineTests);
 
-	var _heatMapTests = __webpack_require__(75);
+	var _heatMapTests = __webpack_require__(69);
 
 	var _heatMapTests2 = _interopRequireDefault(_heatMapTests);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// style-loader injects css from css-loader into document
+	// the !- prefixes are for process arguments respective of plugins
+	// Example: https://stackoverflow.com/a/42440360/3530394
+	// style-loader injects css loaded by css-loader through this import statement.
+
 	/* eslint import/no-unresolved: [2, { ignore: ['!style-loader.*$'] }] */
 	var assert = exports.assert = _chai2.default.assert;
 	// Webpack is configured to load those files with the .html extension as Strings
 	/* global projectName */
-
-	/*
-	 This file dynamically generates the user interface for the freeCodeCamp
-	 testable-projects application. The user interface consists of three main parts:
-	 1. fCCTestTogglerSkeleton
-	    A user interface for hiding / showing the test controls:
-	    a. A toggler for hiding / showing the test controller iframe
-	       (#fcc_foldout_toggler)
-	    b. A small read-only indicator in the top-right corner of the viewport that
-	       shows the pending test project (#fcc_test_suite_indicator_wrapper)
-	 2. fCCTestSuiteSkeleton
-	    A <div> situated in the top-left corner of the viewport with controls
-	    for running the tests
-	 3. mochaModalSkeleton
-	    A modal <div id="mocha"> automatically inserted into the document via Mocha
-
-	 We can use Webpack to inject loaded css into the document. We maintain three
-	 css files: one for the test control window (fcc-test-ui.css), one for the
-	 toggler (fcc-test-toggler.css), and one for the Mocha modal (mocha-modal.css)
-	*/
+	/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "[iI]gnored" }]*/
 
 	var projectNameLocal = false;
 
@@ -210,8 +178,11 @@ var FCC_Global =
 	      if (mocha) {
 	        clearInterval(mochaCheck);
 	        mocha.setup('bdd');
-
-	        // Once testFrame is loaded:
+	        var testDiv = document.createElement('div');
+	        testDiv.style.position = 'inherit';
+	        testDiv.innerHTML = _testSuiteSkeleton2.default;
+	        document.body.appendChild(testDiv);
+	        // Once testDiv is loaded:
 	        var projectTitleCase = localStorage.getItem('projectTitleCase');
 	        // projectName variable is defined in our example projects so the
 	        // correct test suite is automatically loaded. This sets default text
@@ -220,51 +191,15 @@ var FCC_Global =
 	          projectNameLocal = projectName;
 	        }
 
-	        // Create the test UI and its contents.
-	        // Using the 'fcc_test_ui' CSS class allows us to set some reasonable
-	        // CSS defaults that will be inherited for all child elements, making it
-	        // harder for user code to override our test UI CSS.
-	        // fCCTestTogglerSkeleton has the html for the toggle buttons.
-	        // testFrameBody contains the main test UI.
-	        // The mochaModal is where the test output goes.
-	        var fCCToggle = document.createElement('div');
-	        fCCToggle.className = 'fcc_test_ui';
-	        fCCToggle.innerHTML = _fccTestTogglerSkeleton2.default;
-	        document.body.appendChild(fCCToggle);
-
-	        var testFrameBody = document.createElement('div');
-	        testFrameBody.setAttribute('id', 'fcc_foldout_menu');
-	        testFrameBody.innerHTML = _fccTestSuiteSkeleton2.default;
-	        fCCToggle.appendChild(testFrameBody);
-
-	        var mochaModal = document.createElement('div');
-	        mochaModal.className = 'fcc_test_ui';
-	        mochaModal.innerHTML = _mochaModalSkeleton2.default;
-	        document.body.appendChild(mochaModal);
-
-	        var toggleElement = document.getElementById('fcc_toggle');
-	        var indicatorWrapper = document.getElementById('fcc_test_suite_indicator_wrapper');
-
-	        // Determine placeholder for the 'select' dropdown element.
-	        var placeholder = document.getElementById('placeholder');
-
 	        if (!projectNameLocal && projectTitleCase === null) {
-	          placeholder.innerHTML = '- - -';
-	          indicatorWrapper.innerHTML = '';
+	          document.getElementById('placeholder').innerHTML = '- - -';
+	          document.getElementById('fcc_test_suite_indicator_wrapper').innerHTML = '';
 	        } else if (projectNameLocal) {
-	          placeholder.innerHTML = '' + localStorage.getItem('example_project');
-	          indicatorWrapper.innerHTML = '<span id=fcc_test_suite_indicator>FCC Test Suite: ' + (localStorage.getItem('example_project') + '</span>');
+	          document.getElementById('placeholder').innerHTML = '' + localStorage.getItem('example_project');
+	          document.getElementById('fcc_test_suite_indicator_wrapper').innerHTML = '<span id=fcc_test_suite_indicator>FCC Test Suite: ' + (localStorage.getItem('example_project') + '</span>');
 	        } else {
-	          placeholder.innerHTML = projectTitleCase;
-	          indicatorWrapper.innerHTML = '<span id=fcc_test_suite_indicator>FCC Test Suite: ' + (projectTitleCase + '</span>');
-	        }
-	        // If this is the first time loading this project, show test window
-	        if (!localStorage.getItem('fCC_' + localStorage.getItem('project_selector') + '_hide')) {
-	          toggleElement.checked = false;
-	        } else {
-	          // If student has hidden the test window once, keep it hidden.
-	          hamburgerTransform();
-	          toggleElement.checked = true;
+	          document.getElementById('placeholder').innerHTML = projectTitleCase;
+	          document.getElementById('fcc_test_suite_indicator_wrapper').innerHTML = '<span id=fcc_test_suite_indicator>FCC Test Suite: ' + (projectTitleCase + '</span>');
 	        }
 	      }
 	    } catch (err) {
@@ -278,7 +213,6 @@ var FCC_Global =
 
 	// Select project dropdown.
 	function selectProject(project) {
-	  localStorage.removeItem('fCC_' + project + '_hide');
 	  // Store project_selector for initTestRunner function.
 	  localStorage.setItem('project_selector', project);
 	  // Create & store pretty-print project name for display in indicator div.
@@ -400,7 +334,7 @@ var FCC_Global =
 	    }
 	    // Open/close foldout menu: Ctrl + Shift + O.
 	  } else if (map[17] && map[16] && map[79]) {
-	    document.getElementById('fcc_toggle').click();
+	    document.getElementById('toggle').click();
 	  }
 	};
 
@@ -422,9 +356,6 @@ var FCC_Global =
 	    document.getElementById('hamburger_top').classList.remove('transform_top');
 	    document.getElementById('hamburger_middle').classList.remove('transform_middle');
 	    document.getElementById('hamburger_bottom').classList.remove('transform_bottom');
-	    // Once the student has hidden the test window, this localStorage variable
-	    // keeps it hidden until manually toggled.
-	    localStorage.setItem('fCC_' + localStorage.getItem('project_selector') + '_hide', true);
 	  } else {
 	    document.getElementById('hamburger_top').classList.add('transform_top');
 	    document.getElementById('hamburger_middle').classList.add('transform_middle');
@@ -10973,8 +10904,8 @@ var FCC_Global =
 	  }
 
 	  // capture stack trace
-	  ssf = ssf || AssertionError;
-	  if (Error.captureStackTrace) {
+	  ssf = ssf || arguments.callee;
+	  if (ssf && Error.captureStackTrace) {
 	    Error.captureStackTrace(this, ssf);
 	  } else {
 	    try {
@@ -14362,8 +14293,6 @@ var FCC_Global =
 	  revLookup[code.charCodeAt(i)] = i
 	}
 
-	// Support decoding URL-safe base64 strings, as Node.js does.
-	// See: https://en.wikipedia.org/wiki/Base64#URL_applications
 	revLookup['-'.charCodeAt(0)] = 62
 	revLookup['_'.charCodeAt(0)] = 63
 
@@ -14425,7 +14354,7 @@ var FCC_Global =
 	  var tmp
 	  var output = []
 	  for (var i = start; i < end; i += 3) {
-	    tmp = ((uint8[i] << 16) & 0xFF0000) + ((uint8[i + 1] << 8) & 0xFF00) + (uint8[i + 2] & 0xFF)
+	    tmp = (uint8[i] << 16) + (uint8[i + 1] << 8) + (uint8[i + 2])
 	    output.push(tripletToBase64(tmp))
 	  }
 	  return output.join('')
@@ -19107,28 +19036,16 @@ var FCC_Global =
 /* 42 */
 /***/ (function(module, exports) {
 
-	module.exports = "<div id=\"fcc_foldout_menu_inner\">\n  <label for=\"test-suite-selector\">Select Test Suite: </label>\n  <select name=\"Test Suite Selector\" id=\"test-suite-selector\"\n    onchange=\"FCC_Global.selectProject(this.value)\">\n    <option id=\"placeholder\" value=\"\">- - -</option>\n    <option value=\"tribute-page\">Tribute Page</option>\n    <option value=\"portfolio\">Personal Portfolio</option>\n    <option value=\"survey-form\">Survey Form</option>\n    <option value=\"product-landing-page\">Product Landing Page</option>\n    <option value=\"technical-docs-page\">Technical Documentation Page\n    </option>\n    <option value=\"random-quote-machine\">Random Quote Machine</option>\n    <option value=\"markdown-previewer\">Markdown Previewer</option>\n    <option value=\"drum-machine\">Drum Machine</option>\n    <option value=\"pomodoro-clock\">Pomodoro Clock</option>\n    <option value=\"javascript-calculator\">Javascript Calculator</option>\n    <option value=\"bar-chart\">D3: Bar Chart</option>\n    <option value=\"scatter-plot\">D3: Scatter Plot</option>\n    <option value=\"heat-map\">D3: Heat Map</option>\n    <option value=\"choropleth\">D3: Choropleth</option>\n    <option value=\"tree-map\">D3: Tree Map</option>\n  </select>\n  <button id=\"fcc_test_message-box-rerun-button\" type=\"button\"\n    class=\"fcc_foldout_buttons\" title=\"CTRL + SHIFT + ENTER\"\n    onclick=\"FCC_Global.FCCRerunTests()\">\n    Run Tests\n  </button>\n  <button id=\"fcc_test_button\" type=\"button\"\n    class=\"fcc_foldout_buttons fcc_test_btn-default\"\n    title=\"CTRL + SHIFT + T\" onclick=\"FCC_Global.FCCOpenTestModal()\">\n    Tests\n  </button>\n  <div id=\"fcc_legend_wrapper\">\n    <div class=\"fcc_legend key\"></div>\n    <span class=\"fcc_legend\">Test(s) Failed</span>\n    <div class=\"fcc_legend key\"></div>\n    <span class=\"fcc_legend\">Tests Passed</span>\n    <div class=\"fcc_legend key\"></div>\n    <span class=\"fcc_legend\">Tests Executing</span>\n  </div>\n  <span id=\"fcc_report-bug\"><a\n    href=\"https://github.com/freeCodeCamp/testable-projects-fcc/issues/new\"\n    target=\"_blank\">Report Bug</a>\n  </span>\n</div>\n\n";
+	module.exports = "<div id=\"fcc_test_suite_indicator_wrapper\"></div>\n<div id=\"fcc_foldout_toggler\">\n\t<span id=\"hamburger_top\" class=\"fcc_hamburger transform_top\"></span>\n\t<span id=\"hamburger_middle\" class=\"fcc_hamburger transform_middle\"></span>\n\t<span id=\"hamburger_bottom\" class=\"fcc_hamburger transform_bottom\"></span>\n</div>\n<input id=\"toggle\" onclick=\"FCC_Global.hamburgerTransform()\" type=\"checkbox\"\n\ttitle=\"CTRL + SHIFT + O\">\n<div id=\"fcc_foldout_menu\">\n\t<div id=\"fcc_foldout_menu_inner\">\n\t\t<label for=\"test-suite-selector\">Select Test Suite: </label>\n\t\t<select name=\"Test Suite Selector\" id=\"test-suite-selector\"\n\t\t\tonchange=\"FCC_Global.selectProject(this.value)\">\n\t\t\t<option id=\"placeholder\" value=\"\">- - -</option>\n\t\t\t<option value=\"tribute-page\">Tribute Page</option>\n\t\t\t<option value=\"portfolio\">Personal Portfolio</option>\n\t\t\t<option value=\"survey-form\">Survey Form</option>\n\t\t\t<option value=\"product-landing-page\">Product Landing Page</option>\n\t\t\t<option value=\"technical-docs-page\">Technical Documentation Page\n\t\t\t</option>\n\t\t\t<option value=\"random-quote-machine\">Random Quote Machine</option>\n\t\t\t<option value=\"markdown-previewer\">Markdown Previewer</option>\n\t\t\t<option value=\"drum-machine\">Drum Machine</option>\n\t\t\t<option value=\"pomodoro-clock\">Pomodoro Clock</option>\n\t\t\t<option value=\"javascript-calculator\">Javascript Calculator</option>\n\t\t\t<option value=\"bar-chart\">D3: Bar Chart</option>\n\t\t\t<option value=\"scatter-plot\">D3: Scatter Plot</option>\n\t\t\t<option value=\"heat-map\">D3: Heat Map</option>\n\t\t\t<option value=\"choropleth\">D3: Choropleth</option>\n\t\t\t<option value=\"tree-map\">D3: Tree Map</option>\n\t\t</select>\n\t\t<button id=\"fcc_test_message-box-rerun-button\" type=\"button\"\n\t\t\tclass=\"fcc_foldout_buttons\" title=\"CTRL + SHIFT + ENTER\"\n\t\t\tonclick=\"FCC_Global.FCCRerunTests()\">\n\t\t\tRun Tests\n\t\t</button>\n\t\t<button id=\"fcc_test_button\" type=\"button\"\n\t\t\tclass=\"fcc_foldout_buttons fcc_test_btn-default\"\n\t\t\ttitle=\"CTRL + SHIFT + T\" onclick=\"FCC_Global.FCCOpenTestModal()\">\n\t\t\tTests\n\t\t</button>\n\t\t<div id=\"fcc_legend_wrapper\">\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Test(s) Failed</span>\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Tests Passed</span>\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Tests Executing</span>\n\t\t</div>\n\t\t<span id=\"fcc_report-bug\"><a\n\t\t\thref=\"https://github.com/freeCodeCamp/testable-projects-fcc/issues/new\"\n\t\t\ttarget=\"_blank\">Report Bug</a>\n\t\t</span>\n\t</div>\n</div>\n<div id=\"fcc_test_message-box\" class=\"fcc_test_message-box-hidden\"\n\tonclick=\"FCC_Global.FCCclickOutsideToCloseModal(event)\">\n\t<div class=\"fcc_test_message-box-content\">\n\t\t<div class=\"fcc_test_message-box-header\">\n\t\t\t<div class=\"title\">Unit tests</div>\n\t\t</div>\n\t\t<div class=\"fcc_test_message-box-body\">\n\t\t\t<div id=\"mocha\">Run Test Suite to See Unit Tests!</div>\n\t\t</div>\n\t\t<div class=\"fcc_test_message-box-footer\">\n\t\t\t<div class=\"fcc_test_message-box-close-btn\"\n\t\t\t\tonclick=\"FCC_Global.FCCCloseTestModal()\">Close</div>\n\t\t</div>\n\t</div>\n</div>\n";
 
 /***/ }),
 /* 43 */
-/***/ (function(module, exports) {
-
-	module.exports = "<div id=\"fcc_foldout_toggler\">\n  <span id=\"hamburger_top\" class=\"fcc_hamburger transform_top\"></span>\n  <span id=\"hamburger_middle\" class=\"fcc_hamburger transform_middle\"></span>\n  <span id=\"hamburger_bottom\" class=\"fcc_hamburger transform_bottom\"></span>\n  <span id=\"fcc_foldout_toggler_background\"></span>\n</div>\n<input id=\"fcc_toggle\" onclick=\"FCC_Global.hamburgerTransform()\" type=\"checkbox\"\n  title=\"CTRL + SHIFT + O\">\n<div id=\"fcc_test_suite_indicator_wrapper\"></div>";
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports) {
-
-	module.exports = "<div id=\"fcc_test_message-box\" class=\"fcc_test_message-box-hidden\"\n  onclick=\"FCC_Global.FCCclickOutsideToCloseModal(event)\">\n  <div class=\"fcc_test_message-box-content\">\n    <div class=\"fcc_test_message-box-header\">\n      <div class=\"title\">Unit tests</div>\n    </div>\n    <div class=\"fcc_test_message-box-body\">\n      <div id=\"mocha\">Run Test Suite to See Unit Tests!</div>\n    </div>\n    <div class=\"fcc_test_message-box-footer\">\n      <div class=\"fcc_test_message-box-close-btn\"\n        onclick=\"FCC_Global.FCCCloseTestModal()\">Close</div>\n    </div>\n  </div>\n</div>";
-
-/***/ }),
-/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(46);
+	var content = __webpack_require__(44);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// Prepare cssTransformation
 	var transform;
@@ -19136,14 +19053,14 @@ var FCC_Global =
 	var options = {}
 	options.transform = transform
 	// add the styles to the DOM
-	var update = __webpack_require__(48)(content, options);
+	var update = __webpack_require__(46)(content, options);
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../node_modules/css-loader/index.js!./fcc-test-ui.css", function() {
-				var newContent = require("!!../../node_modules/css-loader/index.js!./fcc-test-ui.css");
+			module.hot.accept("!!../../node_modules/css-loader/index.js!./style.css", function() {
+				var newContent = require("!!../../node_modules/css-loader/index.js!./style.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -19153,21 +19070,21 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 46 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(47)(false);
+	exports = module.exports = __webpack_require__(45)(undefined);
 	// imports
-
+	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Noto+Sans);", ""]);
 
 	// module
-	exports.push([module.id, "#fcc_foldout_menu_inner {\n  height: 0px;\n  position: relative;\n  background-color: transparent;\n}\n\n#fcc_foldout_menu_inner label {\n  border-radius: 0px;\n  box-shadow: none;\n  border: none;\n  color: black;\n  cursor: default;\n  font-size: 15px;\n  height: 20px;\n  left: 20px;\n  margin: 0px;\n  padding: 0px;\n  position: absolute;\n  top: 38px;\n  width: fit-content;\n  z-index: 0;\n}\n\n#fcc_foldout_menu_inner select {\n  background-color: buttonface;\n  border: 1px solid;\n  border-color: rgb(169, 169, 169);\n  border-radius: 0px;\n  box-shadow: none;\n  color: black;\n  display: inherit;\n  font-size: 12px;\n  height: auto;\n  left: 18px;\n  margin: 0px;\n  padding: 0px;\n  position: absolute;\n  top: 61px;\n  width: auto;\n}\n\nbutton.fcc_foldout_buttons {\n  background-color: rgba(128, 128, 128, 0.7);\n  border: none;\n  border-radius: 4px;\n  box-shadow: 1px 1px 4px black;\n  box-sizing: content-box;\n  color: white;\n  cursor: pointer;\n  display: block;\n  font-size: 15px;\n  height: 20px;\n  left: 20px;\n  margin: 0px;\n  padding: 10px;\n  position: absolute;\n  text-align: center;\n  width: 110px;\n  z-index: 0;\n}\n\n#fcc_test_message-box-rerun-button {\n  top: 90px;\n  transition: all .3s;\n}\n\n#fcc_test_message-box-rerun-button:hover {\n  color: white;\n  background-color: black;\n}\n\n#fcc_test_button {\n  top: 140px;\n}\n\nbutton.fcc_test_btn-default {\n  background-color: rgba(128, 128, 128, 0.7);\n}\n\nbutton.fcc_test_btn-executing {\n  background-color: rgba(255, 153, 0, 0.9);\n}\n\nbutton.fcc_test_btn-error {\n  background-color: rgba(255, 0, 0, 0.7);\n}\n\nbutton.fcc_test_btn-success {\n  background-color: rgba(81, 211, 81, 0.9);\n}\n\n#fcc_report-bug {\n  position: absolute;\n  top: 186px;\n  left: 20px;\n  width: 110px;\n  padding: 0 10px;\n  font-size: 12px;\n  text-align: center;\n  height: auto;\n  box-shadow: none;\n}\n\n#fcc_legend_wrapper {\n  position: absolute;\n  top: 95px;\n  left: 160px;\n  width: 125px;\n  vertical-align: top;\n  text-align: left;\n  font-size: 15px;\n  background: none;\n  box-shadow: none;\n  height: auto;\n}\n\n#fcc_legend_wrapper span {\n  height: 15px;\n  margin-top: 6px;\n  font-size: 12px ;\n  color: black;\n  background: none;\n}\n\ndiv.fcc_legend.key {\n  height: 15px;\n  width: 15px;\n  margin: 5px;\n  vertical-align: top;\n  border-radius: 0;\n}\n\ndiv.fcc_legend.key:first-of-type {\n  background-color: rgba(255, 0, 0, 0.7);\n}\n\ndiv.fcc_legend.key:nth-of-type(2) {\n  background-color: rgba(81, 211, 81, 0.9);\n}\n\ndiv.fcc_legend.key:nth-of-type(3) {\n  background-color: rgba(255, 153, 0, 0.9);\n}\n\ndiv.fcc_legend, span.fcc_legend {\n  position: relative;\n  display: inline-block;\n  left: 0px;\n}\n\n/* This acts as sort of CSS reset. The div that will use this class is a \n   wrapper div for the entire test UI. By using this class we ensure that\n   Camper code will be less specific and therefor won't override properties\n   that could change the layout or styling of our test UI.\n*/\ndiv.fcc_test_ui {\n  align-items: normal;  \n  border: 0;\n  border-radius: 0;\n  box-shadow: none;\n  color: black;\n  cursor: default;\n  display: block;\n  font-family: Noto Sans, arial, sans-serif;\n  font-size: 100%;\n  font-stretch: normal;\n  font-style: normal;\n  font-variant-caps: normal;\n  font-weight: 400;\n  height: auto;\n  left: 0;\n  letter-spacing: normal;\n  line-height: 1;\n  margin: 0;\n  outline: 0;\n  padding: 0;\n  pointer-events: all;\n  position: absolute;\n  text-align: center;\n  top: 0;\n  transform: none;\n  vertical-align: baseline;\n  word-spacing: 0px;  \n}\n\n/* Ensures that all child elements of the test UI wrapper div will have these\n   properties specified so Camper CSS won't override these properties.\n*/\n.fcc_test_ui * {\n  align-items: inherit;  \n  background: inherit;\n  background-color: inherit;\n  border: inherit;\n  border-radius: inherit;\n  box-shadow: inherit;\n  color: inherit;\n  cursor: inherit;\n/*  display: inherit; */\n  font-family: inherit;\n  font-stretch: inherit;\n  font-size: inherit;\n  font-style: inherit;\n  font-variant-caps: inherit;\n  font-weight: inherit;\n  height: inherit;\n  left: inherit;\n  letter-spacing: inherit;\n  line-height: inherit;\n  margin: inherit;\n  outline: inherit;\n  padding: inherit;\n  pointer-events: inherit;\n  position: inherit;\n  text-align: inherit;\n  transform: inherit;\n  vertical-align: inherit;\n  word-spacing: inherit;  \n}\n", ""]);
+	exports.push([module.id, "/* Please note making changes to the styles here might make some of the project\ntests no longer work, or even just give a false positive. Especially if you\nchange a selector name.\nThe project tests generally try to filter out any CSS selectors that\ncontain 'fcc_test', or that contain 'mocha'. So please make sure the\nselectors here use that naming convention.\nSee the following project tests which rely on filtering out the CSS rules\nused here. If you find other project tests that rely on the CSS here,\nplease add them to the list:\n- styleSheetUtils.js\n- product-landing-page-tests.js\n*/\n\n#mocha .test .html-error,#mocha .test pre{\n  float:left;\n  clear:left;\n  word-wrap:break-word;\n}\n#mocha ul,#mocha-stats li{\n  list-style:none;\n}\n#mocha h1,#mocha h2{\n  margin:0;\n}\n#mocha{\n  font:20px/1.5 \"Helvetica Neue\",Helvetica,Arial,sans-serif;\n  margin:60px 50px;\n}\n#mocha li,#mocha ul{\n  margin:0;\n  padding:0;\n}\n#mocha .suite,#mocha .test{\n  margin-left:15px;\n}\n#mocha h1{\n  margin-top:15px;\n  font-size:1em;\n  font-weight:200;\n}\n#mocha h1 a{\n  text-decoration:none;\n  color:inherit;\n}\n#mocha h1 a:hover{\n  text-decoration:underline;\n}\n#mocha .suite .suite h1{\n  margin-top:0;\n  font-size:.8em;\n}\n#mocha .hidden{\n  display:none;\n}\n#mocha h2{\n  font-size:12px;\n  font-weight:400;\n  cursor:pointer;\n}\n#mocha .test{\n  overflow:hidden;\n}\n#mocha .test.pending:hover h2::after{\n  content:'(pending)';\n  font-family:arial,sans-serif;\n}\n#mocha .test.pass.medium .duration{\n  background:#c09853;\n}\n#mocha .test.pass.slow .duration{\n  background:#b94a48;\n}\n#mocha .test.pass::before{\n  content:'\\2713';\n  font-size:12px;\n  display:block;\n  float:left;\n  margin-right:5px;\n  color:#00d6b2;\n}\n#mocha .test.pass .duration{\n  font-size:9px;\n  margin-left:5px;\n  padding:2px 5px;\n  color:#fff;\n  -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.2);\n  -moz-box-shadow:inset 0 1px 1px rgba(0,0,0,.2);\n  box-shadow:inset 0 1px 1px rgba(0,0,0,.2);\n  -webkit-border-radius:5px;\n  -moz-border-radius:5px;\n  -ms-border-radius:5px;\n  -o-border-radius:5px;\n  border-radius:5px;\n}\n#mocha .test.pass.fast .duration{\n  display:none;\n}\n#mocha .test.pending{\n  color:#0b97c4;\n}\n#mocha .test.pending::before{\n  content:'\\25E6';\n  color:#0b97c4;\n}\n#mocha .test.fail{\n  color:#c00;\n}\n#mocha .test.fail pre{\n  color:#000;\n}\n#mocha .test.fail::before{\n  content:'\\2716';\n  font-size:12px;\n  display:block;\n  float:left;\n  margin-right:5px;\n  color:#c00;\n}\n#mocha .test pre.error{\n  color:#c00;\n  max-height:300px;\n  overflow:auto;\n}\n#mocha .test .html-error{\n  overflow:auto;\n  color:#000;\n  line-height:1.5;\n  display:block;\n  font:12px/1.5 monaco,monospace;\n  margin:5px;\n  padding:15px;\n  border:1px solid #eee;\n  max-width:85%;\n  max-width:-webkit-calc(100% - 42px);\n  max-width:-moz-calc(100% - 42px);\n  max-width:calc(100% - 42px);\n  max-height:300px;\n  border-bottom-color:#ddd;\n  -webkit-box-shadow:0 1px 3px #eee;\n  -moz-box-shadow:0 1px 3px #eee;\n  box-shadow:0 1px 3px #eee;\n  -webkit-border-radius:3px;\n  -moz-border-radius:3px;\n  border-radius:3px;\n}\n#mocha .test .html-error pre.error{\n  border:none;\n  -webkit-border-radius:0;\n  -moz-border-radius:0;\n  border-radius:0;\n  -webkit-box-shadow:0;\n  -moz-box-shadow:0;\n  box-shadow:0; \n  padding:0; \n  margin:18px 0 0;\n  max-height:none;\n}\n#mocha .test pre{\n  display:block;\n  font:12px/1.5 monaco,monospace;\n  margin:5px;\n  padding:15px;\n  border:1px solid #eee;\n  max-width:85%;\n  max-width:-webkit-calc(100% - 42px);\n  max-width:-moz-calc(100% - 42px);\n  max-width:calc(100% - 42px);\n  border-bottom-color:#ddd;\n  -webkit-box-shadow:0 1px 3px #eee;\n  -moz-box-shadow:0 1px 3px #eee;\n  box-shadow:0 1px 3px #eee;\n  -webkit-border-radius:3px;\n  -moz-border-radius:3px;\n  border-radius:3px;\n}\n#mocha .test h2{\n  position:relative;\n}\n#mocha .test a.replay{\n  position:absolute;\n  top:3px;\n  right:0;\n  text-decoration:none;\n  vertical-align:middle;\n  display:block;\n  width:15px;\n  height:15px;\n  line-height:15px;\n  text-align:center;\n  background:#eee;\n  font-size:15px;\n  -webkit-border-radius:15px;\n  -moz-border-radius:15px;\n  border-radius:15px;\n  -webkit-transition:opacity .2s;\n  -moz-transition:opacity .2s;\n  -o-transition:opacity .2s;\n  transition:opacity .2s;\n  opacity:.3;\n  color:#888;\n}\n#mocha .test:hover a.replay{\n  opacity:1;\n}\n#mocha-report.fail .test.pass,#mocha-report.pass .test.fail,#mocha-report.pending .test.fail,#mocha-report.pending .test.pass{\n  display:none;\n}\n#mocha-report.pending .test.pass.pending{\n  display:block;\n}\n#mocha-error{\n  color:#c00;\n  font-size:1.5em;\n  font-weight:100;\n  letter-spacing:1px;\n}\n#mocha-stats{\n  position:fixed;\n  top:15px;\n  right:10px;\n  font-size:12px;\n  margin:0;\n  color:#888;\n  z-index:1;\n}\n#mocha-stats .progress{\n  float:right;\n  padding-top:0;\n  height:auto;\n  -webkit-box-shadow:none;\n  -moz-box-shadow:none;\n  box-shadow:none;\n  background-color:initial;\n}\n#mocha-stats em{\n  color:#000;\n}\n#mocha-stats a{\n  text-decoration:none;\n  color:inherit;\n}\n#mocha-stats a:hover{\n  border-bottom:1px solid #eee;\n}\n#mocha-stats li{\n  display:inline-block;\n  margin:0 5px;\n  padding-top:11px;\n}\n#mocha-stats canvas{\n  width:40px;\n  height:40px;\n}\n#mocha code .comment{\n  color:#ddd;\n}\n#mocha code .init{\n  color:#2f6fad;\n}\n#mocha code .string{\n  color:#5890ad;\n}\n#mocha code .keyword{\n  color:#8a6343;\n}\n#mocha code .number{\n  color:#2f6fad;\n}\n@media screen and (max-device-width:480px){\n  #mocha{\n    margin:60px 0;\n  }\n  #mocha #stats{\n    position:absolute;\n  }\n}\n\n/* TEST/MESSAGE CENTER CSS */\n\n#fcc_test_message-box {\n  font-size: 20px !important;\n  font-family: Noto Sans, arial, sans-serif !important;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  right: 0;\n  text-align: center;\n  background-color: rgba(0, 0, 0, 0.8) !important;\n  transition: all .5s;\n  z-index: 100000;\n  overflow: auto;\n}\n\n.fcc_test_message-box-hidden {\n  visibility: hidden;\n  opacity: 0;\n  top: -300px;\n}\n\n.fcc_test_message-box-shown {\n  visibility: visible;\n  opacity: 1;\n  top: 0;\n}\n\n.fcc_test_message-box-content {\n  position: relative;\n  color: black !important;\n  background-color: white !important;\n  top: 10vh;\n  width: 80%;\n  margin: 0 auto !important;\n  text-align: initial;\n  border-radius: 10px !important;\n  display: flex;\n  flex-direction: column;\n}\n.fcc_test_message-box-header,\n.fcc_test_message-box-footer{\n  position: relative;\n  flex: none;\n  box-sizing: border-box !important;\n  padding: 10px !important;\n}\n.fcc_test_message-box-header {\n  border-bottom: 1px solid rgb(229,229,229);\n  height: 60px;\n}\n\n.fcc_test_message-box-header .title {\n  float: left;\n  font-size: 30px !important;\n  line-height: 40px !important;\n  margin-left: 10px !important;\n}\n\n.fcc_test_message-box-body {\n  flex: 1;\n}\n\n.fcc_test_message-box-footer {\n  border-top: 1px solid rgb(229,229,229);\n  height: 70px;\n}\n\n.fcc_test_message-box-close-btn {\n  float: right;\n  color: black;\n  background-color: white;\n  border: 1px solid rgb(229,229,229);\n  border-radius: 4px;\n  padding: 10px 20px !important;\n  margin-bottom: 10px;\n  transition: all .3s;\n}\n.fcc_test_message-box-close-btn:hover {\n  color: white;\n  background-color: black;\n}\n\n#mocha {\n  margin: 10px !important;\n}\n#mocha .test pre {\n  background-color: rgb(245, 245, 245) !important;\n}\n#mocha-stats {\n  position: absolute;\n}\n#mocha ul {\n  max-width: initial;\n  margin: initial !important;\n  text-align: initial;\n}\n#mocha * {\n  font-family: Noto Sans, arial, sans-serif !important;\n  border: none !important;\n}\n\ndiv {\n  position: static;\n}\n\n/* FOLDOUT MENU CSS */\n\n#fcc_foldout_menu {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 320px;\n  height: 210px;\n  border-radius: 0 !important;\n  border-bottom-right-radius: 5px !important;\n  background-color: rgba(255, 255, 204, 0.9) !important;\n  z-index: 99997;\n  font-family: Noto Sans, arial, sans-serif !important;\n  box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.6) !important;\n  transition: .5s;\n}\n#toggle:checked ~ #fcc_foldout_menu {\n  left: -320px;\n  transition: .5s ease-in-out;\n}\n#fcc_foldout_menu_inner {\n  position: relative;\n}\n#toggle {\n  height: 24px;\n  width: 25px;\n  position: fixed;\n  top: 7px;\n  left: 20px;\n  opacity: 0;\n  cursor: pointer;\n  z-index: 99999;\n}\n#fcc_foldout_toggler {\n  position: absolute;\n  top: 20px;\n  left: 20px;\n  z-index: 99998;\n}\n\n.transform_top {\n  opacity: 1;\n  transform: rotate(45deg) translate(-2px, -1px);\n}\n.transform_middle {\n  opacity: 0;\n  transform: rotate(0deg) scale(0.2, 0.2);\n}\n.transform_bottom {\n  opacity: 1;\n  transform: rotate(-45deg) translate(-1px, -1px);\n}\n\n.fcc_hamburger {\n  position: relative;\n  width: 25px;\n  height: 3px;\n  display: block;\n  background: black !important;\n  border-radius: 5px !important;\n  transform-origin: 4px 0px;\n  transition: transform 0.4s ease, opacity 0.55s ease;\n}\n#hamburger_top {\n  position: absolute;\n  top: -6px;\n  transform-origin: 0% 80%;\n}\n#hamburger_bottom {\n  position: absolute;\n  bottom: -6px;\n  transform-origin: 20% 80%;\n}\n\n#fcc_foldout_menu label {\n  top: 38px;\n  left: 20px;\n  position: absolute;\n  font-size: 15px !important;\n  color: black !important;\n}\n#fcc_foldout_menu select {\n  display: block;\n  padding: 0;\n  height: auto;\n  width: auto;\n  top: 61px;\n  left: 18px;\n  position: absolute;\n  font-size: 12px !important;\n  font-family: Noto Sans, Arial, sans-serif !important;\n}\n\n.fcc_foldout_buttons {\n  position: absolute;\n  left: 20px;\n  height: 20px;\n  width: 110px;\n  padding: 10px !important;\n  display: block;\n  font-size: 15px !important;\n  line-height: 15px !important;\n  text-align: center;\n  border: none !important;\n  outline: none !important;\n  color: white;\n  background-color: rgba(128, 128, 128, 0.7);\n  border-radius: 4px;\n  box-sizing: content-box !important;\n  z-index: 0;\n  cursor: pointer;\n  box-shadow: 1px 1px 4px black;\n  font-family: Noto Sans, arial, sans-serif !important;\n}\n#fcc_test_message-box-rerun-button {\n  top: 90px;\n  transition: all .3s;\n}\n#fcc_test_message-box-rerun-button:hover {\n  color: white;\n  background-color: black;\n}\n#fcc_test_button {\n  top: 140px;\n}\n.fcc_test_btn-default {\n  background-color: rgba(128, 128, 128, 0.7);\n}\n.fcc_test_btn-executing {\n  background-color: rgba(255, 153, 0, 0.9);\n}\n.fcc_test_btn-error {\n  background-color: rgba(255, 0, 0, 0.7);\n}\n.fcc_test_btn-success {\n  background-color: rgba(81, 211, 81, 0.9);\n}\n#fcc_report-bug {\n  position: absolute;\n  top: 186px;\n  left: 20px;\n  width: 110px;\n  padding: 0 10px !important;\n  font-size: 12px !important;\n  text-align: center;\n}\n\n#fcc_legend_wrapper {\n  position: absolute;\n  top: 95px;\n  left: 160px;\n  width: 125px;\n  vertical-align: top;\n  text-align: left !important;\n  font-size: 15px !important;\n  background: none !important;\n}\n#fcc_legend_wrapper span {\n  height: 15px;\n  margin-top: 6px !important;\n  font-size: 12px  !important;\n  color: black !important;\n  background: none !important;\n}\n.key {\n  height: 15px;\n  width: 15px;\n  margin: 5px !important;\n  vertical-align: top;\n  border-radius: 0 !important;\n}\n.key:first-of-type {\n  background-color: rgba(255, 0, 0, 0.7);\n}\n.key:nth-of-type(2) {\n  background-color: rgba(81, 211, 81, 0.9);\n}\n.key:nth-of-type(3) {\n  background-color: rgba(255, 153, 0, 0.9);\n}\n.fcc_legend {\n  position: relative;\n  display: inline-block;\n}\n\n#fcc_test_suite_indicator_wrapper {\n  position: fixed;\n  top: 15px;\n  right: 20px;\n}\n#fcc_test_suite_indicator {\n  position: fixed;\n  top: 15px;\n  right: 20px;\n  font-size: 12px !important;\n  background-color: rgba(255, 255, 204, 0.9) !important;\n  color: black !important;\n  padding: 3px 5px !important;\n  border-radius: 5px !important;\n  box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.6) !important;\n  font-family: Noto Sans, arial, sans-serif !important;\n}", ""]);
 
 	// exports
 
 
 /***/ }),
-/* 47 */
+/* 45 */
 /***/ (function(module, exports) {
 
 	/*
@@ -19249,7 +19166,7 @@ var FCC_Global =
 
 
 /***/ }),
-/* 48 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*
@@ -19295,7 +19212,7 @@ var FCC_Global =
 	var	singletonCounter = 0;
 	var	stylesInsertedAtTop = [];
 
-	var	fixUrls = __webpack_require__(49);
+	var	fixUrls = __webpack_require__(47);
 
 	module.exports = function(list, options) {
 		if (false) {
@@ -19608,7 +19525,7 @@ var FCC_Global =
 
 
 /***/ }),
-/* 49 */
+/* 47 */
 /***/ (function(module, exports) {
 
 	
@@ -19703,97 +19620,7 @@ var FCC_Global =
 
 
 /***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(51);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// Prepare cssTransformation
-	var transform;
-
-	var options = {}
-	options.transform = transform
-	// add the styles to the DOM
-	var update = __webpack_require__(48)(content, options);
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!../../node_modules/css-loader/index.js!./mocha-modal.css", function() {
-				var newContent = require("!!../../node_modules/css-loader/index.js!./mocha-modal.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(47)(false);
-	// imports
-	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Noto+Sans);", ""]);
-
-	// module
-	exports.push([module.id, "/* Please note making changes to the styles here might make some of the project\ntests no longer work, or even just give a false positive. Especially if you\nchange a selector name.\nThe project tests generally try to filter out any CSS selectors that\ncontain 'fcc_test', or that contain 'mocha'. So please make sure the\nselectors here use that naming convention.\nSee the following project tests which rely on filtering out the CSS rules\nused here. If you find other project tests that rely on the CSS here,\nplease add them to the list:\n- styleSheetUtils.js\n- product-landing-page-tests.js\n*/\n\n#mocha .test .html-error,#mocha .test pre{\n  float:left;\n  clear:left;\n  word-wrap:break-word;\n}\n#mocha ul,#mocha-stats li{\n  list-style:none;\n}\n\n#mocha h1,#mocha h2{\n  margin:0;\n}\n\ndiv#mocha{\n  font:20px/1.5 \"Helvetica Neue\",Helvetica,Arial,sans-serif;\n  margin:60px 50px;\n}\n\n#mocha li {\n  display: list-item;\n}\n\n#mocha li,#mocha ul{\n  margin:0;\n  padding:0;\n}\n#mocha .suite,#mocha .test{\n  margin-left:15px;\n}\n#mocha h1{\n  margin-top:15px;\n  font-size:1em;\n  font-weight:200;\n}\n#mocha h1 a{\n  text-decoration:none;\n  color:inherit;\n}\n#mocha h1 a:hover{\n  text-decoration:underline;\n}\n#mocha .suite .suite h1{\n  margin-top:0;\n  font-size:.8em;\n}\n#mocha .hidden{\n  display:none;\n}\n#mocha h2{\n  font-size:12px;\n  font-weight:400;\n  cursor:pointer;\n}\n#mocha .test{\n  overflow:hidden;\n  background-color: unset;\n}\n#mocha .test.pending:hover h2::after{\n  content:'(pending)';\n  font-family:arial,sans-serif;\n}\n#mocha .test.pass.medium .duration{\n  background:#c09853;\n}\n#mocha .test.pass.slow .duration{\n  background:#b94a48;\n}\n#mocha .test.pass::before{\n  content:'\\2713';\n  font-size:12px;\n  display:block;\n  float:left;\n  margin-right:5px;\n  color:#00d6b2;\n}\n#mocha .test.pass .duration{\n  font-size:9px;\n  margin-left:5px;\n  padding:2px 5px;\n  color:#fff;\n  -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.2);\n  -moz-box-shadow:inset 0 1px 1px rgba(0,0,0,.2);\n  box-shadow:inset 0 1px 1px rgba(0,0,0,.2);\n  -webkit-border-radius:5px;\n  -moz-border-radius:5px;\n  -ms-border-radius:5px;\n  -o-border-radius:5px;\n  border-radius:5px;\n}\n#mocha .test.pass.fast .duration{\n  display:none;\n}\n#mocha .test.pending{\n  color:#0b97c4;\n}\n#mocha .test.pending::before{\n  content:'\\25E6';\n  color:#0b97c4;\n}\n#mocha .test.fail{\n  color:#c00;\n}\n#mocha .test.fail pre{\n  color:#000;\n}\n#mocha .test.fail::before{\n  content:'\\2716';\n  font-size:12px;\n  display:block;\n  float:left;\n  margin-right:5px;\n  color:#c00;\n}\n#mocha .test pre.error{\n  color:#c00;\n  max-height:300px;\n  overflow:auto;\n}\n#mocha .test .html-error{\n  overflow:auto;\n  color:#000;\n  line-height:1.5;\n  display:block;\n  font:12px/1.5 monaco,monospace;\n  margin:5px;\n  padding:15px;\n  border:1px solid #eee;\n  max-width:85%;\n  max-width:-webkit-calc(100% - 42px);\n  max-width:-moz-calc(100% - 42px);\n  max-width:calc(100% - 42px);\n  max-height:300px;\n  border-bottom-color:#ddd;\n  -webkit-box-shadow:0 1px 3px #eee;\n  -moz-box-shadow:0 1px 3px #eee;\n  box-shadow:0 1px 3px #eee;\n  -webkit-border-radius:3px;\n  -moz-border-radius:3px;\n  border-radius:3px;\n}\n#mocha .test .html-error pre.error{\n  border:none;\n  -webkit-border-radius:0;\n  -moz-border-radius:0;\n  border-radius:0;\n  -webkit-box-shadow:0;\n  -moz-box-shadow:0;\n  box-shadow:0; \n  padding:0; \n  margin:18px 0 0;\n  max-height:none;\n}\n#mocha .test pre{\n  display:block;\n  font:12px/1.5 monaco,monospace;\n  margin:5px;\n  padding:15px;\n  border:1px solid #eee;\n  max-width:85%;\n  max-width:-webkit-calc(100% - 42px);\n  max-width:-moz-calc(100% - 42px);\n  max-width:calc(100% - 42px);\n  border-bottom-color:#ddd;\n  -webkit-box-shadow:0 1px 3px #eee;\n  -moz-box-shadow:0 1px 3px #eee;\n  box-shadow:0 1px 3px #eee;\n  -webkit-border-radius:3px;\n  -moz-border-radius:3px;\n  border-radius:3px;\n}\n#mocha .test h2{\n  position:relative;\n  display: block;\n}\n#mocha .test a.replay{\n  display:none;\n}\n#mocha-report.fail .test.pass,#mocha-report.pass .test.fail,#mocha-report.pending .test.fail,#mocha-report.pending .test.pass{\n  display:none;\n}\n#mocha-report.pending .test.pass.pending{\n  display:block;\n}\n#mocha-error{\n  color:#c00;\n  font-size:1.5em;\n  font-weight:100;\n  letter-spacing:1px;\n}\n#mocha-stats{\n  position:fixed;\n  top:12px;\n  right:10px;\n  font-size:12px;\n  margin:0;\n  color:#888;\n  z-index:1;\n}\n#mocha-stats .progress{\n  float:right;\n  padding-top:0;\n  height:auto;\n  -webkit-box-shadow:none;\n  -moz-box-shadow:none;\n  box-shadow:none;\n  background-color:initial;\n}\n#mocha-stats em{\n  color:#000;\n  font-style: italic;\n  padding: 0;\n  margin: 0;\n}\n#mocha-stats a{\n  text-decoration:none;\n  color:inherit;\n  padding: 0;\n  margin: 0;\n}\n#mocha-stats a:hover{\n  border-bottom:1px solid #eee;\n}\n#mocha-stats li{\n  display:inline-block;\n  margin:0 5px;\n  padding-top:11px;\n  position: unset;\n}\n#mocha-stats canvas{\n  width:40px;\n  height:40px;\n}\n#mocha code .comment{\n  color:#ddd;\n}\n#mocha code .init{\n  color:#2f6fad;\n}\n#mocha code .string{\n  color:#5890ad;\n}\n#mocha code .keyword{\n  color:#8a6343;\n}\n#mocha code .number{\n  color:#2f6fad;\n}\n@media screen and (max-device-width:480px){\n  #mocha{\n    margin:60px 0;\n  }\n  #mocha #stats{\n    position:absolute;\n  }\n}\n\n/* TEST/MESSAGE CENTER CSS */\n\ndiv#fcc_test_message-box {\n  font-size: 20px !important;\n  font-family: Noto Sans, arial, sans-serif !important;\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  right: 0;\n  text-align: center;\n  background-color: rgba(0, 0, 0, 0.8) !important;\n  transition: all .5s;\n  z-index: 100000;\n  overflow: auto;\n}\n\n.fcc_test_message-box-hidden {\n  visibility: hidden;\n  opacity: 0;\n  top: -300px;\n}\n\n.fcc_test_message-box-shown {\n  visibility: visible;\n  opacity: 1;\n  top: 0;\n}\n\ndiv.fcc_test_message-box-content {\n  position: relative;\n  color: black !important;\n  background-color: white !important;\n  top: 10vh;\n  width: 80%;\n  margin: 0 auto !important;\n  text-align: initial;\n  border-radius: 10px !important;\n  display: flex;\n  flex-direction: column;\n}\n\n.fcc_test_message-box-header,\n.fcc_test_message-box-footer{\n  position: relative;\n  flex: none;\n  box-sizing: border-box !important;\n  padding: 10px !important;\n  margin: 0;\n}\n\n.fcc_test_message-box-header {\n  border-bottom: 1px solid rgb(229,229,229);\n  height: 60px;\n}\n\n.fcc_test_message-box-header .title {\n  float: left;\n  font-size: 30px !important;\n  line-height: 40px !important;\n  margin-left: 10px !important;\n  padding: 0;\n  height: auto;\n  border: unset;\n}\n\ndiv.fcc_test_message-box-body {\n  flex: 1;\n  position: static;\n}\n\n.fcc_test_message-box-footer {\n  border-top: 1px solid rgb(229,229,229);\n  height: 70px;\n}\n\n.fcc_test_message-box-close-btn {\n  float: right;\n  color: black;\n  background-color: white;\n  border: 1px solid rgb(229,229,229);\n  border-radius: 4px;\n  padding: 10px 20px !important;\n  margin-bottom: 10px;\n  transition: all .3s;\n  line-height: 30px;\n  height: auto;\n}\n.fcc_test_message-box-close-btn:hover {\n  color: white;\n  background-color: black;\n}\n\ndiv#mocha {\n  margin: 10px !important;\n  position: static;\n}\n\n#mocha .test pre {\n  background-color: rgb(245, 245, 245) !important;\n}\n\n#mocha-stats {\n  position: absolute;\n  left: unset;\n}\n\n#mocha ul {\n  max-width: initial;\n  margin: initial !important;\n  text-align: initial;\n}\n#mocha * {\n  font-family: Noto Sans, arial, sans-serif !important;\n  border: none !important;\n}\n\ndiv {\n  position: static;\n}\n\n", ""]);
-
-	// exports
-
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(53);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// Prepare cssTransformation
-	var transform;
-
-	var options = {}
-	options.transform = transform
-	// add the styles to the DOM
-	var update = __webpack_require__(48)(content, options);
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!../../node_modules/css-loader/index.js!./fcc-test-toggler.css", function() {
-				var newContent = require("!!../../node_modules/css-loader/index.js!./fcc-test-toggler.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(47)(false);
-	// imports
-
-
-	// module
-	exports.push([module.id, "#fcc_foldout_menu {\n  background-color: rgba(255, 255, 204, 0.9);\n  border: 0px solid #fff;\n  border-radius: 0px 0px 5px 0px;\n  box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.6);\n  font-family: Noto Sans, arial, sans-serif;\n  height: 210px;\n  left: 0;\n  pointer-events: all;\n  position: absolute;\n  top: 0;\n  transition: .5s;\n  width: 320px;\n  z-index: 99997;\n}\n\n#fcc_toggle:checked ~ #fcc_foldout_menu {\n  left: -330px;\n  transition: .5s ease-in-out;\n}\n\n#fcc_toggle:checked ~ #fcc_test_suite_indicator_wrapper {\n  display: none;\n}\n\n#fcc_toggle {\n  height: 24px;\n  width: 25px;\n  position: fixed;\n  top: 7px;\n  left: 20px;\n  opacity: 0;\n  cursor: pointer;\n  z-index: 99999;\n  pointer-events: auto;\n}\n\n#fcc_foldout_toggler {\n  position: absolute;\n  top: 20px;\n  left: 15px;\n  z-index: 99998;\n  pointer-events: auto;\n}\n\n#fcc_foldout_toggler_background {\n  width: 39px;\n  height: 30px;\n  background-color: rgba(255, 255, 204, 0.08);\n  transform-origin: 0% 50%;\n  position: absolute;\n  top: -13px;\n  left: -7px;\n  z-index: -1;\n}\n\n.transform_top {\n  opacity: 1;\n  transform: rotate(45deg) translate(-1px, -1px);\n}\n\n.transform_middle {\n  opacity: 0;\n  transform: rotate(0deg) scale(0.2, 0.2);\n}\n\n.transform_bottom {\n  opacity: 1;\n  transform: rotate(-45deg);\n}\n\n.fcc_hamburger {\n  position: relative;\n  width: 25px;\n  height: 4px;\n  display: block;\n  background: darkgreen !important;\n  border-radius: 5px !important;\n  transform-origin: 4px 0px;\n  transition: transform 0.4s ease, opacity 0.55s ease;\n  left: unset;\n}\n\n#hamburger_top {\n  position: absolute;\n  top: -7.5px;\n  transform-origin: 0% 50%;\n}\n\n#hamburger_middle {\n  margin-top: 0.5px;\n  margin-bottom: 0.5px;\n}\n\n#hamburger_bottom {\n  position: absolute;\n  bottom: -7.5px;\n  transform-origin: 0 50%;\n}\n\n#fcc_test_suite_indicator_wrapper {\n  position: fixed;\n  top: 15px;\n  right: 20px;\n  left: unset;\n  height: auto;\n}\n\n#fcc_test_suite_indicator {\n  position: fixed;\n  top: 15px;\n  right: 20px;\n  font-size: 12px;\n  background-color: rgba(255, 255, 204, 0.9);\n  color: black;\n  padding: 3px 5px;\n  border-radius: 5px;\n  box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.6);\n  font-family: Noto Sans, arial, sans-serif;\n}\n", ""]);
-
-	// exports
-
-
-/***/ }),
-/* 54 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19805,7 +19632,7 @@ var FCC_Global =
 
 	var _chai = __webpack_require__(2);
 
-	var _sharedTestStrings = __webpack_require__(55);
+	var _sharedTestStrings = __webpack_require__(49);
 
 	// DRUM MACHINE TESTS:
 	function createDrumMachineTests() {
@@ -19817,36 +19644,15 @@ var FCC_Global =
 	    var audioElements = document.querySelectorAll('.drum-pad .clip');
 
 	    // functions:
-
-	    // As of React 15.6, we need a workaround that allows continued use of
-	    // el.dispatchEvent()
-	    // SEE: https://github.com/facebook/react/issues/10135
-	    // Make <audio> Object configurable so that we can programmatically hit play
-	    function configureAudioElement() {
-	      var d = configureAudioElement.d || (configureAudioElement.d = {
-	        enumerable: false,
-	        writable: true,
-	        configurable: true
-	      });
-	      return d;
-	    }
-	    // Parameters called from tests are either for click or keydown events
-	    function __triggerEvent(el, eventType, keyCode) {
+	    function __triggerKeyboardEvent(el, keyCode) {
 	      var eventObj = document.createEventObject ? document.createEventObject() : document.createEvent('Events');
 	      if (eventObj.initEvent) {
-	        eventObj.initEvent(eventType, true, true);
+	        eventObj.initEvent('keydown', true, true);
 	      }
 	      eventObj.keyCode = keyCode;
 	      eventObj.which = keyCode;
 	      /* eslint no-unused-expressions: ["error", { "allowTernary": true }] */
-	      el.dispatchEvent ? el.dispatchEvent(eventObj) : el.fireEvent('on' + eventType, eventObj);
-	    }
-	    // This is to accommodate projects using both click and mousedown/up Events
-	    // All three are fired in order
-	    function __triggerClickEventCaller(el) {
-	      __triggerEvent(el, 'mousedown', 0);
-	      __triggerEvent(el, 'click', 0);
-	      __triggerEvent(el, 'mouseup', 0);
+	      el.dispatchEvent ? el.dispatchEvent(eventObj) : el.fireEvent('onkeydown', eventObj);
 	    }
 
 	    describe('#Technology Stack', function () {
@@ -19858,16 +19664,6 @@ var FCC_Global =
 	    describe('#Tests', function () {
 	      var reqNum = 0;
 
-	      before(function () {
-	        audioElements.forEach(function (el) {
-	          Object.defineProperty(el, 'paused', configureAudioElement);
-	        });
-	      });
-	      after(function () {
-	        audioElements.forEach(function (el) {
-	          el.pause();
-	        });
-	      });
 	      reqNum++;
 	      it(reqNum + '. I should be able to see an outer container with a\n      corresponding id="drum-machine" that contains all other elements', function () {
 	        _chai.assert.isNotNull(document.getElementById('drum-machine'));
@@ -19908,8 +19704,8 @@ var FCC_Global =
 	      it(reqNum + '. When I click on a .drum-pad element, the audio clip\n      contained in its child <audio> element should be triggered.', function () {
 	        _chai.assert.isAtLeast(audioElements.length, 9, 'Audio elements do not exist ');
 	        audioElements.forEach(function (el) {
-	          __triggerClickEventCaller(el.parentElement);
-	          _chai.assert.isNotOk(el.paused, 'The <audio> element with id="' + el.id + '" does not play when the ' + el.id + ' .drum-pad is clicked ');
+	          document.getElementById(el.parentElement.id).click();
+	          _chai.assert.isNotOk(document.getElementById(el.id).paused, 'The <audio> element with id="' + el.id + '" does not play when the ' + el.id + ' .drum-pad is clicked ');
 	        });
 	      });
 
@@ -19921,7 +19717,7 @@ var FCC_Global =
 	        return new Promise(function (resolve) {
 	          setTimeout(function () {
 	            audioElements.forEach(function (el, i) {
-	              __triggerEvent(el.parentElement, 'keydown', keyCodes[i]);
+	              __triggerKeyboardEvent(document.getElementById(el.parentElement.id), keyCodes[i]);
 	              _chai.assert.isNotOk(document.getElementById(el.id).paused, 'No audio plays when the ' + el.id + ' key is pressed ');
 	            });
 	            resolve();
@@ -19936,7 +19732,7 @@ var FCC_Global =
 	        return new Promise(function (resolve, reject) {
 	          setTimeout(function () {
 	            drumPads.forEach(function (pad) {
-	              __triggerClickEventCaller(pad);
+	              document.getElementById(pad.id).click();
 	              displayText.push(document.getElementById('display').innerText);
 	            });
 	            displayText = displayText.filter(function (str, i) {
@@ -19960,7 +19756,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 55 */
+/* 49 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -19977,7 +19773,7 @@ var FCC_Global =
 	var d3ProjectStackNoAxes = exports.d3ProjectStackNoAxes = '1. You can use HTML, JavaScript, CSS, ' + 'and the D3 svg-based visualization library. Required (non-virtual) ' + 'DOM elements are queried on the moment of each test. If you use a ' + 'frontend framework (like Vue for example), the test results may be ' + 'inaccurate for dynamic content. We hope to accommodate them eventually, ' + 'but these frameworks are not currently supported for D3 projects.';
 
 /***/ }),
-/* 56 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19989,7 +19785,7 @@ var FCC_Global =
 
 	var _chai = __webpack_require__(2);
 
-	var _sharedTestStrings = __webpack_require__(55);
+	var _sharedTestStrings = __webpack_require__(49);
 
 	/* global marked */
 
@@ -20048,16 +19844,6 @@ var FCC_Global =
 	      editor.dispatchEvent(eventJS);
 	      return;
 	    }
-	    // We need to undo the configuration set in triggerChange after running
-	    // tests. The configuration was added to allow dispatchEvent for
-	    // programmatic value change in React 15.6
-	    // See https://stackoverflow.com/a/7144252/3530394
-	    after(function () {
-	      // remove the value attribute in order to remove the configuration
-	      delete editor.value;
-	      // restore default markdown text
-	      editor.value = markdownOnLoad;
-	    });
 
 	    describe('#Technology Stack', function () {
 	      it(_sharedTestStrings.frontEndLibrariesStack, function () {
@@ -20129,12 +19915,10 @@ var FCC_Global =
 	        _chai.assert.notStrictEqual(markdown.search(/```[^]+```/), -1, 'write some markdown representing a codeblock, i.e. <pre><code>...' + '</code></pre> ');
 
 	        // ol or ul list item
-	        _chai.assert.notStrictEqual(markdown.search(/(?:[-+*]|\d\.)\s[^|\s-*].+/), -1, 'write some markdown representing an <li> item ');
+	        _chai.assert.notStrictEqual(markdown.search(/(?:-|\d\.)\s[^|\s-*].+/), -1, 'write some markdown representing an <li> item ');
 
 	        // blockquote
-	        // Amended 5/18 to test for the > character at the beginning of a line,
-	        // with or without whitespace
-	        _chai.assert.notStrictEqual(markdown.search(/^>.+/m), -1, 'write some markdown representing a <blockquote> ');
+	        _chai.assert.notStrictEqual(markdown.search(/>\s.+/), -1, 'write some markdown representing a <blockquote> ');
 
 	        // image
 	        _chai.assert.notStrictEqual(markdown.search(/!\[.*\]\(.+\..+\)/), -1, 'write some markdown representing an <image> ');
@@ -20169,35 +19953,8 @@ var FCC_Global =
 	        // then check a couple of elements to make sure the present elements
 	        // are actually the ones represented by the markdown:
 
-	        /* Two ways of creating H(n) elements:
-	          1. ATX
-	            `# Example Heading`
-	            `## Example Subheading`
-	          2. setext
-	            `Example Heading
-	            ===`
-	            `Example Subheading
-	            ---`
-	        https://github.github.com/gfm/#setext-heading-underline
-	         // ATX
-	        /* Added the m modifier to match hashes at the beginning of a paragraph
-	        so that people using Setext headers to pass these tests can use
-	        ATX headings elsewhere in the document additionally.
-	        From regex101: 'm modifier: multi line. Causes ^ and $ to match the
-	        begin/end of each line (not only begin/end of string)' */
-	        var h1regexHash = RegExp(/^#\s.*/m);
-	        var h2regexHash = RegExp(/^##\s.*/m);
-
-	        // Setext
-	        /* the (.*) matches everything excluding line terminators, so the
-	        m modifier is not needed for matching Setext headings. */
-	        var h1regexEq = RegExp(/.*[\n\r]=+/);
-	        var h2regexDash = RegExp(/.*[\n\r]--+/);
-
-	        // if ATX, trim hash + space from string h1 text
-	        // if setext, isolate text from the rest of the string at line
-	        // terminator
-	        h1Text = h1regexHash.test(markdown) ? h1regexHash.exec(markdown)[0].slice(2) : h1regexEq.exec(markdown)[0].split(/[\n\r]/)[0];
+	        // find matching H1 element
+	        h1Text = /#\s.*/.exec(markdown)[0].slice(2);
 	        h1Match = [];
 	        document.querySelectorAll('#preview h1').forEach(function (h1) {
 	          if (h1.innerText === h1Text) {
@@ -20207,7 +19964,7 @@ var FCC_Global =
 	        _chai.assert.isAtLeast(h1Match.length, 1, '#preview does not contain the H1 element represented by the ' + 'markdown in the #editor field with the inner text ' + h1Text + ' ');
 
 	        // find matching H2 element
-	        h2Text = h2regexHash.test(markdown) ? h2regexHash.exec(markdown)[0].slice(3) : h2regexDash.exec(markdown)[0].split(/[\n\r]/)[0];
+	        h2Text = /##\s.*/.exec(markdown)[0].slice(3);
 	        h2Match = [];
 	        document.querySelectorAll('#preview h2').forEach(function (h2) {
 	          if (h2.innerText === h2Text) {
@@ -20255,7 +20012,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 57 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20267,9 +20024,9 @@ var FCC_Global =
 
 	var _chai = __webpack_require__(2);
 
-	var _elementUtils = __webpack_require__(58);
+	var _elementUtils = __webpack_require__(52);
 
-	var _sharedTestStrings = __webpack_require__(55);
+	var _sharedTestStrings = __webpack_require__(49);
 
 	function createCalculatorTests() {
 
@@ -20447,7 +20204,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 58 */
+/* 52 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -20508,7 +20265,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 59 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20520,9 +20277,9 @@ var FCC_Global =
 
 	var _chai = __webpack_require__(2);
 
-	var _elementUtils = __webpack_require__(58);
+	var _elementUtils = __webpack_require__(52);
 
-	var _sharedTestStrings = __webpack_require__(55);
+	var _sharedTestStrings = __webpack_require__(49);
 
 	function createPomodoroClockTests() {
 
@@ -21077,14 +20834,14 @@ var FCC_Global =
 
 	      reqNum++;
 	      it(reqNum + '. The audio element with id of "beep" must stop playing and\n      be rewound to the beginning when the element with the id of "reset" is\n      clicked.', function () {
-	        // Call document.getElementById('beep') each time to overcome framework
-	        // cache
-	        document.getElementById('beep').play();
+	        var audioElem = document.getElementById('beep');
+
+	        audioElem.play();
 	        resetTimer();
 
-	        _chai.assert.isTrue(document.getElementById('beep').paused, 'Audio element was not stopped when reset was clicked.');
+	        _chai.assert.isTrue(audioElem.paused, 'Audio element was not stopped when reset was clicked.');
 
-	        _chai.assert.equal(0, document.getElementById('beep').currentTime, 'Audio element was not rewound when reset was clicked. HINT: use ' + 'the currentTime property of the audio element to rewind.');
+	        _chai.assert.equal(0, audioElem.currentTime, 'Audio element was not rewound when reset was clicked. HINT: use ' + 'the currentTime property of the audio element to rewind.');
 	      });
 	      // END #Audio
 	    });
@@ -21094,7 +20851,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 60 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21110,7 +20867,7 @@ var FCC_Global =
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _sharedTestStrings = __webpack_require__(55);
+	var _sharedTestStrings = __webpack_require__(49);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21198,7 +20955,7 @@ var FCC_Global =
 	        // element has an actual size we will get the actual pixels. So we
 	        // temporarily set the "display" style to "none", which will tell
 	        // us if the height is "auto".
-	        img.setAttribute('style', 'display: none !important');
+	        img.style.display = 'none';
 	        heightValue = getPropValue(img, 'height');
 	        _chai.assert.equal(heightValue, 'auto', 'Use the "height" style property with a value of "auto" for' + 'responsive images.');
 	        img.style.display = displayValue;
@@ -21225,7 +20982,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 61 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21235,9 +20992,9 @@ var FCC_Global =
 	});
 	exports.default = createPortfolioTests;
 
-	var _sharedTestStrings = __webpack_require__(55);
+	var _sharedTestStrings = __webpack_require__(49);
 
-	var _styleSheetUtils = __webpack_require__(62);
+	var _styleSheetUtils = __webpack_require__(56);
 
 	var _chai = __webpack_require__(2);
 
@@ -21290,94 +21047,51 @@ var FCC_Global =
 	      });
 
 	      reqNum++;
-	      it(reqNum + '. The navbar should contain at least one link that I can\n      click on to navigate to different sections of the page.', function (done) {
-	        // Filter anchors by location hash (don't click external links)
+	      it(reqNum + '. The navbar should contain at least one link that I can\n      click on to navigate to different sections of the page.', function () {
 	        var links = Array.from(document.querySelectorAll('#navbar a'));
-	        links = links.filter(function (nav) {
-	          return nav.getAttribute('href').substr(0, 1) === '#';
-	        });
-	        var linksIndex = 0;
-	        var bottomScroll = false;
-	        var bottomPositionY = void 0;
+	        var didScroll = false;
 
-	        // If the window has been scrolled then the nav link worked.
-	        var testTopCondition = function testTopCondition() {
+	        _chai.assert.isAbove(document.querySelectorAll('#navbar a').length, 0, 'Navbar should contain a link ');
+
+	        window.scroll(0, 0);
+	        didScroll = links.some(function (link) {
+	          link.click();
+	          // Returning a true value ends the loop, so we continue until the
+	          // window Y position is other than 0.
 	          return window.scrollY !== 0;
-	        };
+	        });
 
-	        // Similar to above, but we are testing if the window scrolled from the
-	        // bottom.
-	        var testBottomCondition = function testBottomCondition() {
+	        // Test passes succesfully if the window scrolled, so we end the test.
+	        if (didScroll) {
+	          _chai.assert.ok(true);
+	          window.scroll(0, 0);
+	          return;
+	        }
+
+	        // No scroll yet, so move window to bottom and try again.
+	        window.scroll(0, document.body.scrollHeight);
+	        var bottomPositionY = window.scrollY;
+
+	        didScroll = links.some(function (link) {
+	          link.click();
 	          var distanceFromBottom = bottomPositionY - window.scrollY;
 	          // if distance from bottom is not 0, clicking a link made it move,
 	          // so we end the loop.
 	          return distanceFromBottom !== 0;
-	        };
-
-	        // Tests if the window scrolled, and if not it clicks the next link
-	        // and calls itself to see if that link scrolled. We need the timeout
-	        // in case the CSS uses "scroll-behavior: smooth;" which takes some
-	        // time to finish scrolling.
-	        // NOTE: This function is not easy to understand. Some well placed
-	        // console.log statements will help understand what is happening.
-	        var testScroll = function testScroll(testCondition) {
-	          setTimeout(function () {
-	            // If the test condition passes, we are done. Scroll the window
-	            // back to the top before successfully ending the tests.
-	            if (testCondition()) {
-	              window.scroll(0, 0);
-	              done();
-	            } else {
-	              // Test condition did not pass, so try the next link and then
-	              // call this function to test to see if it scrolled the window.
-	              linksIndex++;
-	              if (linksIndex < links.length) {
-	                links[linksIndex].click();
-	                testScroll(testCondition);
-	              } else if (!bottomScroll) {
-	                // We are out of the links. If we have not yet tested with
-	                // scrolling from the bottom, then run the tests again after
-	                // first scrolling to the bottom.
-	                bottomScroll = true;
-	                window.scroll(0, document.body.scrollHeight);
-	                // Before running the new set of tests, give it some time to
-	                // finish scrolling to the bottom.
-	                setTimeout(function () {
-	                  return testBottomScroll();
-	                }, 500);
-	              }
-	            }
-	          }, 500);
-	        };
-
-	        // Kicks off the tests that will check if the nav links scroll the
-	        // window from the bottom.
-	        var testBottomScroll = function testBottomScroll() {
-	          bottomPositionY = window.scrollY;
-	          linksIndex = 0;
-	          links[linksIndex].click();
-	          testScroll(testBottomCondition);
-	        };
-
-	        // Tests start here. We need a longer timeout for this test. 10 seconds
-	        // is enough to test about 10 nav links.
-	        this.timeout(10000);
-	        // Filter anchors by location hash (don't click external links)
-	        var anchors = Array.from(document.querySelectorAll('#navbar a'));
-	        anchors = anchors.filter(function (nav) {
-	          return nav.getAttribute('href').substr(0, 1) === '#';
 	        });
 
-	        _chai.assert.isAbove(anchors.length, 0, 'Navbar should contain a link ');
+	        // Test passes succesfully if the window scrolled, so we end the test.
+	        if (didScroll) {
+	          _chai.assert.ok(true);
+	          window.scroll(0, 0);
+	          return;
+	        }
 
-	        // Scroll the window to the top and then try the nav links to make sure
-	        // they scroll the window. We delay the starting of the tests because
-	        // it could take some time to scroll the window to the top.
+	        // If we got here, none of the links changed the scroll position.
 	        window.scroll(0, 0);
-	        links[linksIndex].click();
-	        setTimeout(function () {
-	          return testScroll(testTopCondition);
-	        }, 500);
+	        _chai.assert.ok(false, 'At least one navbar link should move the page position when clicked ');
+
+	        return;
 	      });
 
 	      reqNum++;
@@ -21450,7 +21164,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 62 */
+/* 56 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -21490,20 +21204,12 @@ var FCC_Global =
 	  return [].slice.call(styleSheets).reduce(function (prev, styleSheet) {
 
 	    // The styleSheet might not contain any rules.
-	    try {
-	      if (styleSheet.cssRules) {
-	        // Convert the list of rules into an array.
-	        var rulesAsArray = [].slice.call(styleSheet.cssRules);
-	        // Use the spread operator to push each individual element onto the
-	        // return array.
-	        prev.push.apply(prev, _toConsumableArray(rulesAsArray));
-	      }
-	    } catch (error) {
-	      // Skip DOMException error due to Chrome complaining about CSSRules
-	      // attribute security error.
-	      if (!(error instanceof DOMException)) {
-	        throw error;
-	      }
+	    if (styleSheet.cssRules) {
+	      // Convert the list of rules into an array.
+	      var rulesAsArray = [].slice.call(styleSheet.cssRules);
+	      // Use the spread operator to push each individual element onto the
+	      // return array.
+	      prev.push.apply(prev, _toConsumableArray(rulesAsArray));
 	    }
 
 	    return prev;
@@ -21530,7 +21236,7 @@ var FCC_Global =
 	};
 
 /***/ }),
-/* 63 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21540,9 +21246,9 @@ var FCC_Global =
 	});
 	exports.default = createProductLandingPageTests;
 
-	var _sharedTestStrings = __webpack_require__(55);
+	var _sharedTestStrings = __webpack_require__(49);
 
-	var _styleSheetUtils = __webpack_require__(62);
+	var _styleSheetUtils = __webpack_require__(56);
 
 	var _chai = __webpack_require__(2);
 
@@ -21733,7 +21439,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 64 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21745,7 +21451,7 @@ var FCC_Global =
 
 	var _chai = __webpack_require__(2);
 
-	var _sharedTestStrings = __webpack_require__(55);
+	var _sharedTestStrings = __webpack_require__(49);
 
 	function createSurveyFormTests() {
 
@@ -21937,7 +21643,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 65 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21949,9 +21655,9 @@ var FCC_Global =
 
 	var _chai = __webpack_require__(2);
 
-	var _sharedTestStrings = __webpack_require__(55);
+	var _sharedTestStrings = __webpack_require__(49);
 
-	var _styleSheetUtils = __webpack_require__(62);
+	var _styleSheetUtils = __webpack_require__(56);
 
 	function createTechnicalDocsPageTests() {
 
@@ -22090,10 +21796,10 @@ var FCC_Global =
 	      it(reqNum + '. Each element with the class of "nav-link" should contain\n      text that corresponds to the <header> text within each <section> (e.g. if\n      you have a "Hello world" section/header, your navbar should have an\n      element which contains the text "Hello world").', function () {
 	        _chai.assert.isAbove(classArray('nav-link').length, 0, 'No elements with the class "nav-link" have been defined ');
 	        var headerText = classArray('main-section').map(function (el) {
-	          return el.firstElementChild.innerText.trim().toUpperCase();
+	          return el.firstElementChild.innerText.trim();
 	        });
 	        var linkText = classArray('nav-link').map(function (el) {
-	          return (/[^\n\t\f\r\v]+/.exec(el.innerText)[0].toUpperCase()
+	          return (/[^\n\t\f\r\v]+/.exec(el.innerText)[0]
 	          );
 	        });
 	        // use indexOf instead of matching index for index, in case for some
@@ -22171,7 +21877,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 66 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22181,386 +21887,119 @@ var FCC_Global =
 	});
 	exports.default = createBarChartTests;
 
-	var _alignmentD = __webpack_require__(67);
-
 	var _chai = __webpack_require__(2);
 
-	var _globalD3Tests = __webpack_require__(69);
+	var _globalD3Tests = __webpack_require__(61);
 
 	var _jquery = __webpack_require__(1);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
-
-	var _sharedTestStrings = __webpack_require__(55);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function createBarChartTests() {
 
 	  describe('#BarChartTests', function () {
+	    var reqNum = 0;
 
-	    describe('#Technology Stack', function () {
-	      it(_sharedTestStrings.d3ProjectStack, function () {
-	        return true;
-	      });
+	    reqNum++;
+	    it(reqNum + '. My chart should have a title with a corresponding\n    id="title"', function () {
+	      _chai.assert.isNotNull(document.getElementById('title'), 'Could not find element with id="title" ');
 	    });
 
-	    describe('#Content', function () {
-	      var reqNum = 0;
-
-	      reqNum++;
-	      it(reqNum + '. My chart should have a title with a corresponding\n      id="title"', function () {
-	        _chai.assert.isNotNull(document.getElementById('title'), 'Could not find element with id="title" ');
-	      });
-
-	      reqNum++;
-	      it(reqNum + '. My Chart should have a <g> element x-axis with a \n      corresponding id="x-axis"', function () {
-	        _chai.assert.isAbove(document.querySelectorAll('g#x-axis').length, 0, 'Could not find a <g> SVG element with id="x-axis" ');
-	      });
-
-	      reqNum++;
-	      it(reqNum + '. My Chart should have a <g> element y-axis with a \n      corresponding id="y-axis"', function () {
-	        _chai.assert.isAbove(document.querySelectorAll('g#y-axis').length, 0, 'Could not find a <g> SVG element with id="y-axis" ');
-	      });
-
-	      reqNum++;
-	      it(reqNum + '. Both axes should contain multiple tick labels, each with \n      the corresponding class="tick" ', function () {
-
-	        _chai.assert.isAbove((0, _jquery2.default)('#x-axis .tick').length, 1, 'There are not enough tick labels on the x-axis ');
-	        _chai.assert.isAbove((0, _jquery2.default)('#y-axis .tick').length, 1, 'There are not enough tick labels on the y-axis ');
-	      });
-
-	      reqNum++;
-	      it(reqNum + '. My Chart should have a <rect> element for each data point \n      with a corresponding class="bar" displaying the data', function () {
-
-	        _chai.assert.isAbove(document.querySelectorAll('rect.bar').length, 0, 'Could not find any <rect> elements with class="bar" ');
-	        _chai.assert.equal(document.querySelectorAll('rect.bar').length, 275, 'The number of bars is not equal to the number of data points ');
-	      });
-
-	      reqNum++;
-	      it(reqNum + '. Each bar should have the properties "data-date" and\n      "data-gdp" containing date and GDP values', function () {
-	        var bars = document.querySelectorAll('rect.bar');
-
-	        _chai.assert.isAtLeast(bars.length, 1, 'no <rect> elements with the class of "bar" are detected ');
-
-	        bars.forEach(function (bar) {
-	          _chai.assert.isNotNull(bar.getAttribute('data-date'), 'Could not find property "data-date" in bar ');
-	          _chai.assert.isNotNull(bar.getAttribute('data-gdp'), 'Could not find property "data-gdp" in bar ');
-	        });
-	      });
-
-	      reqNum++;
-	      it(reqNum + '. The bar elements\' "data-date" properties should match the \n      order of the provided data', function (done) {
-	        _jquery2.default.getJSON('https://raw.githubusercontent.com/FreeCodeCamp/' + 'ProjectReferenceData/master/GDP-data.json', function (res) {
-	          try {
-	            var bars = document.querySelectorAll('rect.bar');
-	            _chai.assert.isAtLeast(bars.length, 1, 'no <rect> elements with the class of "bar" are detected ');
-	            bars.forEach(function (bar, i) {
-	              var currentBarDate = bar.getAttribute('data-date');
-	              _chai.assert.equal(currentBarDate, res.data[i][0], 'Bars should have date data in the same order as the ' + 'provided data ');
-	            });
-	            done();
-	          } catch (e) {
-	            done(e);
-	          }
-	        });
-	      });
-
-	      reqNum++;
-	      it(reqNum + '. The bar elements\' "data-gdp" properties should match the \n      order of the provided data', function (done) {
-	        _jquery2.default.getJSON('https://raw.githubusercontent.com/FreeCodeCamp/' + 'ProjectReferenceData/master/GDP-data.json', function (res) {
-	          try {
-	            var bars = document.querySelectorAll('rect.bar');
-	            _chai.assert.isAtLeast(bars.length, 1, 'no <rect> elements with the class of "bar" are detected ');
-	            bars.forEach(function (bar, i) {
-	              var currentBarGdp = bar.getAttribute('data-gdp');
-	              _chai.assert.equal(currentBarGdp, res.data[i][1], 'Bars should have gdp data in the same order as the ' + 'provided data ');
-	            });
-	            done();
-	          } catch (e) {
-	            done(e);
-	          }
-	        });
-	      });
-
-	      reqNum++;
-	      it(reqNum + '. Each bar element\'s height should accurately represent the \n      data\'s corresponding GDP', function () {
-	        var bars = document.querySelectorAll('rect.bar');
-	        // get the ratio of the first data point to the height of the first bar
-	        var firstRatio = parseFloat(bars[0].getAttribute('data-gdp')) / parseFloat(bars[0].getAttribute('height'));
-	        /* iterate through each bar and make sure that its height is consistent
-	        with its corresponding data point using the first ratio */
-	        /* this test completely validates the bars, but isn\'t very useful to
-	        the user, so data-date and data-gdp tests were added for clarity */
-	        bars.forEach(function (bar) {
-	          var dataValue = bar.getAttribute('data-gdp');
-	          var barHeight = bar.getAttribute('height');
-	          var ratio = parseFloat(dataValue) / parseFloat(barHeight);
-	          _chai.assert.equal(firstRatio.toFixed(3), ratio.toFixed(3), 'The heights of the bars should correspond to the data values ');
-	        });
-	      });
-
-	      reqNum++;
-	      it(reqNum + '. The data-date attribute and its corresponding bar element \n      should align with the corresponding value on the x-axis.', function () {
-
-	        var axis = document.querySelector('#x-axis');
-	        var coordAttr = 'x';
-	        var barsCollection = document.querySelectorAll('.bar');
-	        var ticksCollection = axis.querySelectorAll('.tick');
-	        var shapeAttr = 'data-date';
-	        // options are 'minute', 'month', 'thousand', and 'year'
-	        var dataType = 'year';
-	        // what vertex of shape to measure against the axis
-	        // options are 'topLeft' and 'center'
-	        var shapeAlign = 'topLeft';
-
-	        _chai.assert.isAbove(barsCollection.length, 0, 'there are no <rect> elements with the class of "bar" ');
-
-	        _chai.assert.isTrue((0, _alignmentD.areShapesAlignedWithTicks)(barsCollection, ticksCollection, coordAttr, shapeAttr, dataType, shapeAlign), 'x values don\'t line up with x locations ');
-	      });
-
-	      reqNum++;
-	      it(reqNum + '. The data-gdp attribute and its corresponding bar element \n      should align with the corresponding value on the y-axis.', function () {
-
-	        var axis = document.querySelector('#y-axis');
-	        var coordAttr = 'y';
-	        var barsCollection = document.querySelectorAll('.bar');
-	        var ticksCollection = axis.querySelectorAll('.tick');
-	        var shapeAttr = 'data-gdp';
-	        var dataType = 'thousand';
-	        var shapeAlign = 'topLeft';
-
-	        _chai.assert.isAbove(barsCollection.length, 0, 'there are no <rect> elements with the class of "bar" ');
-
-	        _chai.assert.isTrue((0, _alignmentD.areShapesAlignedWithTicks)(barsCollection, ticksCollection, coordAttr, shapeAttr, dataType, shapeAlign), 'y values don\'t line up with y locations ');
-	      });
+	    reqNum++;
+	    it(reqNum + '. My Chart should have an x-axis with a corresponding\n    id="x-axis"', function () {
+	      _chai.assert.isNotNull(document.getElementById('x-axis'), 'Could not find element with id="x-axis" ');
+	      _chai.assert.isAbove(document.querySelectorAll('g#x-axis').length, 0, 'x-axis should be a <g> SVG element ');
 	    });
 
-	    // Tooltip tests.
-	    (0, _globalD3Tests.testToolTip)(document.querySelectorAll('.bar'), 'data-date', 'data-date');
-	  });
-	}
+	    reqNum++;
+	    it(reqNum + '. My Chart should have a y-axis with a corresponding\n    id="y-axis"', function () {
+	      _chai.assert.isNotNull(document.getElementById('y-axis'), 'Could not find element with id="y-axis" ');
 
-/***/ }),
-/* 67 */
-/***/ (function(module, exports, __webpack_require__) {
+	      _chai.assert.isAbove(document.querySelectorAll('g#y-axis').length, 0, 'y-axis should be a <g> SVG element ');
+	    });
 
-	'use strict';
+	    reqNum++;
+	    it(reqNum + '. Both axes should contain multiple tick labels', function () {
+	      _chai.assert.isAbove((0, _jquery2.default)('#x-axis .tick').length, 1, 'There are not enough tick labels on the x-axis ');
+	      _chai.assert.isAbove((0, _jquery2.default)('#y-axis .tick').length, 1, 'There are not enough tick labels on the y-axis ');
+	    });
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports._getSurroundingTicks = _getSurroundingTicks;
-	exports.areShapesAlignedWithTicks = areShapesAlignedWithTicks;
+	    reqNum++;
+	    it(reqNum + '. My Chart should have a bar for each data point with a\n    corresponding class="bar" displaying the data', function () {
+	      _chai.assert.isAbove(document.querySelectorAll('rect.bar').length, 0, 'Could not find any elements with class="bar" ');
+	      _chai.assert.equal(document.querySelectorAll('rect.bar').length, 275, 'The number of bars is not equal to the number of data points ');
+	    });
 
-	var _alignmentD3Support = __webpack_require__(68);
-
-	function _getSurroundingTicks(shape, val, ticks, tickIndex, increment, dataType, normalTickOrder) {
-	  var surroundingTicks = [],
-	      returnValue = null,
-	      nextIndex = void 0;
-	  do {
-	    // nextIndex is either one greater- or less-than according to sort order
-	    nextIndex = normalTickOrder ? tickIndex + 1 : tickIndex - 1;
-
-	    var tickVal0 = !ticks[tickIndex] ?
-	    // ticks[tickIndex] may be undefined. If so, calc mock tick value
-	    (0, _alignmentD3Support.getTickValue)(ticks[nextIndex], dataType) - increment : (0, _alignmentD3Support.getTickValue)(ticks[tickIndex], dataType);
-
-	    var tickVal1 = !ticks[nextIndex] ? (0, _alignmentD3Support.getTickValue)(ticks[tickIndex], dataType) + increment : (0, _alignmentD3Support.getTickValue)(ticks[nextIndex], dataType);
-
-	    // In order to run a single comparison (if), ensure prevTickVal is smaller
-	    // than nextTickVal
-	    var prevTickVal = Math.min(tickVal0, tickVal1);
-	    var nextTickVal = Math.max(tickVal1, tickVal0);
-
-	    // each shape should only compare with one set (2) ticks and the shape's
-	    // value may equal one of the tick's value
-	    if (val >= prevTickVal && val < nextTickVal) {
-	      var nextTick = !ticks[nextIndex] ? null : ticks[nextIndex];
-	      var prevTick = !ticks[tickIndex] ? null : ticks[tickIndex];
-	      surroundingTicks = [prevTick, nextTick];
-	    }
-
-	    if (normalTickOrder) {
-	      tickIndex++;
-	    } else {
-	      tickIndex--;
-	    }
-	  } while (surroundingTicks.length < 2
-	  // stop when two surroundingTicks are captured and tick NodeList iterated
-	  && (normalTickOrder ? tickIndex < ticks.length : tickIndex >= 0));
-	  if (surroundingTicks.length === 2) {
-	    returnValue = surroundingTicks;
-	  }
-	  // null if surroundingTicks is []
-	  return returnValue;
-	}
-
-	function areShapesAlignedWithTicks(
-	// NodeList
-	shapeCollection,
-	// NodeList
-	ticksCollection,
-	// String: 'x', 'y', 'cx', or 'cy'
-	dimension,
-	// String: 'data-year', 'data-gdp', 'data-date', 'data-xvalue', 'data-yvalue'
-	dataAttribute,
-	// String: 'year', 'minute', 'thousand', 'month'
-	dataType,
-	// Shape vertex to compare to axis: String: 'topLeft' or 'center'
-	positionType) {
-	  // return early if no shapes
-	  if (shapeCollection.length === 0) {
-	    return false;
-	  }
-	  var aligned = 0;
-
-	  // get either 'x' or 'y' in case of 'cx' or 'cy'
-	  var coord = dimension.match(/c/g) ? dimension.split('c')[1] : dimension;
-
-	  var normalTickOrder = (0, _alignmentD3Support.getTickValue)(ticksCollection[ticksCollection.length - 1], dataType) > (0, _alignmentD3Support.getTickValue)(ticksCollection[0], dataType);
-
-	  // increment may be positive or negative based on axis sort order
-	  var increment = (0, _alignmentD3Support.getTickValue)(ticksCollection[1], dataType) - (0, _alignmentD3Support.getTickValue)(ticksCollection[0], dataType);
-
-	  // positionIncrement may be positive or negative based on axis sort order
-	  var positionIncrement = (0, _alignmentD3Support.getTickPosition)(ticksCollection[1])[coord] - (0, _alignmentD3Support.getTickPosition)(ticksCollection[0])[coord];
-
-	  shapeCollection.forEach(function (shape) {
-	    var pos = (0, _alignmentD3Support.getShapePosition)(shape, dimension, positionType);
-	    var val = (0, _alignmentD3Support.getShapeValue)(shape, dataAttribute, dataType);
-	    // index is initially off (either -1 or ticksCollection.length), then
-	    // _getSurroundingTicks increments or decrements according to sort order
-	    var tickIndex = !normalTickOrder ? ticksCollection.length : -1;
-
-	    var surroundingTicks = _getSurroundingTicks(shape, val, ticksCollection, tickIndex, increment, dataType, normalTickOrder);
-
-	    if (surroundingTicks.length > 0) {
-	      var tickPos0 = !surroundingTicks[0] ?
-	      // surroundingTicks[0] may be null. if so, calc mock begin position
-	      (0, _alignmentD3Support.getTickPosition)(surroundingTicks[1])[coord] - positionIncrement :
-	      // actual begin position
-	      (0, _alignmentD3Support.getTickPosition)(surroundingTicks[0])[coord];
-
-	      var tickPos1 = !surroundingTicks[1] ?
-	      // calc mock end position
-	      (0, _alignmentD3Support.getTickPosition)(surroundingTicks[0])[coord] + positionIncrement :
-	      // actual position
-	      (0, _alignmentD3Support.getTickPosition)(surroundingTicks[1])[coord];
-	      var beforeTickPos = Math.min(tickPos0, tickPos1),
-	          afterTickPos = Math.max(tickPos0, tickPos1);
-
-	      // if shape is positioned between the two ticks plus or minus 11px
-	      // TODO reduce to 2px after Bar Chart is fixed. A leeway is necessary
-	      // for this code to work on all chart types.
-	      if (pos >= beforeTickPos - 11 && pos <= afterTickPos + 11) {
-	        aligned++;
+	    reqNum++;
+	    it(reqNum + '. Each bar should have the properties "data-date" and\n    "data-gdp" containing date and GDP values', function () {
+	      var bars = document.getElementsByClassName('bar');
+	      _chai.assert.isAtLeast(bars.length, 1, 'no elements with the class of "bar" are detected ');
+	      for (var i = 0; i < bars.length; i++) {
+	        var bar = bars[i];
+	        _chai.assert.isNotNull(bar.getAttribute('data-date'), 'Could not find property "data-date" in bar ');
+	        _chai.assert.isNotNull(bar.getAttribute('data-gdp'), 'Could not find property "data-gdp" in bar ');
 	      }
-	    }
+	    });
+
+	    reqNum++;
+	    it(reqNum + '. The "data-date" properties should match the order of the\n    provided data', function (done) {
+	      _jquery2.default.getJSON('https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/' + 'master/GDP-data.json', function (res) {
+	        try {
+	          var bars = document.getElementsByClassName('bar');
+	          _chai.assert.isAtLeast(bars.length, 1, 'no elements with the class of "bar" are detected ');
+	          for (var i = 0; i < bars.length; i++) {
+	            var currentBarDate = bars[i].getAttribute('data-date');
+	            _chai.assert.equal(currentBarDate, res.data[i][0], 'Bars should have date data in the same order as the ' + 'provided data ');
+	          }
+	          done();
+	        } catch (e) {
+	          done(e);
+	        }
+	      });
+	    });
+
+	    reqNum++;
+	    it(reqNum + '. The "data-gdp" properties should match the order of the\n    provided data', function (done) {
+	      _jquery2.default.getJSON('https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/' + 'master/GDP-data.json', function (res) {
+	        try {
+	          var bars = document.getElementsByClassName('bar');
+	          _chai.assert.isAtLeast(bars.length, 1, 'no elements with the class of "bar" are detected ');
+	          for (var i = 0; i < bars.length; i++) {
+	            var currentBarGdp = bars[i].getAttribute('data-gdp');
+	            _chai.assert.equal(currentBarGdp, res.data[i][1], 'Bars should have gdp data in the same order as the ' + 'provided data ');
+	          }
+	          done();
+	        } catch (e) {
+	          done(e);
+	        }
+	      });
+	    });
+
+	    reqNum++;
+	    it(reqNum + '. Each bar\'s height should accurately represent the data\'s\n    corresponding GDP', function () {
+	      var bars = document.querySelectorAll('rect.bar');
+	      // get the ratio of the first data point to the height of the first bar
+	      var firstRatio = bars[0].getAttribute('data-gdp') / bars[0].getAttribute('height');
+	      /* iterate through each bar and make sure that its height is consistent
+	      with its corresponding data point using the first ratio */
+	      /* this test completely validates the bars, but isn\'t very useful to the
+	      user, so data-date and data-gdp tests were added for clarity */
+	      for (var i = 0; i < bars.length; i++) {
+	        var dataValue = bars[i].getAttribute('data-gdp');
+	        var barHeight = bars[i].getAttribute('height');
+	        var ratio = dataValue / barHeight;
+	        _chai.assert.equal(firstRatio.toFixed(3), ratio.toFixed(3), 'The heights of the bars should correspond to the data values ');
+	      }
+	    });
 	  });
-	  return aligned === shapeCollection.length;
+
+	  (0, _globalD3Tests.testToolTip)(document.querySelectorAll('.bar'), 'data-date', 'data-date');
 	}
 
 /***/ }),
-/* 68 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.getTickPosition = getTickPosition;
-	exports.getTickValue = getTickValue;
-	exports.getShapeValue = getShapeValue;
-	exports.getShapePosition = getShapePosition;
-	// D3 Alignment test supporting functions. These functions fetch values
-	// and positions of both axis ticks and chart shapes (bars, dots, rects).
-	// TODO: Documentation.
-
-	var months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
-
-	function getTickPosition(tick) {
-	  var x = void 0,
-	      y = void 0;
-
-	  if (!tick.hasAttribute('transform')) {
-	    throw new Error('Element does not have the required transform attribute.');
-	  }
-
-	  y = parseFloat(tick.getAttribute('transform').split(',')[1].split(')')[0]);
-	  x = parseFloat(tick.getAttribute('transform').split(',')[0].split('(')[1]);
-
-	  return { x: x, y: y };
-	}
-
-	function getTickValue(item, dataType) {
-	  var val = item.querySelector('text').innerHTML;
-	  switch (dataType) {
-	    case null:
-	      break;
-	    case 'minute':
-	      val = parseInt(val.split(':')[0], 10) + parseInt(val.split(':')[1], 10) / 60;
-	      break;
-	    case 'month':
-	      val = months.indexOf(val.toLowerCase());
-	      break;
-	    case 'thousand':
-	      val = val.split(',').join('');
-	      break;
-	    default:
-	      break;
-	  }
-	  return parseFloat(val);
-	}
-
-	function getShapeValue(item, attribute, dataType) {
-	  var val = void 0;
-	  switch (dataType) {
-	    case null:
-	      val = item.getAttribute(attribute);
-	      break;
-	    case 'year':
-	      val = new Date(item.getAttribute(attribute)).getFullYear();
-	      break;
-	    case 'minute':
-	      val = new Date(item.getAttribute(attribute)).getMinutes() + new Date(item.getAttribute(attribute)).getSeconds() / 60;
-	      break;
-	    case 'month':
-	      val = isNaN(parseInt(item.getAttribute(attribute), 10)) ? months.indexOf(item.getAttribute(attribute).toLowerCase()) : item.getAttribute(attribute);
-	      break;
-	    default:
-	      val = item.getAttribute(attribute);
-	  }
-	  return parseFloat(val);
-	}
-
-	function getShapePosition(item, dimension, positionType) {
-	  var half = void 0,
-	      pos = parseFloat(item.getAttribute(dimension));
-	  switch (positionType) {
-	    case 'topLeft':
-	      // bar
-	      half = 0;
-	      break;
-	    case 'center':
-	      // get either 'width' or 'height' if dimension is 'x', 'cx', 'y', or 'cy'
-	      var attr = dimension.match(/y/g) ? 'height' : 'width';
-	      // circle elements have 'r' attributes instead of 'height' or 'width'.
-	      // The half variable is for rect elements we want the midpoint from
-	      // so item.getAttribute(attr) will be null for circles.
-	      half = !item.getAttribute(attr) ? 0 : parseFloat(item.getAttribute(attr)) / 2;
-	      break;
-	    default:
-	      half = 0;
-	  }
-	  pos += half;
-	  return pos;
-	}
-
-/***/ }),
-/* 69 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22676,7 +22115,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 70 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22686,13 +22125,15 @@ var FCC_Global =
 	});
 	exports.default = createScatterPlotTests;
 
-	var _alignmentD = __webpack_require__(67);
+	var _alignmentD = __webpack_require__(63);
+
+	var _alignmentD3Support = __webpack_require__(64);
 
 	var _chai = __webpack_require__(2);
 
-	var _globalD3Tests = __webpack_require__(69);
+	var _globalD3Tests = __webpack_require__(61);
 
-	var _sharedTestStrings = __webpack_require__(55);
+	var _sharedTestStrings = __webpack_require__(49);
 
 	function createScatterPlotTests() {
 
@@ -22768,28 +22209,22 @@ var FCC_Global =
 
 	      reqNum++;
 	      it(reqNum + '. The data-xvalue and its corresponding dot should align\n      with the corresponding point/value on the x-axis.', function () {
-	        var axis = document.querySelector('#x-axis');
-	        var coordAttr = 'cx';
-	        var dotsCollection = document.querySelectorAll('.dot');
-	        var ticksCollection = axis.querySelectorAll('.tick');
-	        var shapeAttr = 'data-xvalue';
-	        var dataType = 'year';
-	        var shapeAlign = 'center';
+	        var dotsCollection = document.getElementsByClassName('dot');
+	        var coordAttr = 'x';
 
-	        _chai.assert.isTrue((0, _alignmentD.areShapesAlignedWithTicks)(dotsCollection, ticksCollection, coordAttr, shapeAttr, dataType, shapeAlign), 'x values don\'t line up with x locations ');
+	        _chai.assert.isAbove(dotsCollection.length, 0, 'there are no elements with the class of "dot" ');
+
+	        _chai.assert.isTrue((0, _alignmentD.isAxisAlignedWithDataPoints)(document.querySelector('#x-axis'), coordAttr, dotsCollection, _alignmentD3Support.getShapeValueYearScatter, _alignmentD3Support.getTickValueYear, _alignmentD3Support.getShapePositionCircle, _alignmentD3Support.getTickPosition), 'x values don\'t line up with x locations ');
 	      });
 
 	      reqNum++;
 	      it(reqNum + '. The data-yvalue and its corresponding dot should align\n      with the corresponding point/value on the y-axis.', function () {
-	        var axis = document.querySelector('#y-axis');
-	        var coordAttr = 'cy';
-	        var dotsCollection = document.querySelectorAll('.dot');
-	        var ticksCollection = axis.querySelectorAll('.tick');
-	        var shapeAttr = 'data-yvalue';
-	        var dataType = 'minute';
-	        var shapeAlign = 'center';
+	        var dotsCollection = document.getElementsByClassName('dot');
+	        var coordAttr = 'y';
 
-	        _chai.assert.isTrue((0, _alignmentD.areShapesAlignedWithTicks)(dotsCollection, ticksCollection, coordAttr, shapeAttr, dataType, shapeAlign), 'y values don\'t line up with y locations ');
+	        _chai.assert.isAbove(dotsCollection.length, 0, 'there are no elements with the class of "dot" ');
+
+	        _chai.assert.isTrue((0, _alignmentD.isAxisAlignedWithDataPoints)(document.querySelector('#y-axis'), coordAttr, dotsCollection, _alignmentD3Support.getShapeValueMinutes, _alignmentD3Support.getTickValueMinutes, _alignmentD3Support.getShapePositionCircle, _alignmentD3Support.getTickPosition), 'y values don\'t line up with y locations ');
 	      });
 
 	      reqNum++;
@@ -22860,7 +22295,291 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 71 */
+/* 63 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.isAxisAlignedWithDataPoints = isAxisAlignedWithDataPoints;
+	exports._isShapeAlignedWithTicks = _isShapeAlignedWithTicks;
+	exports._getSurroundingTicks = _getSurroundingTicks;
+	exports._isShapeValueWithinTickValues = _isShapeValueWithinTickValues;
+	// D3 Alignment testing.
+	// Used to determine if all the shapes on a chart are correctly aligned with
+	// the ticks on an axis.
+
+	// This is the main function you should be using in tests.
+	// Given an axis that has ticks, and a list of data shapes, it determines if
+	// each shape is aligned with the correct ticks on the axis.
+	function isAxisAlignedWithDataPoints(axis, dimension, dataShapes, getShapeValue, getTickValue, getShapePosition, getTickPosition) {
+	  var dataShapesArray = [].slice.call(dataShapes);
+	  var allTicks = axis.querySelectorAll('.tick');
+
+	  var tickOrderNormal = _getTickOrdering(allTicks, getTickValue, getTickPosition, dimension);
+
+	  var outside = dataShapesArray.every(function (shape) {
+	    return _isShapeAlignedWithTicks(shape, allTicks, dimension, tickOrderNormal, getShapeValue, getTickValue, getShapePosition, getTickPosition);
+	  });
+
+	  return outside;
+	}
+
+	// If the first tick is less than the second tick, and the first tick has
+	// a lower position then the ordering is considered "normal". If the order is
+	// normal, we return true. False otherwise.
+	function _getTickOrdering(allTicks, getTickValue, getTickPosition, dimension) {
+	  var returnValue = void 0;
+
+	  // Compare the first and second tick to see which is greater in value.
+	  if (getTickValue(allTicks[0]) < getTickValue(allTicks[1])) {
+	    returnValue = true;
+	  } else {
+	    returnValue = false;
+	  }
+
+	  // Now look at the position of the ticks to understand the order.
+	  if (getTickPosition(allTicks[0])[dimension] > getTickPosition(allTicks[1])[dimension]) {
+	    return !returnValue;
+	  }
+
+	  return returnValue;
+	}
+
+	// TODO: Only exported so we can test it.
+	// Given an axis and one shape, it will find the surrounding ticks based on
+	// the position of the shape, and then it will determine if the value of the
+	// shape is between the tick values
+	function _isShapeAlignedWithTicks(shape, allTicks, dimension, tickOrderNormal, getShapeValue, getTickValue, getShapePosition, getTickPosition) {
+
+	  var position = getShapePosition(shape);
+
+	  var enclosingTicks = _getSurroundingTicks(allTicks, dimension, position, getTickPosition);
+
+	  var within = _isShapeValueWithinTickValues(shape, enclosingTicks, tickOrderNormal, getShapeValue, getTickValue);
+
+	  return within;
+	}
+
+	// Gets the nearest tick to a given position.
+	// The way it does this is not obvious. First it filters all the ticks to only
+	// get the ticks before or after the given position. The filtering is based
+	// on the "filterCompare" function parameter. Then it performs a reduce on the
+	// filtered ticks to find which one is closest to the given postion. The reduce
+	// function uses the "compare" parameter which is a function to compare ticks.
+	// See the "_getSurroundingTicks" function for an example of how this is used.
+	function getNearestTick(allTicks, filterCompare, dimension, position, getTickPosition, compare) {
+
+	  // Function to finds the tick that is closest to the given position, based on
+	  // the compare function.
+	  var reduceFunction = function reduceFunction(result, tick) {
+	    var position = getTickPosition(tick)[dimension];
+	    if (result && compare(getTickPosition(result)[dimension], position)) {
+	      return result;
+	    }
+	    return tick;
+	  };
+
+	  // First filter the ticks to get only the ticks that are before or after
+	  // the given position.
+	  var ticks = allTicks.filter(function (tick) {
+	    var tickPosition = getTickPosition(tick)[dimension];
+	    return filterCompare(tickPosition, position[dimension]);
+	  });
+
+	  // Finally, run the reduce operation to get the closest tick.
+	  var closestTick = ticks.reduce(reduceFunction, null);
+
+	  return closestTick;
+	}
+
+	// TODO: Only exported so we can test it.
+	// Given a list of ticks it will find the ticks closest to the given position.
+	// This also works when there is no beforeTick or afterTick. I.e. sometimes some
+	// of the small values appear before the first tick, or the largest values
+	// appear after the last tick. In those cases it will return null for the
+	// tick in question.
+	function _getSurroundingTicks(ticksList, dimension, position, getTickPosition) {
+
+	  var ticks = void 0;
+	  var afterTick = void 0;
+	  var beforeTick = void 0;
+	  var lessThanFilter = function lessThanFilter(tickPosition, position) {
+	    return tickPosition <= position;
+	  };
+	  var greaterThanCompare = function greaterThanCompare(prevPosition, position) {
+	    return prevPosition > position;
+	  };
+	  var greaterThanFilter = function greaterThanFilter(tickPosition, position) {
+	    return tickPosition > position;
+	  };
+	  var lessThanCompare = function lessThanCompare(prevPosition, position) {
+	    return prevPosition < position;
+	  };
+
+	  if (!ticksList) {
+	    throw new Error('The list of ticks must not be empty.');
+	  }
+
+	  ticks = [].slice.call(ticksList);
+
+	  // The filter function finds all ticks less than or equal to the position.
+	  // The compare function then finds the largest of the filtered ticks.
+	  beforeTick = getNearestTick(ticks, lessThanFilter, dimension, position, getTickPosition, greaterThanCompare);
+
+	  // The filter function finds all ticks greater than the position.
+	  // The compare function then finds the smallest of the filtered ticks.
+	  afterTick = getNearestTick(ticks, greaterThanFilter, dimension, position, getTickPosition, lessThanCompare);
+
+	  return [beforeTick, afterTick];
+	}
+
+	// TODO: Only exported so we can test it.
+	// Given an array of two ticks, it determines the values of the ticks and
+	// whether or not the value of the given shape is within the tick values.
+	function _isShapeValueWithinTickValues(shape, ticks, tickOrderNormal, getShapeValue, getTickValue) {
+
+	  var shapeValue = getShapeValue(shape);
+
+	  // beforeTick and afterTick have only to do with the position of the ticks
+	  // in relation to the position of the shape.
+	  var beforeTickValue = void 0;
+	  var afterTickValue = void 0;
+	  var returnValue = void 0;
+
+	  // The beforeTick could be null.
+	  if (!ticks[0]) {
+	    afterTickValue = getTickValue(ticks[1]);
+	    if (tickOrderNormal) {
+	      returnValue = shapeValue <= afterTickValue;
+	    } else {
+	      returnValue = shapeValue >= afterTickValue;
+	    }
+	    // The afterTick could be null.
+	  } else if (!ticks[1]) {
+	    beforeTickValue = getTickValue(ticks[0]);
+	    if (tickOrderNormal) {
+	      returnValue = beforeTickValue <= shapeValue;
+	    } else {
+	      returnValue = beforeTickValue >= shapeValue;
+	    }
+	    // Neither the beforeTick or afterTick are null, so we use both to compare.
+	  } else {
+	    beforeTickValue = getTickValue(ticks[0]);
+	    afterTickValue = getTickValue(ticks[1]);
+	    if (tickOrderNormal) {
+	      returnValue = beforeTickValue <= shapeValue && shapeValue <= afterTickValue;
+	    } else {
+	      returnValue = beforeTickValue >= shapeValue && shapeValue >= afterTickValue;
+	    }
+	  }
+
+	  return returnValue;
+	}
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.getTickPosition = getTickPosition;
+	exports.getTickValueMonth = getTickValueMonth;
+	exports.getTickValueYear = getTickValueYear;
+	exports.getShapeValueMonthHeatMap = getShapeValueMonthHeatMap;
+	exports.getShapeValueYearHeatMap = getShapeValueYearHeatMap;
+	exports.getShapeValueYearScatter = getShapeValueYearScatter;
+	exports.getShapeValueMinutes = getShapeValueMinutes;
+	exports.getTickValueMinutes = getTickValueMinutes;
+	exports.getShapePositionRect = getShapePositionRect;
+	exports.getShapePositionCircle = getShapePositionCircle;
+	// D3 Alignment test supporting functions. Anything that is chart specific
+	// should go here. For example, the getTickValueMonth function is only used for
+	// testing the Heatmap D3 Chart, so it belongs here.
+
+	// TODO: Documentation.
+
+	function getTickPosition(tick) {
+	  var x = void 0,
+	      y = void 0;
+
+	  if (!tick.hasAttribute('transform')) {
+	    throw new Error('Element does not have the required transform attribute.');
+	  }
+
+	  y = parseFloat(tick.getAttribute('transform').split(',')[1].split(')')[0]);
+	  x = parseFloat(tick.getAttribute('transform').split(',')[0].split('(')[1]);
+
+	  return { x: x, y: y };
+	}
+
+	function getTickValueMonth(tick) {
+	  var months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+
+	  var value = tick.querySelector('text').innerHTML.toLowerCase();
+	  return months.indexOf(value);
+	}
+
+	function getTickValueYear(tick) {
+	  return parseInt(tick.querySelector('text').innerHTML, 10);
+	}
+
+	function getShapeValueMonthHeatMap(shape) {
+	  return parseInt(shape.getAttribute('data-month'), 10);
+	}
+
+	function getShapeValueYearHeatMap(shape) {
+	  return parseInt(shape.getAttribute('data-year'), 10);
+	}
+
+	function getShapeValueYearScatter(shape) {
+	  return parseInt(shape.getAttribute('data-xvalue'), 10);
+	}
+
+	function getShapeValueMinutes(shape) {
+	  var value = shape.getAttribute('data-yvalue');
+	  return new Date(value).getMinutes() + new Date(value).getSeconds() / 60;
+	}
+
+	function getTickValueMinutes(tick) {
+	  var value = tick.querySelector('text').innerHTML;
+	  return parseInt(value.split(':')[0], 10) + parseInt(value.split(':')[1], 10) / 60;
+	}
+
+	function getShapePositionRect(shape) {
+	  // the x, y attributes for each rect are from the top-left of the shape.
+	  // compute the mid-value for a coordinate to compare to axis tick
+	  var half = void 0,
+	      x = void 0,
+	      y = void 0;
+
+	  half = parseFloat(shape.getAttribute('width')) / 2;
+	  x = parseFloat(shape.getAttribute('x')) + half;
+
+	  half = parseFloat(shape.getAttribute('height')) / 2;
+	  y = parseFloat(shape.getAttribute('y')) + half;
+
+	  return { x: x, y: y };
+	}
+
+	function getShapePositionCircle(shape) {
+	  var x = void 0,
+	      y = void 0;
+
+	  x = parseFloat(shape.getAttribute('cx'));
+
+	  y = parseFloat(shape.getAttribute('cy'));
+
+	  return { x: x, y: y };
+	}
+
+/***/ }),
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22872,15 +22591,15 @@ var FCC_Global =
 
 	var _chai = __webpack_require__(2);
 
-	var _education = __webpack_require__(72);
+	var _education = __webpack_require__(66);
 
 	var _education2 = _interopRequireDefault(_education);
 
-	var _globalD3Tests = __webpack_require__(69);
+	var _globalD3Tests = __webpack_require__(61);
 
-	var _sharedTestStrings = __webpack_require__(55);
+	var _sharedTestStrings = __webpack_require__(49);
 
-	var _elementUtils = __webpack_require__(58);
+	var _elementUtils = __webpack_require__(52);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -23000,7 +22719,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 72 */
+/* 66 */
 /***/ (function(module, exports) {
 
 	module.exports = [
@@ -41859,7 +41578,7 @@ var FCC_Global =
 	]
 
 /***/ }),
-/* 73 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41871,11 +41590,11 @@ var FCC_Global =
 
 	var _chai = __webpack_require__(2);
 
-	var _globalD3Tests = __webpack_require__(69);
+	var _globalD3Tests = __webpack_require__(61);
 
-	var _sharedTestStrings = __webpack_require__(55);
+	var _sharedTestStrings = __webpack_require__(49);
 
-	var _elementUtils = __webpack_require__(58);
+	var _elementUtils = __webpack_require__(52);
 
 	function createTreeMapTests() {
 
@@ -42002,7 +41721,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 74 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42014,9 +41733,9 @@ var FCC_Global =
 
 	var _chai = __webpack_require__(2);
 
-	var _elementUtils = __webpack_require__(58);
+	var _elementUtils = __webpack_require__(52);
 
-	var _sharedTestStrings = __webpack_require__(55);
+	var _sharedTestStrings = __webpack_require__(49);
 
 	function createRandomQuoteMachineTests() {
 	  describe('Random Quote Machine tests', function () {
@@ -42166,7 +41885,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 75 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42176,15 +41895,17 @@ var FCC_Global =
 	});
 	exports.default = createHeatMapTests;
 
-	var _sharedTestStrings = __webpack_require__(55);
+	var _sharedTestStrings = __webpack_require__(49);
 
-	var _elementUtils = __webpack_require__(58);
+	var _elementUtils = __webpack_require__(52);
 
-	var _alignmentD = __webpack_require__(67);
+	var _alignmentD = __webpack_require__(63);
+
+	var _alignmentD3Support = __webpack_require__(64);
 
 	var _chai = __webpack_require__(2);
 
-	var _globalD3Tests = __webpack_require__(69);
+	var _globalD3Tests = __webpack_require__(61);
 
 	function createHeatMapTests() {
 
@@ -42274,35 +41995,30 @@ var FCC_Global =
 
 	      reqNum++;
 	      it(reqNum + '. My heat map should have cells that align with the\n      corresponding month on the y-axis.', function () {
-
-	        var axis = document.querySelector('#y-axis');
-	        var coordAttr = 'y';
 	        var cellsCollection = document.querySelectorAll('rect.cell');
-	        var ticksCollection = axis.querySelectorAll('.tick');
-	        var shapeAttr = 'data-month';
-	        // options are 'minute', 'month', 'thousand', and 'year'
-	        var dataType = 'month';
-	        // what vertex of shape to measure against the axis
-	        // options are 'topLeft' and 'center'
-	        var shapeAlign = 'center';
+	        var coordAttr = 'y';
 
-	        _chai.assert.isTrue((0, _alignmentD.areShapesAlignedWithTicks)(cellsCollection, ticksCollection, coordAttr, shapeAttr, dataType, shapeAlign), 'month values don\'t line up with y locations ');
+	        // Protect against a false positive for the alignment test. The
+	        // alignment test will return true if there are no cells.
+	        // TODO: isAxisAlignedWithDataPoints should probably return false if
+	        // the list of cells is empty. That would let us remove this check.
+	        _chai.assert.isAbove(cellsCollection.length, 0, 'Could not find any <rect> elements with a class="cell" ');
+
+	        _chai.assert.isTrue((0, _alignmentD.isAxisAlignedWithDataPoints)(document.querySelector('#y-axis'), coordAttr, cellsCollection, _alignmentD3Support.getShapeValueMonthHeatMap, _alignmentD3Support.getTickValueMonth, _alignmentD3Support.getShapePositionRect, _alignmentD3Support.getTickPosition), 'month values don\'t line up with y locations ');
 	      });
 
 	      reqNum++;
 	      it(reqNum + '. My heat map should have cells that align with the\n      corresponding year on the x-axis.', function () {
 	        var cellsCollection = document.querySelectorAll('rect.cell');
-	        var axis = document.querySelector('#x-axis');
 	        var coordAttr = 'x';
-	        var ticksCollection = axis.querySelectorAll('.tick');
-	        var shapeAttr = 'data-year';
-	        // options are 'minute', 'month', 'thousand', and 'year'
-	        var dataType = 'year';
-	        // what vertex of shape to measure against the axis
-	        // options are 'topLeft' and 'center'
-	        var shapeAlign = 'center';
 
-	        _chai.assert.isTrue((0, _alignmentD.areShapesAlignedWithTicks)(cellsCollection, ticksCollection, coordAttr, shapeAttr, dataType, shapeAlign), 'year values don\'t line up with x locations ');
+	        // Protect against a false positive for the alignment test. The
+	        // alignment test will return true if there are no cells.
+	        // TODO: isAxisAlignedWithDataPoints should probably return false if
+	        // the list of cells is empty. That would let us remove this check.
+	        _chai.assert.isAbove(cellsCollection.length, 0, 'Could not find any elements with a class="cell" ');
+
+	        _chai.assert.isTrue((0, _alignmentD.isAxisAlignedWithDataPoints)(document.querySelector('#x-axis'), coordAttr, cellsCollection, _alignmentD3Support.getShapeValueYearHeatMap, _alignmentD3Support.getTickValueYear, _alignmentD3Support.getShapePositionRect, _alignmentD3Support.getTickPosition), 'year values don\'t line up with x locations ');
 	      });
 
 	      reqNum++;

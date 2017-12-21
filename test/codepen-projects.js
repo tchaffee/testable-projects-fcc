@@ -34,63 +34,8 @@ describe('CodePen Page Tests', function() {
 
   var tests = [
     {
-      name: 'D3 Tree Map',
-      URL: 'https://codepen.io/freeCodeCamp/pen/KaNGNR'
-    },
-    {
-      name: 'Product Landing Page',
-      URL: 'https://codepen.io/freeCodeCamp/pen/RKRbwL'
-    },
-    { name: 'Personal Portfolio',
-      URL: 'https://codepen.io/freeCodeCamp/pen/zNBOYG'
-    },
-    {
-      name: 'Technical Documentation',
-      URL: 'https://codepen.io/freeCodeCamp/pen/NdrKKL'
-    },
-    {
-      name: 'React Pomodoro Clock',
-      URL: 'https://codepen.io/freeCodeCamp/pen/XpKrrW'
-    },
-    {
-      name: 'Javascript Calculator',
-      URL: 'https://codepen.io/freeCodeCamp/pen/wgGVVX'
-    },
-    {
-      name: 'Markdown Previewer',
-      URL: 'https://codepen.io/freeCodeCamp/pen/GrZVVO'
-    },
-    {
-      name: 'Drum Machine',
-      URL: 'https://codepen.io/freeCodeCamp/pen/MJyNMd'
-    },
-    {
       name: 'Tribute Page', URL:
-      'https://codepen.io/freeCodeCamp/pen/zNqgVx'
-    },
-    {
-      name: 'D3 Scatter Plot',
-      URL: 'https://codepen.io/freeCodeCamp/pen/bgpXyK'
-    },
-    {
-      name: 'D3 Bar Chart',
-      URL: 'https://codepen.io/freeCodeCamp/pen/GrZVaM'
-    },
-    {
-      name: 'Random Quote Machine',
-      URL: 'https://codepen.io/freeCodeCamp/pen/qRZeGZ'
-    },
-    {
-      name: 'D3 Choropleth Map',
-      URL: 'https://codepen.io/freeCodeCamp/pen/EZKqza'
-    },
-    {
-      name: 'Survey Form', URL:
-      'https://codepen.io/freeCodeCamp/pen/VPaoNP'
-    },
-    {
-      name: 'D3 Heat Map', URL:
-      'https://codepen.io/freeCodeCamp/pen/JEXgeY'
+      'https://codepen.io/tchaffee/pen/gXOPra'
     }
   ];
 

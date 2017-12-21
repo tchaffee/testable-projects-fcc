@@ -34,23 +34,7 @@ import mochaModalStyles from // eslint-disable-line no-unused-vars
   '!style-loader!css-loader!./stylesheets/mocha-modal.css';
 import fCCTestTogglerStyles from // eslint-disable-line no-unused-vars
   '!style-loader!css-loader!./stylesheets/fcc-test-toggler.css';
-import createDrumMachineTests from './project-tests/drum-machine-tests';
-import createMarkdownPreviewerTests from
-  './project-tests/markdown-previewer-tests';
-import createCalculatorTests from './project-tests/calculator-tests';
-import createPomodoroClockTests from './project-tests/pomodoro-clock-tests';
 import createTributePageTests from './project-tests/tribute-page-tests';
-import createPortfolioTests from './project-tests/portfolio-tests';
-import createProductLandingPageTests from
-  './project-tests/product-landing-page-tests';
-import createSurveyFormTests from './project-tests/survey-form-tests';
-import createTechnicalDocsPageTests from './project-tests/technical-docs-tests';
-import createBarChartTests from './project-tests/bar-chart-tests';
-import createScatterPlotTests from './project-tests/scatter-plot-tests';
-import createChoroplethTests from './project-tests/choropleth-tests';
-import createTreeMapTests from './project-tests/tree-map-tests';
-import createRandomQuoteMachineTests from './project-tests/quote-machine-tests';
-import createHeatMapTests from './project-tests/heat-map-tests';
 
 export const assert = chai.assert;
 
@@ -74,10 +58,8 @@ $(document).ready(function() {
   if (isChrome === false) {
     alertOnce(
       'Intro Alert',
-      'Test suites are currently optimized for Chrome. There are known ' +
-      'issues that we are trying to work through to make these suites fully ' +
-      'cross-browser compatible, but it is a work in progress. For the best ' +
-      'user experience, please use Chrome until these issues are resolved. ' +
+      'Test suites are currently optimized for the Chrome browser. Please ' +
+      'use Chrome for the best user experience. ' +
       'Thanks and Happy Coding!'
     );
   }
