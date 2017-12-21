@@ -20,105 +20,170 @@ export default function createTributePageTests() {
       let reqNum = 0;
 
       reqNum++;
-      it(`${reqNum}. My tribute page should have an element with corresponding
-      id="main", which contains all other elements.`,
+      it(`${reqNum}. Your Tribute Page must use an <h1> element with 
+      an id="title". The <h1> element should contain the subject of your 
+      Tribute Page (for example "Dr. Norman Borlaug").`,
       function() {
-        assert.isNotNull(document.getElementById('main'));
-        assert(
-          document.querySelectorAll('#main div, #main a, #main h1, #main img')
-          .length,
-          'element with id="main" must contain other elements'
-        );
-      });
+        let elem = document.querySelector('h1#title');
 
-      reqNum++;
-      it(`${reqNum}. I should see an element with corresponding id="title",
-      which contains a string (i.e. text) that describes the subject of the
-      tribute page (e.g. "Dr. Norman Borlaug").`,
-      function() {
-        assert.isNotNull(document.getElementById('title'));
-        const titleText = document.getElementById('title').innerText;
+        assert.isNotNull(
+          elem,
+          'Could not find an <h1> element with an id of "title"'
+        );
+
+        const titleText = elem.innerText;
         assert.isAbove(
           titleText.length,
           0,
-          'Element does not contain any text'
+          'The <h1> element with an id of "title" does not contain any text'
         );
       });
 
       reqNum++;
-      it(`${reqNum}. I should see a <div> element with corresponding
-      id="img-div".`,
+      it(`${reqNum}. Your page must have a <div> element with an id="img-div".`,
       function() {
-        assert.isNotNull(document.getElementById('img-div'));
-      });
+        let elem = document.querySelector('div#img-div');
 
-      reqNum++;
-      it(`${reqNum}. Within the "img-div" element, I should see an <img> element
-      with a corresponding id="image".`,
-      function() {
-        assert.isNotNull(document.getElementById('image'));
-        assert.strictEqual(
-          $('#img-div').find('#image').length,
-          1,
-          'Element is not a child of id="img-div" '
+        assert.isNotNull(
+          elem,
+          'Could not find a <div> element with an id of "img-div"'
         );
       });
 
       reqNum++;
-      it(`${reqNum}. Within the "img-div" element, I should see an element with
-      a corresponding id="img-caption" that contains textual content describing
-      the image shown in "img-div".`,
+      it(`${reqNum}. Within your "img-div" element, you must have an <img>
+      element with an id="image".`,
       function() {
-        assert.isNotNull(document.getElementById('img-caption'));
-        assert.strictEqual(
-          $('#img-div').find('#img-caption').length,
-          1,
-          'Element is not a child of id="img-div" '
+        let elem = document.querySelector('div#img-div > img#image');
+
+        assert.isNotNull(
+          elem,
+          'Could not find a <img> element with id "image" inside your <div> ' +
+          'with id "img-div"'
         );
-        const captionContents =
-          document.getElementById('img-caption').innerText;
+
+      });
+
+      reqNum++;
+      it(`${reqNum}. Within your "img-div" element, you must have another <div>
+      element with an id="img-caption" that contains some words that describe
+      the image.`,
+      function() {
+        let elem = document.querySelector('div#img-div > div#img-caption');
+
+        assert.isNotNull(
+          elem,
+          'Could not find a <div> element with id "img-caption" inside your ' +
+          '<div> with id "img-div"'
+        );
+
+        const elemContents = elem.innerText;
         assert.isAbove(
-          captionContents.length,
+          elemContents.length,
           0,
-          'Element does not have any content '
+          'Your "img-caption" element does not have any words inside it'
         );
       });
 
       reqNum++;
-      it(`${reqNum}. I should see an element with a corresponding
-      id="tribute-info", which contains textual content describing the subject
-      of the tribute page.`,
+      it(`${reqNum}. Your page must have a <div> element with an
+      id="tribute-info".`,
       function() {
-        assert.isNotNull(document.getElementById('tribute-info'));
-        const infoContents =
-          document.getElementById('tribute-info').innerText;
+        let elem = document.querySelector('div#tribute-info');
+
+        assert.isNotNull(
+          elem,
+          'Could not find a <div> element with id "tribute-info"'
+        );
+
+      });
+
+      // TODO: Tests about the contents of the "tribute-info" div.
+      reqNum++;
+      it(`${reqNum}. Your tribute-info div must have an <h3> element that
+      describes the contents (example: Here is a timeline of...)`,
+      function() {
+        let elem = document.querySelector('div#tribute-info > h3');
+
+        assert.isNotNull(
+          elem,
+          'Could not find an <h3> element inside your tribute-info div'
+        );
+
+      });
+
+      reqNum++;
+      it(`${reqNum}. Your tribute-info div must have an unordered list.`,
+      function() {
+        let elem = document.querySelector('div#tribute-info > ul');
+
+        assert.isNotNull(
+          elem,
+          'Could not find an <ul> element inside your tribute-info div'
+        );
+
+      });
+
+      reqNum++;
+      it(`${reqNum}. Your unordered list must have at least three list items.`,
+      function() {
+        let elems = document.querySelectorAll('div#tribute-info > ul > li');
+
+        assert.isAtLeast(
+          elems.length,
+          3,
+          'Could not find at least three <li> elements inside your ordered list'
+        );
+
+      });
+
+      reqNum++;
+      it(`${reqNum}. Your page must have a blockquote which should contain a
+      quote from or about the person on your Tribute page.`,
+      function() {
+        let elem = document.querySelector('blockquote');
+
+        assert.isNotNull(
+          elem,
+          'Could not find an <blockquote> element on'
+        );
+
+        const elemText = elem.innerText;
         assert.isAbove(
-          infoContents.length,
+          elemText.length,
           0,
-          'Element does not have any content '
+          'The <blockqoute> element does not contain any text'
         );
       });
 
       reqNum++;
-      it(`${reqNum}. I should see an <a> element with a corresponding
+      it(`${reqNum}. Your page must have an <a> element with an
       id="tribute-link", which links to an outside site that contains additional
-      information about the subject of the tribute page. HINT: You must give
+      information about the subject of your page. HINT: You must give
       your element an attribute of target and set it to "_blank" in order for
       your link to open in a new tab (i.e. target="_blank").`,
       function() {
-        const tributeLink = document.getElementById('tribute-link');
-        assert.isNotNull(tributeLink);
-        assert(
-          tributeLink.hasAttribute('href'),
-          '<a> element with id="tribute-link" must contain an href attribute '
+        const elem = document.querySelector('a#tribute-link');
+
+        assert.isNotNull(
+          elem,
+          'Could not find an <a> element with id "tribute-link"'
         );
+
         assert(
-          tributeLink.hasAttribute('target'),
-          '<a> element with id="tribute-link" must contain a target' +
-          ' attribute '
+          elem.hasAttribute('href'),
+          'Your <a> element with id="tribute-link" must contain an href ' +
+          'attribute '
         );
+
+        assert(
+          elem.hasAttribute('target'),
+          'Your <a> element with id="tribute-link" must contain a target ' +
+          'attribute '
+        );
+
         assert.strictEqual(
-          tributeLink.getAttribute('target'),
+          elem.getAttribute('target'),
           '_blank',
           'The target attribute should be set to "_blank", in order for the' +
           'link to open in a new tab '
@@ -130,41 +195,6 @@ export default function createTributePageTests() {
 
     describe('#Layout', function() {
       let reqNum = 0;
-
-      reqNum++;
-      it(`${reqNum}. The <img> element should responsively resize, relative to
-      the width of its parent element, without exceeding its original size.`,
-      function() {
-        const img = document.getElementById('image');
-        const maxWidthValue = getPropValue(img, 'max-width');
-        const displayValue = getPropValue(img, 'display');
-        let heightValue;
-        assert.notStrictEqual(
-          maxWidthValue,
-          'none',
-          'Try using the "max-width" style property '
-        );
-        assert.equal(
-          displayValue,
-          'block',
-          'Use the "display" style property with a value of "block" for' +
-          'responsive images.'
-        );
-        // In order to determine if the height style is "auto", we
-        // need to use a little trick. If we use getComputedStyle and the
-        // element has an actual size we will get the actual pixels. So we
-        // temporarily set the "display" style to "none", which will tell
-        // us if the height is "auto".
-        img.style.display = 'none';
-        heightValue = getPropValue(img, 'height');
-        assert.equal(
-          heightValue,
-          'auto',
-          'Use the "height" style property with a value of "auto" for' +
-          'responsive images.'
-        );
-        img.style.display = displayValue;
-      });
 
       reqNum++;
       it(`${reqNum}. The <img> element should be centered within its parent
@@ -183,6 +213,9 @@ export default function createTributePageTests() {
           'Image is not centered'
         );
       });
+
+
+      // TODO: Can we test for more layout? Italics for blockquote?
 
     // END #Layout
     });
