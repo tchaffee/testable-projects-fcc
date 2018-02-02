@@ -75,7 +75,8 @@ exports.doesProjectPassTests = function(name, URL) {
   let options = new chrome.Options();
   options.addArguments([
     'start-maximized',
-    `window-size=${browserMaxWidth}x${browserMaxHeight}`
+    `window-size=${browserMaxWidth}x${browserMaxHeight}`,
+    'no-sandbox'
   ]);
   options.setChromeBinaryPath(chromeBinaryPath);
 
