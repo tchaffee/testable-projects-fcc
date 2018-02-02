@@ -16,6 +16,8 @@ before_script:
   # Start https server (and sleep) so we can get the local bundle.js via https.
   - npm run serve-https-local > /dev/null 2>&1 &
   - sleep 3
+  - whereis google-chrome-stable
+  - google-chrome-stable
 cache:
   directories:
     - node_modules
