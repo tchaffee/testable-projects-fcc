@@ -19576,24 +19576,14 @@ var FCC_Global =
 
 	var _chai = __webpack_require__(2);
 
-	var _jquery = __webpack_require__(1);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
 	var _sharedTestStrings = __webpack_require__(49);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 	function createTributePageTests() {
-
-	  function getPropValue(el, prop) {
-	    return window.getComputedStyle(el).getPropertyValue(prop);
-	  }
 
 	  describe('#Tribute Page tests', function () {
 
 	    describe('#Technology Stack', function () {
-	      it(_sharedTestStrings.responsiveWebDesignStack, function () {
+	      it(_sharedTestStrings.beginnerWebProgrammingStack, function () {
 	        _chai.assert.ok(true);
 	      });
 	    });
@@ -19602,7 +19592,7 @@ var FCC_Global =
 	      var reqNum = 0;
 
 	      reqNum++;
-	      it(reqNum + '. Your Tribute Page must use an <h1> element with \n      an id="title". The <h1> element should contain the subject of your \n      Tribute Page (for example "Dr. Norman Borlaug").', function () {
+	      it(reqNum + '. Your Tribute Page must use an <h1> element with \n      an id="title". The <h1> element should contain the subject of your \n      Tribute Page (for example "Ada Lovelace").', function () {
 	        var elem = document.querySelector('h1#title');
 
 	        _chai.assert.isNotNull(elem, 'Could not find an <h1> element with an id of "title"');
@@ -19724,6 +19714,8 @@ var FCC_Global =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	var beginnerWebProgrammingStack = exports.beginnerWebProgrammingStack = '1. You can use HTML and CSS to ' + 'complete this project. Additional languages, frameworks, libraries or ' + 'other technologies must not be used for this project. Happy coding!';
+
 	var responsiveWebDesignStack = exports.responsiveWebDesignStack = '1. You can use HTML, JavaScript, ' + 'and CSS to complete this project. Plain CSS is recommended because that ' + 'is what the lessons have covered so far and you should get some practice ' + 'with plain CSS. Additional technologies not listed above are not ' + 'recommended for this project, and using them is at your own risk. ' + 'We will fix all issue reports that ' + 'use the suggested technology stack for this project. Happy coding!';
 
 	var frontEndLibrariesStack = exports.frontEndLibrariesStack = '1. You can use any mix of HTML, ' + 'JavaScript, CSS, Bootstrap, SASS, React, Redux, and jQuery to complete ' + 'this project. You should use a frontend framework (like React for ' + 'example) because this section is about learning frontend frameworks. ' + 'Additional technologies not listed above are not recommended and using ' + 'them is at your own risk. We are looking at supporting other frontend ' + 'frameworks like Angular and Vue, but they are not currently supported. ' + 'We will accept and try to fix all issue reports that use the suggested ' + 'technology stack for this project. Happy coding!';

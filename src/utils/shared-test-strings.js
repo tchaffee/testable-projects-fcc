@@ -1,3 +1,7 @@
+export const beginnerWebProgrammingStack = '1. You can use HTML and CSS to ' +
+  'complete this project. Additional languages, frameworks, libraries or ' +
+  'other technologies must not be used for this project. Happy coding!';
+
 export const responsiveWebDesignStack = '1. You can use HTML, JavaScript, ' +
   'and CSS to complete this project. Plain CSS is recommended because that ' +
   'is what the lessons have covered so far and you should get some practice ' +

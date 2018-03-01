@@ -1,17 +1,12 @@
 import { assert } from 'chai';
-import $ from 'jquery';
-import { responsiveWebDesignStack } from '../utils/shared-test-strings';
+import { beginnerWebProgrammingStack } from '../utils/shared-test-strings';
 
 export default function createTributePageTests() {
-
-  function getPropValue(el, prop) {
-    return window.getComputedStyle(el).getPropertyValue(prop);
-  }
 
   describe('#Tribute Page tests', function() {
 
     describe('#Technology Stack', function() {
-      it(responsiveWebDesignStack, function() {
+      it(beginnerWebProgrammingStack, function() {
         assert.ok(true);
       });
     });
@@ -22,7 +17,7 @@ export default function createTributePageTests() {
       reqNum++;
       it(`${reqNum}. Your Tribute Page must use an <h1> element with 
       an id="title". The <h1> element should contain the subject of your 
-      Tribute Page (for example "Dr. Norman Borlaug").`,
+      Tribute Page (for example "Ada Lovelace").`,
       function() {
         let elem = document.querySelector('h1#title');
 
