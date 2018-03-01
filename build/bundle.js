@@ -20863,24 +20863,14 @@ var FCC_Global =
 
 	var _chai = __webpack_require__(2);
 
-	var _jquery = __webpack_require__(1);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
 	var _sharedTestStrings = __webpack_require__(49);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 	function createTributePageTests() {
-
-	  function getPropValue(el, prop) {
-	    return window.getComputedStyle(el).getPropertyValue(prop);
-	  }
 
 	  describe('#Tribute Page tests', function () {
 
 	    describe('#Technology Stack', function () {
-	      it(_sharedTestStrings.responsiveWebDesignStack, function () {
+	      it(_sharedTestStrings.beginnerWebProgrammingStack, function () {
 	        _chai.assert.ok(true);
 	      });
 	    });
