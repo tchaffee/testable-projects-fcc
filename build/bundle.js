@@ -79,7 +79,15 @@ var FCC_Global =
 
 	var _style2 = _interopRequireDefault(_style);
 
-	var _tributePageTests = __webpack_require__(48);
+	var _informationalArticle = __webpack_require__(48);
+
+	var _informationalArticle2 = _interopRequireDefault(_informationalArticle);
+
+	var _tributePageTestsHtmlOnly = __webpack_require__(50);
+
+	var _tributePageTestsHtmlOnly2 = _interopRequireDefault(_tributePageTestsHtmlOnly);
+
+	var _tributePageTests = __webpack_require__(51);
 
 	var _tributePageTests2 = _interopRequireDefault(_tributePageTests);
 
@@ -318,6 +326,9 @@ var FCC_Global =
 	  var hardCodedProjectName = !projectNameLocal ? null : projectNameLocal;
 	  // create tests
 	  switch (hardCodedProjectName || localStorage.getItem('project_selector')) {
+	    case 'informational-article':
+	      (0, _informationalArticle2.default)();
+	      break;
 	    case 'random-quote-machine':
 	      createRandomQuoteMachineTests();
 	      break;
@@ -326,6 +337,9 @@ var FCC_Global =
 	      break;
 	    case 'pomodoro-clock':
 	      createPomodoroClockTests();
+	      break;
+	    case 'tribute-page-html-only':
+	      (0, _tributePageTestsHtmlOnly2.default)();
 	      break;
 	    case 'tribute-page':
 	      (0, _tributePageTests2.default)();
@@ -18980,7 +18994,7 @@ var FCC_Global =
 /* 42 */
 /***/ (function(module, exports) {
 
-	module.exports = "<div id=\"fcc_test_suite_indicator_wrapper\"></div>\n<div id=\"fcc_foldout_toggler\">\n\t<span id=\"hamburger_top\" class=\"fcc_hamburger transform_top\"></span>\n\t<span id=\"hamburger_middle\" class=\"fcc_hamburger transform_middle\"></span>\n\t<span id=\"hamburger_bottom\" class=\"fcc_hamburger transform_bottom\"></span>\n</div>\n<input id=\"toggle\" onclick=\"FCC_Global.hamburgerTransform()\" type=\"checkbox\"\n\ttitle=\"CTRL + SHIFT + O\">\n<div id=\"fcc_foldout_menu\">\n\t<div id=\"fcc_foldout_menu_inner\">\n\t\t<label for=\"test-suite-selector\">Select Test Suite: </label>\n\t\t<select name=\"Test Suite Selector\" id=\"test-suite-selector\"\n\t\t\tonchange=\"FCC_Global.selectProject(this.value)\">\n\t\t\t<option id=\"placeholder\" value=\"\">- - -</option>\n\t\t\t<option value=\"tribute-page\">Tribute Page</option>\n\t\t</select>\n\t\t<button id=\"fcc_test_message-box-rerun-button\" type=\"button\"\n\t\t\tclass=\"fcc_foldout_buttons\" title=\"CTRL + SHIFT + ENTER\"\n\t\t\tonclick=\"FCC_Global.FCCRerunTests()\">\n\t\t\tRun Tests\n\t\t</button>\n\t\t<button id=\"fcc_test_button\" type=\"button\"\n\t\t\tclass=\"fcc_foldout_buttons fcc_test_btn-default\"\n\t\t\ttitle=\"CTRL + SHIFT + T\" onclick=\"FCC_Global.FCCOpenTestModal()\">\n\t\t\tTests\n\t\t</button>\n\t\t<div id=\"fcc_legend_wrapper\">\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Test(s) Failed</span>\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Tests Passed</span>\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Tests Executing</span>\n\t\t</div>\n\t\t<span id=\"fcc_report-bug\"><a\n\t\t\thref=\"https://github.com/freeCodeCamp/testable-projects-fcc/issues/new\"\n\t\t\ttarget=\"_blank\">Report Bug</a>\n\t\t</span>\n\t</div>\n</div>\n<div id=\"fcc_test_message-box\" class=\"fcc_test_message-box-hidden\"\n\tonclick=\"FCC_Global.FCCclickOutsideToCloseModal(event)\">\n\t<div class=\"fcc_test_message-box-content\">\n\t\t<div class=\"fcc_test_message-box-header\">\n\t\t\t<div class=\"title\">Unit tests</div>\n\t\t</div>\n\t\t<div class=\"fcc_test_message-box-body\">\n\t\t\t<div id=\"mocha\">Run Test Suite to See Unit Tests!</div>\n\t\t</div>\n\t\t<div class=\"fcc_test_message-box-footer\">\n\t\t\t<div class=\"fcc_test_message-box-close-btn\"\n\t\t\t\tonclick=\"FCC_Global.FCCCloseTestModal()\">Close</div>\n\t\t</div>\n\t</div>\n</div>\n";
+	module.exports = "<div id=\"fcc_test_suite_indicator_wrapper\"></div>\n<div id=\"fcc_foldout_toggler\">\n\t<span id=\"hamburger_top\" class=\"fcc_hamburger transform_top\"></span>\n\t<span id=\"hamburger_middle\" class=\"fcc_hamburger transform_middle\"></span>\n\t<span id=\"hamburger_bottom\" class=\"fcc_hamburger transform_bottom\"></span>\n</div>\n<input id=\"toggle\" onclick=\"FCC_Global.hamburgerTransform()\" type=\"checkbox\"\n\ttitle=\"CTRL + SHIFT + O\">\n<div id=\"fcc_foldout_menu\">\n\t<div id=\"fcc_foldout_menu_inner\">\n\t\t<label for=\"test-suite-selector\">Select Test Suite: </label>\n\t\t<select name=\"Test Suite Selector\" id=\"test-suite-selector\"\n\t\t\tonchange=\"FCC_Global.selectProject(this.value)\">\n\t\t\t<option id=\"placeholder\" value=\"\">- - -</option>\n\t\t\t<option value=\"informational-article\">Informational Article</option>\n\t\t\t<option value=\"tribute-page-html-only\">Tribute Page (HTML Only)</option>\n\t\t\t<option value=\"tribute-page\">Improved Tribute Page with CSS</option>\n\t\t</select>\n\t\t<button id=\"fcc_test_message-box-rerun-button\" type=\"button\"\n\t\t\tclass=\"fcc_foldout_buttons\" title=\"CTRL + SHIFT + ENTER\"\n\t\t\tonclick=\"FCC_Global.FCCRerunTests()\">\n\t\t\tRun Tests\n\t\t</button>\n\t\t<button id=\"fcc_test_button\" type=\"button\"\n\t\t\tclass=\"fcc_foldout_buttons fcc_test_btn-default\"\n\t\t\ttitle=\"CTRL + SHIFT + T\" onclick=\"FCC_Global.FCCOpenTestModal()\">\n\t\t\tTests\n\t\t</button>\n\t\t<div id=\"fcc_legend_wrapper\">\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Test(s) Failed</span>\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Tests Passed</span>\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Tests Executing</span>\n\t\t</div>\n\t\t<span id=\"fcc_report-bug\"><a\n\t\t\thref=\"https://github.com/freeCodeCamp/testable-projects-fcc/issues/new\"\n\t\t\ttarget=\"_blank\">Report Bug</a>\n\t\t</span>\n\t</div>\n</div>\n<div id=\"fcc_test_message-box\" class=\"fcc_test_message-box-hidden\"\n\tonclick=\"FCC_Global.FCCclickOutsideToCloseModal(event)\">\n\t<div class=\"fcc_test_message-box-content\">\n\t\t<div class=\"fcc_test_message-box-header\">\n\t\t\t<div class=\"title\">Unit tests</div>\n\t\t</div>\n\t\t<div class=\"fcc_test_message-box-body\">\n\t\t\t<div id=\"mocha\">Run Test Suite to See Unit Tests!</div>\n\t\t</div>\n\t\t<div class=\"fcc_test_message-box-footer\">\n\t\t\t<div class=\"fcc_test_message-box-close-btn\"\n\t\t\t\tonclick=\"FCC_Global.FCCCloseTestModal()\">Close</div>\n\t\t</div>\n\t</div>\n</div>\n";
 
 /***/ }),
 /* 43 */
@@ -19572,6 +19586,228 @@ var FCC_Global =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.default = createInformationalArticleTests;
+
+	var _chai = __webpack_require__(2);
+
+	var _sharedTestStrings = __webpack_require__(49);
+
+	function createInformationalArticleTests() {
+
+	  describe('Informational Article tests', function () {
+
+	    describe('Technology Stack', function () {
+	      it(_sharedTestStrings.beginnerWebProgrammingHTMLStack, function () {
+	        _chai.assert.ok(true);
+	      });
+	    });
+
+	    describe('Content', function () {
+	      var reqNum = 0;
+
+	      reqNum++;
+	      it(reqNum + '. Your article must use an <h1> element. The <h1> element \n      should contain the title of your article.', function () {
+	        var elem = document.querySelector('h1');
+
+	        _chai.assert.isNotNull(elem, 'Could not find an <h1> element');
+
+	        var titleText = elem.innerText;
+	        _chai.assert.isAbove(titleText.length, 0, 'The <h1> element does not contain any text');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Your article must use at least one <h2> element. The <h2> \n      element should be used as the heading of a section of your article.', function () {
+	        var elem = document.querySelector('h2');
+
+	        _chai.assert.isNotNull(elem, 'Could not find an <h2> element');
+
+	        var titleText = elem.innerText;
+	        _chai.assert.isAbove(titleText.length, 0, 'The <h2> element does not contain any text');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Your article must use at least one <h3> element. The <h3> \n      element should be used as the sub-heading of a section of your article.', function () {
+	        var elem = document.querySelector('h3');
+
+	        _chai.assert.isNotNull(elem, 'Could not find an <h3> element');
+
+	        var titleText = elem.innerText;
+	        _chai.assert.isAbove(titleText.length, 0, 'The <h3> element does not contain any text');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Your article must use at least three <p> elements. The <p> \n      elements should contain the text of your article.', function () {
+	        var elems = document.querySelectorAll('p');
+
+	        _chai.assert.isAtLeast(elems.length, 3, 'Could not find at least three <p> elements in your article');
+
+	        elems.forEach(function (elem) {
+	          _chai.assert.isAbove(elem.innerText.length, 0, 'A <p> element does not contain any text');
+	        });
+	      });
+
+	      // END Content
+	    });
+
+	    // END InformationalArticleTests
+	  });
+
+	  // END createInformationalArticleTests()
+	}
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var beginnerWebProgrammingHTMLStack = exports.beginnerWebProgrammingHTMLStack = '1. You can use HTML to ' + 'complete this project. Additional languages, frameworks, libraries or ' + 'other technologies must not be used for this project. Happy coding!';
+
+	var beginnerWebProgrammingStack = exports.beginnerWebProgrammingStack = '1. You can use HTML and CSS to ' + 'complete this project. Additional languages, frameworks, libraries or ' + 'other technologies must not be used for this project. Happy coding!';
+
+	var responsiveWebDesignStack = exports.responsiveWebDesignStack = '1. You can use HTML, JavaScript, ' + 'and CSS to complete this project. Plain CSS is recommended because that ' + 'is what the lessons have covered so far and you should get some practice ' + 'with plain CSS. Additional technologies not listed above are not ' + 'recommended for this project, and using them is at your own risk. ' + 'We will fix all issue reports that ' + 'use the suggested technology stack for this project. Happy coding!';
+
+	var frontEndLibrariesStack = exports.frontEndLibrariesStack = '1. You can use any mix of HTML, ' + 'JavaScript, CSS, Bootstrap, SASS, React, Redux, and jQuery to complete ' + 'this project. You should use a frontend framework (like React for ' + 'example) because this section is about learning frontend frameworks. ' + 'Additional technologies not listed above are not recommended and using ' + 'them is at your own risk. We are looking at supporting other frontend ' + 'frameworks like Angular and Vue, but they are not currently supported. ' + 'We will accept and try to fix all issue reports that use the suggested ' + 'technology stack for this project. Happy coding!';
+
+	var d3ProjectStack = exports.d3ProjectStack = '1. You can use HTML, JavaScript, CSS, and the ' + 'D3 svg-based visualization library. The tests require axes to be ' + 'generated using the D3 axis property, which automatically generates ' + 'ticks along the axis. These ticks are required for passing the D3 tests ' + 'because their positions are used to determine alignment of graphed ' + 'elements. You will find information about generating axes at ' + 'https://github.com/d3/d3/blob/master/API.md#axes-d3-axis. Required ' + '(non-virtual) DOM elements are queried on the moment of each test. If ' + 'you use a frontend framework (like Vue for example), the test results ' + 'may be inaccurate for dynamic content. We hope to accommodate them ' + 'eventually, but these frameworks are not currently supported for D3 ' + 'projects.';
+
+	var d3ProjectStackNoAxes = exports.d3ProjectStackNoAxes = '1. You can use HTML, JavaScript, CSS, ' + 'and the D3 svg-based visualization library. Required (non-virtual) ' + 'DOM elements are queried on the moment of each test. If you use a ' + 'frontend framework (like Vue for example), the test results may be ' + 'inaccurate for dynamic content. We hope to accommodate them eventually, ' + 'but these frameworks are not currently supported for D3 projects.';
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = createTributePageHTMLTests;
+
+	var _chai = __webpack_require__(2);
+
+	var _sharedTestStrings = __webpack_require__(49);
+
+	function createTributePageHTMLTests() {
+
+	  describe('#Tribute Page HTML tests', function () {
+
+	    describe('#Technology Stack', function () {
+	      it(_sharedTestStrings.beginnerWebProgrammingHTMLStack, function () {
+	        _chai.assert.ok(true);
+	      });
+	    });
+
+	    describe('#Content', function () {
+	      var reqNum = 0;
+
+	      reqNum++;
+	      it(reqNum + '. Your Tribute Page must use an <h1> element with \n      an id="title". The <h1> element should contain the subject of your \n      Tribute Page (for example "Ada Lovelace").', function () {
+	        var elem = document.querySelector('h1#title');
+
+	        _chai.assert.isNotNull(elem, 'Could not find an <h1> element with an id of "title"');
+
+	        var titleText = elem.innerText;
+	        _chai.assert.isAbove(titleText.length, 0, 'The <h1> element with an id of "title" does not contain any text');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Your page must have a <div> element with an id="img-div".', function () {
+	        var elem = document.querySelector('div#img-div');
+
+	        _chai.assert.isNotNull(elem, 'Could not find a <div> element with an id of "img-div"');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Within your "img-div" element, you must have an <img>\n      element with an id="image".', function () {
+	        var elem = document.querySelector('div#img-div > img#image');
+
+	        _chai.assert.isNotNull(elem, 'Could not find a <img> element with id "image" inside your <div> ' + 'with id "img-div"');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Within your "img-div" element, you must have another <div>\n      element with an id="img-caption" that contains some words that describe\n      the image.', function () {
+	        var elem = document.querySelector('div#img-div > div#img-caption');
+
+	        _chai.assert.isNotNull(elem, 'Could not find a <div> element with id "img-caption" inside your ' + '<div> with id "img-div"');
+
+	        var elemContents = elem.innerText;
+	        _chai.assert.isAbove(elemContents.length, 0, 'Your "img-caption" element does not have any words inside it');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Your page must have a <div> element with an\n      id="tribute-info".', function () {
+	        var elem = document.querySelector('div#tribute-info');
+
+	        _chai.assert.isNotNull(elem, 'Could not find a <div> element with id "tribute-info"');
+	      });
+
+	      // TODO: Tests about the contents of the "tribute-info" div.
+	      reqNum++;
+	      it(reqNum + '. Your tribute-info div must have an <h3> element that\n      describes the contents (example: Here is a timeline of...)', function () {
+	        var elem = document.querySelector('div#tribute-info > h3');
+
+	        _chai.assert.isNotNull(elem, 'Could not find an <h3> element inside your tribute-info div');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Your tribute-info div must have an unordered list.', function () {
+	        var elem = document.querySelector('div#tribute-info > ul');
+
+	        _chai.assert.isNotNull(elem, 'Could not find an <ul> element inside your tribute-info div');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Your unordered list must have at least three list items.', function () {
+	        var elems = document.querySelectorAll('div#tribute-info > ul > li');
+
+	        _chai.assert.isAtLeast(elems.length, 3, 'Could not find at least three <li> elements inside your ordered list');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Your page must have a blockquote which should contain a\n      quote from or about the person on your Tribute page.', function () {
+	        var elem = document.querySelector('blockquote');
+
+	        _chai.assert.isNotNull(elem, 'Could not find an <blockquote> element on');
+
+	        var elemText = elem.innerText;
+	        _chai.assert.isAbove(elemText.length, 0, 'The <blockqoute> element does not contain any text');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Your page must have an <a> element with an\n      id="tribute-link", which links to an outside site that contains additional\n      information about the subject of your page. HINT: You must give\n      your element an attribute of target and set it to "_blank" in order for\n      your link to open in a new tab (i.e. target="_blank").', function () {
+	        var elem = document.querySelector('a#tribute-link');
+
+	        _chai.assert.isNotNull(elem, 'Could not find an <a> element with id "tribute-link"');
+
+	        (0, _chai.assert)(elem.hasAttribute('href'), 'Your <a> element with id="tribute-link" must contain an href ' + 'attribute ');
+
+	        (0, _chai.assert)(elem.hasAttribute('target'), 'Your <a> element with id="tribute-link" must contain a target ' + 'attribute ');
+
+	        _chai.assert.strictEqual(elem.getAttribute('target'), '_blank', 'The target attribute should be set to "_blank", in order for the' + 'link to open in a new tab ');
+	      });
+
+	      // END #Content
+	    });
+
+	    // END #TributePageTests
+	  });
+
+	  // END createTributePageTests()
+	}
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	exports.default = createTributePageTests;
 
 	var _chai = __webpack_require__(2);
@@ -19704,25 +19940,6 @@ var FCC_Global =
 
 	  // END createTributePageTests()
 	}
-
-/***/ }),
-/* 49 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var beginnerWebProgrammingStack = exports.beginnerWebProgrammingStack = '1. You can use HTML and CSS to ' + 'complete this project. Additional languages, frameworks, libraries or ' + 'other technologies must not be used for this project. Happy coding!';
-
-	var responsiveWebDesignStack = exports.responsiveWebDesignStack = '1. You can use HTML, JavaScript, ' + 'and CSS to complete this project. Plain CSS is recommended because that ' + 'is what the lessons have covered so far and you should get some practice ' + 'with plain CSS. Additional technologies not listed above are not ' + 'recommended for this project, and using them is at your own risk. ' + 'We will fix all issue reports that ' + 'use the suggested technology stack for this project. Happy coding!';
-
-	var frontEndLibrariesStack = exports.frontEndLibrariesStack = '1. You can use any mix of HTML, ' + 'JavaScript, CSS, Bootstrap, SASS, React, Redux, and jQuery to complete ' + 'this project. You should use a frontend framework (like React for ' + 'example) because this section is about learning frontend frameworks. ' + 'Additional technologies not listed above are not recommended and using ' + 'them is at your own risk. We are looking at supporting other frontend ' + 'frameworks like Angular and Vue, but they are not currently supported. ' + 'We will accept and try to fix all issue reports that use the suggested ' + 'technology stack for this project. Happy coding!';
-
-	var d3ProjectStack = exports.d3ProjectStack = '1. You can use HTML, JavaScript, CSS, and the ' + 'D3 svg-based visualization library. The tests require axes to be ' + 'generated using the D3 axis property, which automatically generates ' + 'ticks along the axis. These ticks are required for passing the D3 tests ' + 'because their positions are used to determine alignment of graphed ' + 'elements. You will find information about generating axes at ' + 'https://github.com/d3/d3/blob/master/API.md#axes-d3-axis. Required ' + '(non-virtual) DOM elements are queried on the moment of each test. If ' + 'you use a frontend framework (like Vue for example), the test results ' + 'may be inaccurate for dynamic content. We hope to accommodate them ' + 'eventually, but these frameworks are not currently supported for D3 ' + 'projects.';
-
-	var d3ProjectStackNoAxes = exports.d3ProjectStackNoAxes = '1. You can use HTML, JavaScript, CSS, ' + 'and the D3 svg-based visualization library. Required (non-virtual) ' + 'DOM elements are queried on the moment of each test. If you use a ' + 'frontend framework (like Vue for example), the test results may be ' + 'inaccurate for dynamic content. We hope to accommodate them eventually, ' + 'but these frameworks are not currently supported for D3 projects.';
 
 /***/ })
 /******/ ]);
