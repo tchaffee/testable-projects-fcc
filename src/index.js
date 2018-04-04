@@ -34,6 +34,10 @@ import mochaModalStyles from // eslint-disable-line no-unused-vars
   '!style-loader!css-loader!./stylesheets/mocha-modal.css';
 import fCCTestTogglerStyles from // eslint-disable-line no-unused-vars
   '!style-loader!css-loader!./stylesheets/fcc-test-toggler.css';
+import createInformationalArticleTests from 
+  './project-tests/informational-article';
+import createTributePageHTMLTests from 
+  './project-tests/tribute-page-tests-html-only';
 import createTributePageTests from './project-tests/tribute-page-tests';
 
 export const assert = chai.assert;
@@ -345,6 +349,9 @@ export function FCCInitTestRunner() {
     : projectNameLocal;
   // create tests
   switch (hardCodedProjectName || localStorage.getItem('project_selector')) {
+    case 'informational-article':
+      createInformationalArticleTests();
+      break;
     case 'random-quote-machine':
       createRandomQuoteMachineTests();
       break;
@@ -353,6 +360,9 @@ export function FCCInitTestRunner() {
       break;
     case 'pomodoro-clock':
       createPomodoroClockTests();
+      break;
+    case 'tribute-page-html-only':
+      createTributePageHTMLTests();
       break;
     case 'tribute-page':
       createTributePageTests();
