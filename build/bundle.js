@@ -83,25 +83,31 @@ var FCC_Global =
 
 	var _informationalArticle2 = _interopRequireDefault(_informationalArticle);
 
-	var _tributePageTestsHtmlOnly = __webpack_require__(50);
+	var _productLandingPageHtmlOnly = __webpack_require__(50);
+
+	var _productLandingPageHtmlOnly2 = _interopRequireDefault(_productLandingPageHtmlOnly);
+
+	var _tributePageTestsHtmlOnly = __webpack_require__(52);
 
 	var _tributePageTestsHtmlOnly2 = _interopRequireDefault(_tributePageTestsHtmlOnly);
 
-	var _tributePageTests = __webpack_require__(51);
+	var _tributePageTests = __webpack_require__(53);
 
 	var _tributePageTests2 = _interopRequireDefault(_tributePageTests);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	// Webpack is configured to load those files with the .html extension as Strings
+	/* global projectName */
+	/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "[iI]gnored" }]*/
+
+	var assert = exports.assert = _chai2.default.assert;
 	// the !- prefixes are for process arguments respective of plugins
 	// Example: https://stackoverflow.com/a/42440360/3530394
 	// style-loader injects css loaded by css-loader through this import statement.
 
 	/* eslint import/no-unresolved: [2, { ignore: ['!style-loader.*$'] }] */
-	var assert = exports.assert = _chai2.default.assert;
-	// Webpack is configured to load those files with the .html extension as Strings
-	/* global projectName */
-	/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "[iI]gnored" }]*/
+
 
 	var projectNameLocal = false;
 
@@ -328,6 +334,9 @@ var FCC_Global =
 	  switch (hardCodedProjectName || localStorage.getItem('project_selector')) {
 	    case 'informational-article':
 	      (0, _informationalArticle2.default)();
+	      break;
+	    case 'product-landing-page-html-only':
+	      (0, _productLandingPageHtmlOnly2.default)();
 	      break;
 	    case 'random-quote-machine':
 	      createRandomQuoteMachineTests();
@@ -18994,7 +19003,7 @@ var FCC_Global =
 /* 42 */
 /***/ (function(module, exports) {
 
-	module.exports = "<div id=\"fcc_test_suite_indicator_wrapper\"></div>\n<div id=\"fcc_foldout_toggler\">\n\t<span id=\"hamburger_top\" class=\"fcc_hamburger transform_top\"></span>\n\t<span id=\"hamburger_middle\" class=\"fcc_hamburger transform_middle\"></span>\n\t<span id=\"hamburger_bottom\" class=\"fcc_hamburger transform_bottom\"></span>\n</div>\n<input id=\"toggle\" onclick=\"FCC_Global.hamburgerTransform()\" type=\"checkbox\"\n\ttitle=\"CTRL + SHIFT + O\">\n<div id=\"fcc_foldout_menu\">\n\t<div id=\"fcc_foldout_menu_inner\">\n\t\t<label for=\"test-suite-selector\">Select Test Suite: </label>\n\t\t<select name=\"Test Suite Selector\" id=\"test-suite-selector\"\n\t\t\tonchange=\"FCC_Global.selectProject(this.value)\">\n\t\t\t<option id=\"placeholder\" value=\"\">- - -</option>\n\t\t\t<option value=\"informational-article\">Informational Article</option>\n\t\t\t<option value=\"tribute-page-html-only\">Tribute Page (HTML Only)</option>\n\t\t\t<option value=\"tribute-page\">Improved Tribute Page with CSS</option>\n\t\t</select>\n\t\t<button id=\"fcc_test_message-box-rerun-button\" type=\"button\"\n\t\t\tclass=\"fcc_foldout_buttons\" title=\"CTRL + SHIFT + ENTER\"\n\t\t\tonclick=\"FCC_Global.FCCRerunTests()\">\n\t\t\tRun Tests\n\t\t</button>\n\t\t<button id=\"fcc_test_button\" type=\"button\"\n\t\t\tclass=\"fcc_foldout_buttons fcc_test_btn-default\"\n\t\t\ttitle=\"CTRL + SHIFT + T\" onclick=\"FCC_Global.FCCOpenTestModal()\">\n\t\t\tTests\n\t\t</button>\n\t\t<div id=\"fcc_legend_wrapper\">\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Test(s) Failed</span>\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Tests Passed</span>\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Tests Executing</span>\n\t\t</div>\n\t\t<span id=\"fcc_report-bug\"><a\n\t\t\thref=\"https://github.com/freeCodeCamp/testable-projects-fcc/issues/new\"\n\t\t\ttarget=\"_blank\">Report Bug</a>\n\t\t</span>\n\t</div>\n</div>\n<div id=\"fcc_test_message-box\" class=\"fcc_test_message-box-hidden\"\n\tonclick=\"FCC_Global.FCCclickOutsideToCloseModal(event)\">\n\t<div class=\"fcc_test_message-box-content\">\n\t\t<div class=\"fcc_test_message-box-header\">\n\t\t\t<div class=\"title\">Unit tests</div>\n\t\t</div>\n\t\t<div class=\"fcc_test_message-box-body\">\n\t\t\t<div id=\"mocha\">Run Test Suite to See Unit Tests!</div>\n\t\t</div>\n\t\t<div class=\"fcc_test_message-box-footer\">\n\t\t\t<div class=\"fcc_test_message-box-close-btn\"\n\t\t\t\tonclick=\"FCC_Global.FCCCloseTestModal()\">Close</div>\n\t\t</div>\n\t</div>\n</div>\n";
+	module.exports = "<div id=\"fcc_test_suite_indicator_wrapper\"></div>\n<div id=\"fcc_foldout_toggler\">\n\t<span id=\"hamburger_top\" class=\"fcc_hamburger transform_top\"></span>\n\t<span id=\"hamburger_middle\" class=\"fcc_hamburger transform_middle\"></span>\n\t<span id=\"hamburger_bottom\" class=\"fcc_hamburger transform_bottom\"></span>\n</div>\n<input id=\"toggle\" onclick=\"FCC_Global.hamburgerTransform()\" type=\"checkbox\"\n\ttitle=\"CTRL + SHIFT + O\">\n<div id=\"fcc_foldout_menu\">\n\t<div id=\"fcc_foldout_menu_inner\">\n\t\t<label for=\"test-suite-selector\">Select Test Suite: </label>\n\t\t<select name=\"Test Suite Selector\" id=\"test-suite-selector\"\n\t\t\tonchange=\"FCC_Global.selectProject(this.value)\">\n\t\t\t<option id=\"placeholder\" value=\"\">- - -</option>\n\t\t\t<option value=\"informational-article\">Informational Article</option>\n\t\t\t<option value=\"product-landing-page-html-only\">Product Landing Page</option>\n\t\t\t<option value=\"tribute-page-html-only\">Tribute Page I</option>\n\t\t\t<option value=\"tribute-page\">Tribute Page II</option>\n\t\t</select>\n\t\t<button id=\"fcc_test_message-box-rerun-button\" type=\"button\"\n\t\t\tclass=\"fcc_foldout_buttons\" title=\"CTRL + SHIFT + ENTER\"\n\t\t\tonclick=\"FCC_Global.FCCRerunTests()\">\n\t\t\tRun Tests\n\t\t</button>\n\t\t<button id=\"fcc_test_button\" type=\"button\"\n\t\t\tclass=\"fcc_foldout_buttons fcc_test_btn-default\"\n\t\t\ttitle=\"CTRL + SHIFT + T\" onclick=\"FCC_Global.FCCOpenTestModal()\">\n\t\t\tTests\n\t\t</button>\n\t\t<div id=\"fcc_legend_wrapper\">\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Test(s) Failed</span>\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Tests Passed</span>\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Tests Executing</span>\n\t\t</div>\n\t\t<span id=\"fcc_report-bug\"><a\n\t\t\thref=\"https://github.com/freeCodeCamp/testable-projects-fcc/issues/new\"\n\t\t\ttarget=\"_blank\">Report Bug</a>\n\t\t</span>\n\t</div>\n</div>\n<div id=\"fcc_test_message-box\" class=\"fcc_test_message-box-hidden\"\n\tonclick=\"FCC_Global.FCCclickOutsideToCloseModal(event)\">\n\t<div class=\"fcc_test_message-box-content\">\n\t\t<div class=\"fcc_test_message-box-header\">\n\t\t\t<div class=\"title\">Unit tests</div>\n\t\t</div>\n\t\t<div class=\"fcc_test_message-box-body\">\n\t\t\t<div id=\"mocha\">Run Test Suite to See Unit Tests!</div>\n\t\t</div>\n\t\t<div class=\"fcc_test_message-box-footer\">\n\t\t\t<div class=\"fcc_test_message-box-close-btn\"\n\t\t\t\tonclick=\"FCC_Global.FCCCloseTestModal()\">Close</div>\n\t\t</div>\n\t</div>\n</div>\n";
 
 /***/ }),
 /* 43 */
@@ -19616,17 +19625,17 @@ var FCC_Global =
 	      });
 
 	      reqNum++;
-	      it(reqNum + '. Your article must use at least one <h2> element. The <h2> \n      element should be used as the heading of a section of your article.', function () {
+	      it(reqNum + '. Your article must use at least one <h2> element. You can\n      use <h2> elements as headings before each main section of your article.', function () {
 	        var elem = document.querySelector('h2');
 
-	        _chai.assert.isNotNull(elem, 'Could not find an <h2> element');
+	        _chai.assert.isNotNull(elem, 'Could not find any <h2> elements');
 
 	        var titleText = elem.innerText;
 	        _chai.assert.isAbove(titleText.length, 0, 'The <h2> element does not contain any text');
 	      });
 
 	      reqNum++;
-	      it(reqNum + '. Your article must use at least one <h3> element. The <h3> \n      element should be used as the sub-heading of a section of your article.', function () {
+	      it(reqNum + '. Your article must use at least one <h3> element. You can \n      use the <h3> elements as sub-headings in your article.', function () {
 	        var elem = document.querySelector('h3');
 
 	        _chai.assert.isNotNull(elem, 'Could not find an <h3> element');
@@ -19678,6 +19687,210 @@ var FCC_Global =
 
 /***/ }),
 /* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = createProductLandingPageHTMLTests;
+
+	var _sharedTestStrings = __webpack_require__(49);
+
+	var _styleSheetUtils = __webpack_require__(51);
+
+	var _chai = __webpack_require__(2);
+
+	function createProductLandingPageHTMLTests() {
+	  describe('Product Landing Page tests', function () {
+
+	    describe('Technology Stack', function () {
+	      it(_sharedTestStrings.responsiveWebDesignStack, function () {
+	        _chai.assert.ok(true);
+	      });
+	    });
+
+	    describe('Content', function () {
+	      var reqNum = 0;
+
+	      reqNum++;
+	      it(reqNum + '. My product landing page should have a <div> element with\n      an id attribute that has a value of "hero".', function () {
+	        _chai.assert.isNotNull(document.getElementById('hero'), 'Could not find a <div> element with id="hero" ');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Within the "hero" div I must have a <div> \n      with an id="hero-logo".', function () {
+	        _chai.assert.isNotNull(document.querySelectorAll('#hero > #hero-logo'), 'Could not find a div element with id="hero-logo" within the ' + 'div with id="hero" ');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Within the "hero-logo" div I must have an <h1> \n      element. The h1 element should contain some text with the name of a\n      company or business. For example, "Queen Bee Drones".', function () {
+	        var elems = document.querySelectorAll('#hero > #hero-logo > h1');
+
+	        _chai.assert.equal(elems.length, 1, 'Could not find an h1 element within the div with id="hero-logo"');
+
+	        var elemText = elems[0].innerText;
+	        _chai.assert.isAbove(elemText.length, 0, 'The <h1> element does not contain any text');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Within the "hero" div I must have a <div> \n      with an id="tagline".', function () {
+	        _chai.assert.isNotNull(document.querySelectorAll('#hero > #tagline'), 'Could not find a div element with id="tagline" within the ' + 'div with id="hero" ');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Within the "tagline" div I must have an <h2> \n      element. The h2 element should contain some text explaing the value \n      your business provides. For example "We sell only the best drones".', function () {
+	        var elems = document.querySelectorAll('div#hero > div#tagline > h2');
+
+	        _chai.assert.equal(elems.length, 1, 'Could not find an h2 element within the div with id="tagline"');
+
+	        var elemText = elems[0].innerText;
+	        _chai.assert.isAbove(elemText.length, 0, 'The <h2> element does not contain any text');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. My product landing page must have a <div> element with\n      an id attribute that has a value of "products-list".', function () {
+	        _chai.assert.isNotNull(document.getElementById('products-list'), 'Could not find a <div> element with id="products-list" ');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Within my "products-list" div I must have three divs \n      with a class of "product-container".', function () {
+	        var elems = document.querySelectorAll('div#products-list > div.product-container');
+
+	        _chai.assert.equal(elems.length, 3, 'Could not find three <div> elements with class=' + '"product-container" inside the "products-list" div');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Each "product-container" div should contain a div with a\n      class of "product-image".', function () {
+	        var elems = document.querySelectorAll('div#products-list > div.product-container > div.product-image');
+
+	        _chai.assert.equal(elems.length, 3, 'Could not find <div> elements with class=' + '"product-image" inside the "products-container" div ');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Each "product-image" div should contain an <img> element.\n        The image element must have the src attribute specified. See the project\n        instructions for the list of images you can use.', function () {
+	        var elems = document.querySelectorAll('div#products-list > div.product-container > div.product-image > img');
+
+	        _chai.assert.equal(elems.length, 3, 'Could not find an <img> element inside each of the ' + '"products-image" divs ');
+
+	        _chai.assert.strictEqual(elems[0].hasAttribute('src'), true, 'Each <img> element must have a src attribute ');
+
+	        _chai.assert.isAbove(elems[0].getAttribute('src').length, 0, 'The source attribute for each <img> element must have a ' + 'value');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Each "product-container" div should contain a div with a\n        class of "product-info".', function () {
+	        var elems = document.querySelectorAll('div#products-list > div.product-container > div.product-info');
+
+	        _chai.assert.equal(elems.length, 3, 'Could not find <div> elements with class=' + '"product-info" inside the "products-container" div ');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Each "product-info" div must contain a div with a\n        class of "product-name". The contents of the div should describe the\n        product. For example "UTO Drone U960"', function () {
+	        var elems = document.querySelectorAll('div#products-list > div.product-container > div.product-info' + ' > div.product-name');
+
+	        _chai.assert.equal(elems.length, 3, 'Could not find <div> elements with class=' + '"product-name" inside the "products-info" div ');
+
+	        elems.forEach(function (elem) {
+	          _chai.assert.isAbove(elem.innerText.length, 0, 'Each "product-name" div must contain some text describing the ' + 'product');
+	        });
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Each "product-info" div must contain a div with a\n        class of "product-price". The contents of the div should be the\n        price of the product. For example "$1999.99"', function () {
+	        var elems = document.querySelectorAll('div#products-list > div.product-container > div.product-info' + ' > div.product-price');
+
+	        _chai.assert.equal(elems.length, 3, 'Could not find <div> elements with class=' + '"product-price" inside the "products-info" div ');
+
+	        elems.forEach(function (elem) {
+	          _chai.assert.isAbove(elem.innerText.length, 0, 'Each "product-price" div must contain some text giving the ' + 'price of the product');
+	        });
+	      });
+
+	      // END #Content
+	    });
+
+	    // END #ProductLadingPageTests
+	  });
+
+	  // END createProductLandingPageTests()
+	}
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	/*
+	 * Given a list of styleSheet-like objects, it returns an array of CSSStyleRule
+	 * objects.
+	 *
+	 * You can use the returned array to easily filter the CSS rules used on a
+	 * page. For example, the following could be used to find all CSS media rules,
+	 * and is much shorter than the corresponding code using nested "for loops":
+	 *
+	 * ```
+	 * const queryRules = allCSSRulesAsArray(document.styleSheets)
+	     .filter(rule => rule.type === CSSRule.MEDIA_RULE);
+	 * ```
+	 *
+	 * The styleSheets parameter accepts any array or array-like list, as long as
+	 * each object has a cssRules attribute. A StyleSheetList would fit this
+	 * requirement.
+	 * See https://developer.mozilla.org/en-US/docs/Web/API/StyleSheetList
+	 *
+	 * For example, `document.styleSheets` returns a StyleSheetList.
+	 *
+	 * The cssRules attribute is another array-like list.
+	 * See https://developer.mozilla.org/en-US/docs/Web/API/CSSRuleList
+	 *
+	 */
+	var allCSSRulesAsArray = exports.allCSSRulesAsArray = function allCSSRulesAsArray(styleSheets) {
+	  // Convert to an array, and then use reduce.
+	  return [].slice.call(styleSheets).reduce(function (prev, styleSheet) {
+
+	    // The styleSheet might not contain any rules.
+	    if (styleSheet.cssRules) {
+	      // Convert the list of rules into an array.
+	      var rulesAsArray = [].slice.call(styleSheet.cssRules);
+	      // Use the spread operator to push each individual element onto the
+	      // return array.
+	      prev.push.apply(prev, _toConsumableArray(rulesAsArray));
+	    }
+
+	    return prev;
+	  }, []);
+	};
+
+	/*
+	 * Given a CSS Style Rule it will determine if the rule is one of our internal
+	 * test suite UI rules.
+	 *
+	 * There is a small chance a student could use a selector that includes
+	 * the text we are using below to determine if it's our CSS. In the off chance
+	 * that happens, it's best to just ask them to rename it differently.
+	 *
+	 * See https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleRule
+	 *
+	 */
+	var isTestSuiteRule = exports.isTestSuiteRule = function isTestSuiteRule(cssStyleRule) {
+	  if (typeof cssStyleRule.selectorText !== 'undefined' && (cssStyleRule.selectorText.includes('fcc_test') || cssStyleRule.selectorText.includes('mocha'))) {
+	    return true;
+	  }
+
+	  return false;
+	};
+
+/***/ }),
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19800,7 +20013,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';

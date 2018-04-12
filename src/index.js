@@ -12,9 +12,11 @@ import testSuiteSkeleton from './utils/test-suite-skeleton.html';
 /* eslint import/no-unresolved: [2, { ignore: ['!style-loader.*$'] }] */
 import testSuiteFCCStylesIgnored from
   '!style-loader!css-loader!./stylesheets/style.css';
-import createInformationalArticleTests from 
+import createInformationalArticleTests from
   './project-tests/informational-article';
-import createTributePageHTMLTests from 
+import createProductLandingPageHTMLTests from
+  './project-tests/product-landing-page-html-only';
+import createTributePageHTMLTests from
   './project-tests/tribute-page-tests-html-only';
 import createTributePageTests from './project-tests/tribute-page-tests';
 
@@ -290,6 +292,9 @@ export function FCCInitTestRunner() {
   switch (hardCodedProjectName || localStorage.getItem('project_selector')) {
     case 'informational-article':
       createInformationalArticleTests();
+      break;
+    case 'product-landing-page-html-only':
+      createProductLandingPageHTMLTests();
       break;
     case 'random-quote-machine':
       createRandomQuoteMachineTests();
