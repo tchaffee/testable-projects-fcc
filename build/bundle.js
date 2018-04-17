@@ -87,11 +87,11 @@ var FCC_Global =
 
 	var _productLandingPageHtmlOnly2 = _interopRequireDefault(_productLandingPageHtmlOnly);
 
-	var _tributePageTestsHtmlOnly = __webpack_require__(52);
+	var _tributePageTestsHtmlOnly = __webpack_require__(51);
 
 	var _tributePageTestsHtmlOnly2 = _interopRequireDefault(_tributePageTestsHtmlOnly);
 
-	var _tributePageTests = __webpack_require__(53);
+	var _tributePageTests = __webpack_require__(52);
 
 	var _tributePageTests2 = _interopRequireDefault(_tributePageTests);
 
@@ -19698,15 +19698,13 @@ var FCC_Global =
 
 	var _sharedTestStrings = __webpack_require__(49);
 
-	var _styleSheetUtils = __webpack_require__(51);
-
 	var _chai = __webpack_require__(2);
 
 	function createProductLandingPageHTMLTests() {
 	  describe('Product Landing Page tests', function () {
 
 	    describe('Technology Stack', function () {
-	      it(_sharedTestStrings.responsiveWebDesignStack, function () {
+	      it(_sharedTestStrings.beginnerWebProgrammingHTMLStack, function () {
 	        _chai.assert.ok(true);
 	      });
 	    });
@@ -19720,7 +19718,7 @@ var FCC_Global =
 	      });
 
 	      reqNum++;
-	      it(reqNum + '. Within the "hero" div I must have a <div> \n      with an id="hero-logo".', function () {
+	      it(reqNum + '. Within the "hero" div I must have a child <div> \n      with an id="hero-logo".', function () {
 	        _chai.assert.isNotNull(document.querySelectorAll('#hero > #hero-logo'), 'Could not find a div element with id="hero-logo" within the ' + 'div with id="hero" ');
 	      });
 
@@ -19819,78 +19817,6 @@ var FCC_Global =
 
 /***/ }),
 /* 51 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-	/*
-	 * Given a list of styleSheet-like objects, it returns an array of CSSStyleRule
-	 * objects.
-	 *
-	 * You can use the returned array to easily filter the CSS rules used on a
-	 * page. For example, the following could be used to find all CSS media rules,
-	 * and is much shorter than the corresponding code using nested "for loops":
-	 *
-	 * ```
-	 * const queryRules = allCSSRulesAsArray(document.styleSheets)
-	     .filter(rule => rule.type === CSSRule.MEDIA_RULE);
-	 * ```
-	 *
-	 * The styleSheets parameter accepts any array or array-like list, as long as
-	 * each object has a cssRules attribute. A StyleSheetList would fit this
-	 * requirement.
-	 * See https://developer.mozilla.org/en-US/docs/Web/API/StyleSheetList
-	 *
-	 * For example, `document.styleSheets` returns a StyleSheetList.
-	 *
-	 * The cssRules attribute is another array-like list.
-	 * See https://developer.mozilla.org/en-US/docs/Web/API/CSSRuleList
-	 *
-	 */
-	var allCSSRulesAsArray = exports.allCSSRulesAsArray = function allCSSRulesAsArray(styleSheets) {
-	  // Convert to an array, and then use reduce.
-	  return [].slice.call(styleSheets).reduce(function (prev, styleSheet) {
-
-	    // The styleSheet might not contain any rules.
-	    if (styleSheet.cssRules) {
-	      // Convert the list of rules into an array.
-	      var rulesAsArray = [].slice.call(styleSheet.cssRules);
-	      // Use the spread operator to push each individual element onto the
-	      // return array.
-	      prev.push.apply(prev, _toConsumableArray(rulesAsArray));
-	    }
-
-	    return prev;
-	  }, []);
-	};
-
-	/*
-	 * Given a CSS Style Rule it will determine if the rule is one of our internal
-	 * test suite UI rules.
-	 *
-	 * There is a small chance a student could use a selector that includes
-	 * the text we are using below to determine if it's our CSS. In the off chance
-	 * that happens, it's best to just ask them to rename it differently.
-	 *
-	 * See https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleRule
-	 *
-	 */
-	var isTestSuiteRule = exports.isTestSuiteRule = function isTestSuiteRule(cssStyleRule) {
-	  if (typeof cssStyleRule.selectorText !== 'undefined' && (cssStyleRule.selectorText.includes('fcc_test') || cssStyleRule.selectorText.includes('mocha'))) {
-	    return true;
-	  }
-
-	  return false;
-	};
-
-/***/ }),
-/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20013,7 +19939,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 53 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
