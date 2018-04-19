@@ -25,14 +25,18 @@ export default function createProductLandingPageHTMLTests() {
       });
 
       reqNum++;
-      it(`${reqNum}. Within the "hero" div I must have a child <div> 
+      it(`${reqNum}. Within the "hero" div I must have one child <div> 
       with an id="hero-logo".`,
       function() {
-        assert.isNotNull(
-          document.querySelectorAll('#hero > #hero-logo'),
+        let elems = document.querySelectorAll('#hero > #hero-logo');
+
+        assert.equal(
+          elems.length,
+          1,
           'Could not find a div element with id="hero-logo" within the ' +
           'div with id="hero" '
         );
+
       });
 
       reqNum++;
@@ -62,11 +66,15 @@ export default function createProductLandingPageHTMLTests() {
       it(`${reqNum}. Within the "hero" div I must have a <div> 
       with an id="tagline".`,
       function() {
-        assert.isNotNull(
-          document.querySelectorAll('#hero > #tagline'),
+        let elems = document.querySelectorAll('#hero > #tagline');
+
+        assert.equal(
+          elems.length,
+          1,
           'Could not find a div element with id="tagline" within the ' +
-          'div with id="hero" '
+          'div with id="hero"'
         );
+
       });
 
       reqNum++;
@@ -140,9 +148,10 @@ export default function createProductLandingPageHTMLTests() {
         instructions for the list of images you can use.`,
         function() {
           let elems = document.querySelectorAll(
-            'div#products-list > div.product-container > div.product-image > img'
+            'div#products-list > div.product-container > ' +
+            'div.product-image > img'
           );
-  
+
           assert.equal(
             elems.length,
             3,

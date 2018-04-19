@@ -19766,8 +19766,10 @@ var FCC_Global =
 	      });
 
 	      reqNum++;
-	      it(reqNum + '. Within the "hero" div I must have a child <div> \n      with an id="hero-logo".', function () {
-	        _chai.assert.isNotNull(document.querySelectorAll('#hero > #hero-logo'), 'Could not find a div element with id="hero-logo" within the ' + 'div with id="hero" ');
+	      it(reqNum + '. Within the "hero" div I must have one child <div> \n      with an id="hero-logo".', function () {
+	        var elems = document.querySelectorAll('#hero > #hero-logo');
+
+	        _chai.assert.equal(elems.length, 1, 'Could not find a div element with id="hero-logo" within the ' + 'div with id="hero" ');
 	      });
 
 	      reqNum++;
@@ -19782,7 +19784,9 @@ var FCC_Global =
 
 	      reqNum++;
 	      it(reqNum + '. Within the "hero" div I must have a <div> \n      with an id="tagline".', function () {
-	        _chai.assert.isNotNull(document.querySelectorAll('#hero > #tagline'), 'Could not find a div element with id="tagline" within the ' + 'div with id="hero" ');
+	        var elems = document.querySelectorAll('#hero > #tagline');
+
+	        _chai.assert.equal(elems.length, 1, 'Could not find a div element with id="tagline" within the ' + 'div with id="hero"');
 	      });
 
 	      reqNum++;
@@ -19816,7 +19820,7 @@ var FCC_Global =
 
 	      reqNum++;
 	      it(reqNum + '. Each "product-image" div should contain an <img> element.\n        The image element must have the src attribute specified. See the project\n        instructions for the list of images you can use.', function () {
-	        var elems = document.querySelectorAll('div#products-list > div.product-container > div.product-image > img');
+	        var elems = document.querySelectorAll('div#products-list > div.product-container > ' + 'div.product-image > img');
 
 	        _chai.assert.equal(elems.length, 3, 'Could not find an <img> element inside each of the ' + '"products-image" divs ');
 
