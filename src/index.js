@@ -12,6 +12,8 @@ import testSuiteSkeleton from './utils/test-suite-skeleton.html';
 /* eslint import/no-unresolved: [2, { ignore: ['!style-loader.*$'] }] */
 import testSuiteFCCStylesIgnored from
   '!style-loader!css-loader!./stylesheets/style.css';
+import createFontsAsFriendsTests from
+  './project-tests/fonts-as-friends';
 import createInformationalArticleTests from
   './project-tests/informational-article';
 import createProductLandingPageHTMLTests from
@@ -290,6 +292,9 @@ export function FCCInitTestRunner() {
     : projectNameLocal;
   // create tests
   switch (hardCodedProjectName || localStorage.getItem('project_selector')) {
+    case 'fonts-as-friends':
+      createFontsAsFriendsTests();
+      break;
     case 'informational-article':
       createInformationalArticleTests();
       break;
