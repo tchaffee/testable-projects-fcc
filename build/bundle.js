@@ -19608,6 +19608,8 @@ var FCC_Global =
 
 	function createFontsAsFriendsTests() {
 
+	  // Tests for pen https://codepen.io/tchaffee/pen/wjoxBe
+
 	  var paragraphTests = [{
 	    cssClass: 'loud',
 	    text: 'YES!!!'
@@ -19659,103 +19661,109 @@ var FCC_Global =
 	        paragraphTest(reqNum, test.cssClass, test.text);
 	      });
 
-	      // LEFT OFF HERE. NEED TO ADD MORE OF THE ABOVE TESTS.
-
-
-	      reqNum++;
-	      it(reqNum + '. Your page must have a <div> element with an id="img-div".', function () {
-	        var elem = document.querySelector('div#img-div');
-
-	        _chai.assert.isNotNull(elem, 'Could not find a <div> element with an id of "img-div"');
-	      });
-
-	      reqNum++;
-	      it(reqNum + '. Within your "img-div" element, you must have an <img>\n      element with an id="image".', function () {
-	        var elem = document.querySelector('div#img-div > img#image');
-
-	        _chai.assert.isNotNull(elem, 'Could not find a <img> element with id "image" inside your <div> ' + 'with id "img-div"');
-	      });
-
-	      reqNum++;
-	      it(reqNum + '. Within your "img-div" element, you must have another <div>\n      element with an id="img-caption" that contains some words that describe\n      the image.', function () {
-	        var elem = document.querySelector('div#img-div > div#img-caption');
-
-	        _chai.assert.isNotNull(elem, 'Could not find a <div> element with id "img-caption" inside your ' + '<div> with id "img-div"');
-
-	        var elemContents = elem.innerText;
-	        _chai.assert.isAbove(elemContents.length, 0, 'Your "img-caption" element does not have any words inside it');
-	      });
-
-	      reqNum++;
-	      it(reqNum + '. Your page must have a <div> element with an\n      id="tribute-info".', function () {
-	        var elem = document.querySelector('div#tribute-info');
-
-	        _chai.assert.isNotNull(elem, 'Could not find a <div> element with id "tribute-info"');
-	      });
-
-	      // TODO: Tests about the contents of the "tribute-info" div.
-	      reqNum++;
-	      it(reqNum + '. Your tribute-info div must have an <h3> element that\n      describes the contents (example: Here is a timeline of...)', function () {
-	        var elem = document.querySelector('div#tribute-info > h3');
-
-	        _chai.assert.isNotNull(elem, 'Could not find an <h3> element inside your tribute-info div');
-	      });
-
-	      reqNum++;
-	      it(reqNum + '. Your tribute-info div must have an unordered list.', function () {
-	        var elem = document.querySelector('div#tribute-info > ul');
-
-	        _chai.assert.isNotNull(elem, 'Could not find an <ul> element inside your tribute-info div');
-	      });
-
-	      reqNum++;
-	      it(reqNum + '. Your unordered list must have at least three list items.', function () {
-	        var elems = document.querySelectorAll('div#tribute-info > ul > li');
-
-	        _chai.assert.isAtLeast(elems.length, 3, 'Could not find at least three <li> elements inside your ordered list');
-	      });
-
-	      reqNum++;
-	      it(reqNum + '. Your page must have a blockquote which should contain a\n      quote from or about the person on your Tribute page.', function () {
-	        var elem = document.querySelector('blockquote');
-
-	        _chai.assert.isNotNull(elem, 'Could not find an <blockquote> element on');
-
-	        var elemText = elem.innerText;
-	        _chai.assert.isAbove(elemText.length, 0, 'The <blockqoute> element does not contain any text');
-	      });
-
-	      reqNum++;
-	      it(reqNum + '. Your page must have an <a> element with an\n      id="tribute-link", which links to an outside site that contains additional\n      information about the subject of your page. HINT: You must give\n      your element an attribute of target and set it to "_blank" in order for\n      your link to open in a new tab (i.e. target="_blank").', function () {
-	        var elem = document.querySelector('a#tribute-link');
-
-	        _chai.assert.isNotNull(elem, 'Could not find an <a> element with id "tribute-link"');
-
-	        (0, _chai.assert)(elem.hasAttribute('href'), 'Your <a> element with id="tribute-link" must contain an href ' + 'attribute ');
-
-	        (0, _chai.assert)(elem.hasAttribute('target'), 'Your <a> element with id="tribute-link" must contain a target ' + 'attribute ');
-
-	        _chai.assert.strictEqual(elem.getAttribute('target'), '_blank', 'The target attribute should be set to "_blank", in order for the' + 'link to open in a new tab ');
-	      });
-
-	      // END #Content
+	      // END Content tests
 	    });
 
-	    describe('#Layout', function () {
+	    describe('Layout', function () {
 	      var reqNum = 0;
 
 	      reqNum++;
-	      it(reqNum + '. The <img> element should be centered within its parent\n      element.', function () {
-	        var img = document.getElementById('image'),
-	            imgParent = document.getElementById('image').parentElement,
-	            imgLeft = img.getBoundingClientRect().left,
-	            imgRight = img.getBoundingClientRect().right,
-	            parentLeft = imgParent.getBoundingClientRect().left,
-	            parentRight = imgParent.getBoundingClientRect().right;
-	        _chai.assert.approximately(imgLeft - parentLeft, parentRight - imgRight, 11, 'Image is not centered');
+	      it(reqNum + '. The <p> element with a class of "loud" must have a \n      background-color of yellow, a color of red, and a font-size of 50px.', function () {
+	        var className = 'loud';
+	        var elem = document.querySelector('p.' + className);
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['background-color'], 'rgb(255, 255, 0)', 'The paragraph with class ' + className + ' does not have ' + 'a "yellow" background-color');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['color'], 'rgb(255, 0, 0)', 'The paragraph with class ' + className + ' does not have ' + 'a color of "red"');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['font-size'], '50px', 'The paragraph with class ' + className + ' does not have ' + 'a font-size of "50px"');
 	      });
 
-	      // END Layout
+	      reqNum++;
+	      it(reqNum + '. The <p> element with a class of "shy" must have a color \n      of gray and a font-size of 12px.', function () {
+	        var className = 'shy';
+	        var elem = document.querySelector('p.' + className);
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['color'], 'rgb(128, 128, 128)', 'The paragraph with class ' + className + ' does not have ' + 'its color set to "gray".');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['font-size'], '12px', 'The paragraph with class ' + className + ' does not have ' + 'a font-size of "12px"');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. The <p> element with a class of "nerdy" must have a color \n      of white, a background-color of black, a font-family of monospace, and a\n      font-size of 20px.', function () {
+	        var className = 'nerdy';
+	        var elem = document.querySelector('p.' + className);
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['color'], 'rgb(255, 255, 255)', 'The paragraph with class ' + className + ' does not have ' + 'its color set to "white".');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['background-color'], 'rgb(0, 0, 0)', 'The paragraph with class ' + className + ' does not have ' + 'its background-color set to "black".');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['font-family'], 'monospace', 'The paragraph with class ' + className + ' does not have ' + 'its font-family set to "monospace".');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['font-size'], '20px', 'The paragraph with class ' + className + ' does not have ' + 'a font-size of "20px"');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. The <p> element with a class of "confident" must have a \n      color of blue, a font-family of sans, and font-size of 40px, and a \n      font-weight of 700.', function () {
+	        var className = 'confident';
+	        var elem = document.querySelector('p.' + className);
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['color'], 'rgb(0, 0, 255)', 'The paragraph with class ' + className + ' does not have ' + 'its color set to "blue".');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['font-family'], 'sans', 'The paragraph with class ' + className + ' does not have ' + 'its font-family set to "sans".');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['font-size'], '40px', 'The paragraph with class ' + className + ' does not have ' + 'a font-size of "40px"');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['font-weight'], '700', 'The paragraph with class ' + className + ' does not have ' + 'a font-weight of "700"');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. The <p> element with a class of "fashion" must have a \n      a font-family of serif, and font-size of 30px, and a font-style of \n      italic.', function () {
+	        var className = 'fashion';
+	        var elem = document.querySelector('p.' + className);
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['font-family'], 'serif', 'The paragraph with class ' + className + ' does not have ' + 'its font-family set to "serif".');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['font-size'], '30px', 'The paragraph with class ' + className + ' does not have ' + 'a font-size of "30px"');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['font-style'], 'italic', 'The paragraph with class ' + className + ' does not have ' + 'a font-style of "italic"');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. The <p> element with a class of "sporty" must have a \n      a color of brown, a font-family of serif, and font-size of 30px, and a \n      and a font-weight of 900.', function () {
+	        var className = 'sporty';
+	        var elem = document.querySelector('p.' + className);
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['color'], 'rgb(165, 42, 42)', 'The paragraph with class ' + className + ' does not have ' + 'a color of "brown".');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['font-family'], 'serif', 'The paragraph with class ' + className + ' does not have ' + 'its font-family set to "serif".');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['font-size'], '30px', 'The paragraph with class ' + className + ' does not have ' + 'a font-size of "30px"');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['font-weight'], '900', 'The paragraph with class ' + className + ' does not have ' + 'a font-weight of "900"');
+	      });
+
+	      // .funny {
+	      //   color: green;
+	      //   font-family: Comic sans, sans;
+	      //   font-size: 45px;
+	      //   font-weight: 100;
+	      // }
+	      reqNum++;
+	      it(reqNum + '. The <p> element with a class of "funny" must have a \n      a color of green, a font-family of sans, and font-size of 45px, and a \n      and a font-weight of 100.', function () {
+	        var className = 'funny';
+	        var elem = document.querySelector('p.' + className);
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['color'], 'rgb(0, 128, 0)', 'The paragraph with class ' + className + ' does not have ' + 'a color of "green".');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['font-family'], 'sans', 'The paragraph with class ' + className + ' does not have ' + 'its font-family set to "sans".');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['font-size'], '45px', 'The paragraph with class ' + className + ' does not have ' + 'a font-size of "45px"');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['font-weight'], '100', 'The paragraph with class ' + className + ' does not have ' + 'a font-weight of "100"');
+	      });
+
+	      // END Layout tests
 	    });
 
 	    // END FontsAsFriendsTests
