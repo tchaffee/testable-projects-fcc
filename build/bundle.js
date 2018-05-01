@@ -81,13 +81,17 @@ var FCC_Global =
 
 	var _drumMachineTests = __webpack_require__(48);
 
+	var _fontsAsFriends2 = _interopRequireDefault(_fontsAsFriends);
+
+	var _informationalArticle = __webpack_require__(50);
+
 	var _drumMachineTests2 = _interopRequireDefault(_drumMachineTests);
 
 	var _markdownPreviewerTests = __webpack_require__(50);
 
 	var _productLandingPageHtmlOnly2 = _interopRequireDefault(_productLandingPageHtmlOnly);
 
-	var _tributePageTestsHtmlOnly = __webpack_require__(51);
+	var _tributePageTestsHtmlOnly = __webpack_require__(52);
 
 	var _markdownPreviewerTests2 = _interopRequireDefault(_markdownPreviewerTests);
 
@@ -145,17 +149,15 @@ var FCC_Global =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// Webpack is configured to load those files with the .html extension as Strings
-	/* global projectName */
-	/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "[iI]gnored" }]*/
-
-	var assert = exports.assert = _chai2.default.assert;
 	// the !- prefixes are for process arguments respective of plugins
 	// Example: https://stackoverflow.com/a/42440360/3530394
 	// style-loader injects css loaded by css-loader through this import statement.
 
 	/* eslint import/no-unresolved: [2, { ignore: ['!style-loader.*$'] }] */
-
+	var assert = exports.assert = _chai2.default.assert;
+	// Webpack is configured to load those files with the .html extension as Strings
+	/* global projectName */
+	/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "[iI]gnored" }]*/
 
 	var projectNameLocal = false;
 
@@ -380,6 +382,9 @@ var FCC_Global =
 	  var hardCodedProjectName = !projectNameLocal ? null : projectNameLocal;
 	  // create tests
 	  switch (hardCodedProjectName || localStorage.getItem('project_selector')) {
+	    case 'fonts-as-friends':
+	      (0, _fontsAsFriends2.default)();
+	      break;
 	    case 'informational-article':
 	      (0, _informationalArticle2.default)();
 	      break;
@@ -19649,6 +19654,199 @@ var FCC_Global =
 
 	var _sharedTestStrings = __webpack_require__(49);
 
+	function createFontsAsFriendsTests() {
+
+	  var paragraphTests = [{
+	    cssClass: 'loud',
+	    text: 'YES!!!'
+	  }, {
+	    cssClass: 'shy',
+	    text: 'leave me alone'
+	  }, {
+	    cssClass: 'nerdy',
+	    text: 'N3rdy 0v3r h3r3'
+	  }, {
+	    cssClass: 'confident',
+	    text: 'I will succeed'
+	  }, {
+	    cssClass: 'fashion',
+	    text: 'Stylish!'
+	  }, {
+	    cssClass: 'sporty',
+	    text: 'Football anyone?'
+	  }, {
+	    cssClass: 'funny',
+	    text: 'Knock knock'
+	  }];
+
+	  var paragraphTest = function paragraphTest(reqNum, cssClassName, contents) {
+	    it(reqNum + '. Your page must have a <p> element with \n    a class attribute of "' + cssClassName + '". Set the contents to "' + contents + '".', function () {
+	      var elem = document.querySelector('p.' + cssClassName);
+
+	      _chai.assert.isNotNull(elem, 'Could not find an <p> element with a class of "' + cssClassName + '"');
+
+	      var elemText = elem.textContent;
+	      _chai.assert.equal(elemText, contents, 'The <p> element with a class of "' + cssClassName + '" does not contain' + ('the text "' + contents));
+	    });
+	  };
+
+	  describe('Fonts as Friends page tests', function () {
+
+	    describe('Technology Stack', function () {
+	      it(_sharedTestStrings.beginnerWebProgrammingStack, function () {
+	        _chai.assert.ok(true);
+	      });
+	    });
+
+	    describe('Content', function () {
+	      var reqNum = 0;
+
+	      // Paragraph tests
+	      paragraphTests.forEach(function (test) {
+	        reqNum++;
+	        paragraphTest(reqNum, test.cssClass, test.text);
+	      });
+
+	      // LEFT OFF HERE. NEED TO ADD MORE OF THE ABOVE TESTS.
+
+
+	      reqNum++;
+	      it(reqNum + '. Your page must have a <div> element with an id="img-div".', function () {
+	        var elem = document.querySelector('div#img-div');
+
+	        _chai.assert.isNotNull(elem, 'Could not find a <div> element with an id of "img-div"');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Within your "img-div" element, you must have an <img>\n      element with an id="image".', function () {
+	        var elem = document.querySelector('div#img-div > img#image');
+
+	        _chai.assert.isNotNull(elem, 'Could not find a <img> element with id "image" inside your <div> ' + 'with id "img-div"');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Within your "img-div" element, you must have another <div>\n      element with an id="img-caption" that contains some words that describe\n      the image.', function () {
+	        var elem = document.querySelector('div#img-div > div#img-caption');
+
+	        _chai.assert.isNotNull(elem, 'Could not find a <div> element with id "img-caption" inside your ' + '<div> with id "img-div"');
+
+	        var elemContents = elem.innerText;
+	        _chai.assert.isAbove(elemContents.length, 0, 'Your "img-caption" element does not have any words inside it');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Your page must have a <div> element with an\n      id="tribute-info".', function () {
+	        var elem = document.querySelector('div#tribute-info');
+
+	        _chai.assert.isNotNull(elem, 'Could not find a <div> element with id "tribute-info"');
+	      });
+
+	      // TODO: Tests about the contents of the "tribute-info" div.
+	      reqNum++;
+	      it(reqNum + '. Your tribute-info div must have an <h3> element that\n      describes the contents (example: Here is a timeline of...)', function () {
+	        var elem = document.querySelector('div#tribute-info > h3');
+
+	        _chai.assert.isNotNull(elem, 'Could not find an <h3> element inside your tribute-info div');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Your tribute-info div must have an unordered list.', function () {
+	        var elem = document.querySelector('div#tribute-info > ul');
+
+	        _chai.assert.isNotNull(elem, 'Could not find an <ul> element inside your tribute-info div');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Your unordered list must have at least three list items.', function () {
+	        var elems = document.querySelectorAll('div#tribute-info > ul > li');
+
+	        _chai.assert.isAtLeast(elems.length, 3, 'Could not find at least three <li> elements inside your ordered list');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Your page must have a blockquote which should contain a\n      quote from or about the person on your Tribute page.', function () {
+	        var elem = document.querySelector('blockquote');
+
+	        _chai.assert.isNotNull(elem, 'Could not find an <blockquote> element on');
+
+	        var elemText = elem.innerText;
+	        _chai.assert.isAbove(elemText.length, 0, 'The <blockqoute> element does not contain any text');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. Your page must have an <a> element with an\n      id="tribute-link", which links to an outside site that contains additional\n      information about the subject of your page. HINT: You must give\n      your element an attribute of target and set it to "_blank" in order for\n      your link to open in a new tab (i.e. target="_blank").', function () {
+	        var elem = document.querySelector('a#tribute-link');
+
+	        _chai.assert.isNotNull(elem, 'Could not find an <a> element with id "tribute-link"');
+
+	        (0, _chai.assert)(elem.hasAttribute('href'), 'Your <a> element with id="tribute-link" must contain an href ' + 'attribute ');
+
+	        (0, _chai.assert)(elem.hasAttribute('target'), 'Your <a> element with id="tribute-link" must contain a target ' + 'attribute ');
+
+	        _chai.assert.strictEqual(elem.getAttribute('target'), '_blank', 'The target attribute should be set to "_blank", in order for the' + 'link to open in a new tab ');
+	      });
+
+	      // END #Content
+	    });
+
+	    describe('#Layout', function () {
+	      var reqNum = 0;
+
+	      reqNum++;
+	      it(reqNum + '. The <img> element should be centered within its parent\n      element.', function () {
+	        var img = document.getElementById('image'),
+	            imgParent = document.getElementById('image').parentElement,
+	            imgLeft = img.getBoundingClientRect().left,
+	            imgRight = img.getBoundingClientRect().right,
+	            parentLeft = imgParent.getBoundingClientRect().left,
+	            parentRight = imgParent.getBoundingClientRect().right;
+	        _chai.assert.approximately(imgLeft - parentLeft, parentRight - imgRight, 11, 'Image is not centered');
+	      });
+
+	      // END Layout
+	    });
+
+	    // END FontsAsFriendsTests
+	  });
+
+	  // END createFontsAsFriendsTests()
+	}
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var beginnerWebProgrammingHTMLStack = exports.beginnerWebProgrammingHTMLStack = '1. You must use HTML to ' + 'complete this project. Additional languages, frameworks, libraries or ' + 'other technologies must not be used for this project. Happy coding!';
+
+	var beginnerWebProgrammingStack = exports.beginnerWebProgrammingStack = '1. You must use HTML and CSS to ' + 'complete this project. Additional languages, frameworks, libraries or ' + 'other technologies must not be used for this project. Happy coding!';
+
+	var responsiveWebDesignStack = exports.responsiveWebDesignStack = '1. You can use HTML, JavaScript, ' + 'and CSS to complete this project. Plain CSS is recommended because that ' + 'is what the lessons have covered so far and you should get some practice ' + 'with plain CSS. Additional technologies not listed above are not ' + 'recommended for this project, and using them is at your own risk. ' + 'We will fix all issue reports that ' + 'use the suggested technology stack for this project. Happy coding!';
+
+	var frontEndLibrariesStack = exports.frontEndLibrariesStack = '1. You can use any mix of HTML, ' + 'JavaScript, CSS, Bootstrap, SASS, React, Redux, and jQuery to complete ' + 'this project. You should use a frontend framework (like React for ' + 'example) because this section is about learning frontend frameworks. ' + 'Additional technologies not listed above are not recommended and using ' + 'them is at your own risk. We are looking at supporting other frontend ' + 'frameworks like Angular and Vue, but they are not currently supported. ' + 'We will accept and try to fix all issue reports that use the suggested ' + 'technology stack for this project. Happy coding!';
+
+	var d3ProjectStack = exports.d3ProjectStack = '1. You can use HTML, JavaScript, CSS, and the ' + 'D3 svg-based visualization library. The tests require axes to be ' + 'generated using the D3 axis property, which automatically generates ' + 'ticks along the axis. These ticks are required for passing the D3 tests ' + 'because their positions are used to determine alignment of graphed ' + 'elements. You will find information about generating axes at ' + 'https://github.com/d3/d3/blob/master/API.md#axes-d3-axis. Required ' + '(non-virtual) DOM elements are queried on the moment of each test. If ' + 'you use a frontend framework (like Vue for example), the test results ' + 'may be inaccurate for dynamic content. We hope to accommodate them ' + 'eventually, but these frameworks are not currently supported for D3 ' + 'projects.';
+
+	var d3ProjectStackNoAxes = exports.d3ProjectStackNoAxes = '1. You can use HTML, JavaScript, CSS, ' + 'and the D3 svg-based visualization library. Required (non-virtual) ' + 'DOM elements are queried on the moment of each test. If you use a ' + 'frontend framework (like Vue for example), the test results may be ' + 'inaccurate for dynamic content. We hope to accommodate them eventually, ' + 'but these frameworks are not currently supported for D3 projects.';
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _chai = __webpack_require__(2);
+
+	var _sharedTestStrings = __webpack_require__(49);
+
 	function createInformationalArticleTests() {
 
 	  describe('Informational Article tests', function () {
@@ -19713,28 +19911,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 49 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var beginnerWebProgrammingHTMLStack = exports.beginnerWebProgrammingHTMLStack = '1. You can use HTML to ' + 'complete this project. Additional languages, frameworks, libraries or ' + 'other technologies must not be used for this project. Happy coding!';
-
-	var beginnerWebProgrammingStack = exports.beginnerWebProgrammingStack = '1. You can use HTML and CSS to ' + 'complete this project. Additional languages, frameworks, libraries or ' + 'other technologies must not be used for this project. Happy coding!';
-
-	var responsiveWebDesignStack = exports.responsiveWebDesignStack = '1. You can use HTML, JavaScript, ' + 'and CSS to complete this project. Plain CSS is recommended because that ' + 'is what the lessons have covered so far and you should get some practice ' + 'with plain CSS. Additional technologies not listed above are not ' + 'recommended for this project, and using them is at your own risk. ' + 'We will fix all issue reports that ' + 'use the suggested technology stack for this project. Happy coding!';
-
-	var frontEndLibrariesStack = exports.frontEndLibrariesStack = '1. You can use any mix of HTML, ' + 'JavaScript, CSS, Bootstrap, SASS, React, Redux, and jQuery to complete ' + 'this project. You should use a frontend framework (like React for ' + 'example) because this section is about learning frontend frameworks. ' + 'Additional technologies not listed above are not recommended and using ' + 'them is at your own risk. We are looking at supporting other frontend ' + 'frameworks like Angular and Vue, but they are not currently supported. ' + 'We will accept and try to fix all issue reports that use the suggested ' + 'technology stack for this project. Happy coding!';
-
-	var d3ProjectStack = exports.d3ProjectStack = '1. You can use HTML, JavaScript, CSS, and the ' + 'D3 svg-based visualization library. The tests require axes to be ' + 'generated using the D3 axis property, which automatically generates ' + 'ticks along the axis. These ticks are required for passing the D3 tests ' + 'because their positions are used to determine alignment of graphed ' + 'elements. You will find information about generating axes at ' + 'https://github.com/d3/d3/blob/master/API.md#axes-d3-axis. Required ' + '(non-virtual) DOM elements are queried on the moment of each test. If ' + 'you use a frontend framework (like Vue for example), the test results ' + 'may be inaccurate for dynamic content. We hope to accommodate them ' + 'eventually, but these frameworks are not currently supported for D3 ' + 'projects.';
-
-	var d3ProjectStackNoAxes = exports.d3ProjectStackNoAxes = '1. You can use HTML, JavaScript, CSS, ' + 'and the D3 svg-based visualization library. Required (non-virtual) ' + 'DOM elements are queried on the moment of each test. If you use a ' + 'frontend framework (like Vue for example), the test results may be ' + 'inaccurate for dynamic content. We hope to accommodate them eventually, ' + 'but these frameworks are not currently supported for D3 projects.';
-
-/***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19868,7 +20045,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -19991,7 +20168,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';

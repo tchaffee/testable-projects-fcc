@@ -1,8 +1,8 @@
-export const beginnerWebProgrammingHTMLStack = '1. You can use HTML to ' +
+export const beginnerWebProgrammingHTMLStack = '1. You must use HTML to ' +
   'complete this project. Additional languages, frameworks, libraries or ' +
   'other technologies must not be used for this project. Happy coding!';
 
-export const beginnerWebProgrammingStack = '1. You can use HTML and CSS to ' +
+export const beginnerWebProgrammingStack = '1. You must use HTML and CSS to ' +
   'complete this project. Additional languages, frameworks, libraries or ' +
   'other technologies must not be used for this project. Happy coding!';
 
