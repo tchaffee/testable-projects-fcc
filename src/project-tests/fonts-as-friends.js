@@ -74,185 +74,248 @@ export default function createFontsAsFriendsTests() {
         paragraphTest(reqNum, test.cssClass, test.text);     
       });
 
-      // LEFT OFF HERE. NEED TO ADD MORE OF THE ABOVE TESTS.
-
-
-      reqNum++;
-      it(`${reqNum}. Your page must have a <div> element with an id="img-div".`,
-      function() {
-        let elem = document.querySelector('div#img-div');
-
-        assert.isNotNull(
-          elem,
-          'Could not find a <div> element with an id of "img-div"'
-        );
-      });
-
-      reqNum++;
-      it(`${reqNum}. Within your "img-div" element, you must have an <img>
-      element with an id="image".`,
-      function() {
-        let elem = document.querySelector('div#img-div > img#image');
-
-        assert.isNotNull(
-          elem,
-          'Could not find a <img> element with id "image" inside your <div> ' +
-          'with id "img-div"'
-        );
-
-      });
-
-      reqNum++;
-      it(`${reqNum}. Within your "img-div" element, you must have another <div>
-      element with an id="img-caption" that contains some words that describe
-      the image.`,
-      function() {
-        let elem = document.querySelector('div#img-div > div#img-caption');
-
-        assert.isNotNull(
-          elem,
-          'Could not find a <div> element with id "img-caption" inside your ' +
-          '<div> with id "img-div"'
-        );
-
-        const elemContents = elem.innerText;
-        assert.isAbove(
-          elemContents.length,
-          0,
-          'Your "img-caption" element does not have any words inside it'
-        );
-      });
-
-      reqNum++;
-      it(`${reqNum}. Your page must have a <div> element with an
-      id="tribute-info".`,
-      function() {
-        let elem = document.querySelector('div#tribute-info');
-
-        assert.isNotNull(
-          elem,
-          'Could not find a <div> element with id "tribute-info"'
-        );
-
-      });
-
-      // TODO: Tests about the contents of the "tribute-info" div.
-      reqNum++;
-      it(`${reqNum}. Your tribute-info div must have an <h3> element that
-      describes the contents (example: Here is a timeline of...)`,
-      function() {
-        let elem = document.querySelector('div#tribute-info > h3');
-
-        assert.isNotNull(
-          elem,
-          'Could not find an <h3> element inside your tribute-info div'
-        );
-
-      });
-
-      reqNum++;
-      it(`${reqNum}. Your tribute-info div must have an unordered list.`,
-      function() {
-        let elem = document.querySelector('div#tribute-info > ul');
-
-        assert.isNotNull(
-          elem,
-          'Could not find an <ul> element inside your tribute-info div'
-        );
-
-      });
-
-      reqNum++;
-      it(`${reqNum}. Your unordered list must have at least three list items.`,
-      function() {
-        let elems = document.querySelectorAll('div#tribute-info > ul > li');
-
-        assert.isAtLeast(
-          elems.length,
-          3,
-          'Could not find at least three <li> elements inside your ordered list'
-        );
-
-      });
-
-      reqNum++;
-      it(`${reqNum}. Your page must have a blockquote which should contain a
-      quote from or about the person on your Tribute page.`,
-      function() {
-        let elem = document.querySelector('blockquote');
-
-        assert.isNotNull(
-          elem,
-          'Could not find an <blockquote> element on'
-        );
-
-        const elemText = elem.innerText;
-        assert.isAbove(
-          elemText.length,
-          0,
-          'The <blockqoute> element does not contain any text'
-        );
-      });
-
-      reqNum++;
-      it(`${reqNum}. Your page must have an <a> element with an
-      id="tribute-link", which links to an outside site that contains additional
-      information about the subject of your page. HINT: You must give
-      your element an attribute of target and set it to "_blank" in order for
-      your link to open in a new tab (i.e. target="_blank").`,
-      function() {
-        const elem = document.querySelector('a#tribute-link');
-
-        assert.isNotNull(
-          elem,
-          'Could not find an <a> element with id "tribute-link"'
-        );
-
-        assert(
-          elem.hasAttribute('href'),
-          'Your <a> element with id="tribute-link" must contain an href ' +
-          'attribute '
-        );
-
-        assert(
-          elem.hasAttribute('target'),
-          'Your <a> element with id="tribute-link" must contain a target ' +
-          'attribute '
-        );
-
-        assert.strictEqual(
-          elem.getAttribute('target'),
-          '_blank',
-          'The target attribute should be set to "_blank", in order for the' +
-          'link to open in a new tab '
-        );
-      });
-
-    // END #Content
+    // END Content tests
     });
 
-    describe('#Layout', function() {
+    describe('Layout', function() {
       let reqNum = 0;
 
       reqNum++;
-      it(`${reqNum}. The <img> element should be centered within its parent
-      element.`,
+      it(`${reqNum}. The <p> element with a class of "loud" must have a 
+      background-color of yellow, a color of red, and a font-size of 50px.`,
       function() {
-        const img = document.getElementById('image'),
-          imgParent = document.getElementById('image').parentElement,
-          imgLeft = img.getBoundingClientRect().left,
-          imgRight = img.getBoundingClientRect().right,
-          parentLeft = imgParent.getBoundingClientRect().left,
-          parentRight = imgParent.getBoundingClientRect().right;
-        assert.approximately(
-          imgLeft - parentLeft,
-          parentRight - imgRight,
-          11,
-          'Image is not centered'
+        const className = 'loud';
+        const elem = document.querySelector('p.' + className);
+
+        assert.equal(
+          window.getComputedStyle(elem)['background-color'],
+          'rgb(255, 255, 0)',
+          `The paragraph with class ${className} does not have ` +
+          'a "yellow" background-color'
+        );
+
+        assert.equal(
+          window.getComputedStyle(elem)['color'],
+          'rgb(255, 0, 0)',
+          `The paragraph with class ${className} does not have ` +
+          'a color of "red"'
+        );
+
+        assert.equal(
+          window.getComputedStyle(elem)['font-size'],
+          '50px',
+          `The paragraph with class ${className} does not have ` +
+          'a font-size of "50px"'
         );
       });
 
-    // END Layout
+      reqNum++;
+      it(`${reqNum}. The <p> element with a class of "shy" must have a color 
+      of gray and a font-size of 12px.`,
+      function() {
+        const className = 'shy';
+        const elem = document.querySelector('p.' + className);
+
+        assert.equal(
+          window.getComputedStyle(elem)['color'],
+          'rgb(128, 128, 128)',
+          `The paragraph with class ${className} does not have ` +
+          'its color set to "gray".'
+        );
+
+        assert.equal(
+          window.getComputedStyle(elem)['font-size'],
+          '12px',
+          `The paragraph with class ${className} does not have ` +
+          'a font-size of "12px"'
+        );
+      });
+
+      reqNum++;
+      it(`${reqNum}. The <p> element with a class of "nerdy" must have a color 
+      of white, a background-color of black, a font-family of monospace, and a
+      font-size of 20px.`,
+      function() {
+        const className = 'nerdy';
+        const elem = document.querySelector('p.' + className);
+
+        assert.equal(
+          window.getComputedStyle(elem)['color'],
+          'rgb(255, 255, 255)',
+          `The paragraph with class ${className} does not have ` +
+          'its color set to "white".'
+        );
+
+        assert.equal(
+          window.getComputedStyle(elem)['background-color'],
+          'rgb(0, 0, 0)',
+          `The paragraph with class ${className} does not have ` +
+          'its background-color set to "black".'
+        );
+
+        assert.equal(
+          window.getComputedStyle(elem)['font-family'],
+          'monospace',
+          `The paragraph with class ${className} does not have ` +
+          'its font-family set to "monospace".'
+        );
+
+        assert.equal(
+          window.getComputedStyle(elem)['font-size'],
+          '20px',
+          `The paragraph with class ${className} does not have ` +
+          'a font-size of "20px"'
+        );
+      });
+
+      reqNum++;
+      it(`${reqNum}. The <p> element with a class of "confident" must have a 
+      color of blue, a font-family of sans, and font-size of 40px, and a 
+      font-weight of 700.`,
+      function() {
+        const className = 'confident';
+        const elem = document.querySelector('p.' + className);
+
+        assert.equal(
+          window.getComputedStyle(elem)['color'],
+          'rgb(0, 0, 255)',
+          `The paragraph with class ${className} does not have ` +
+          'its color set to "blue".'
+        );
+
+        assert.equal(
+          window.getComputedStyle(elem)['font-family'],
+          'sans',
+          `The paragraph with class ${className} does not have ` +
+          'its font-family set to "sans".'
+        );
+
+        assert.equal(
+          window.getComputedStyle(elem)['font-size'],
+          '40px',
+          `The paragraph with class ${className} does not have ` +
+          'a font-size of "40px"'
+        );
+
+        assert.equal(
+          window.getComputedStyle(elem)['font-weight'],
+          '700',
+          `The paragraph with class ${className} does not have ` +
+          'a font-weight of "700"'
+        );
+      });
+
+      reqNum++;
+      it(`${reqNum}. The <p> element with a class of "fashion" must have a 
+      a font-family of serif, and font-size of 30px, and a font-style of 
+      italic.`,
+      function() {
+        const className = 'fashion';
+        const elem = document.querySelector('p.' + className);
+
+        assert.equal(
+          window.getComputedStyle(elem)['font-family'],
+          'serif',
+          `The paragraph with class ${className} does not have ` +
+          'its font-family set to "serif".'
+        );
+
+        assert.equal(
+          window.getComputedStyle(elem)['font-size'],
+          '30px',
+          `The paragraph with class ${className} does not have ` +
+          'a font-size of "30px"'
+        );
+
+        assert.equal(
+          window.getComputedStyle(elem)['font-style'],
+          'italic',
+          `The paragraph with class ${className} does not have ` +
+          'a font-style of "italic"'
+        );
+      });
+
+      reqNum++;
+      it(`${reqNum}. The <p> element with a class of "sporty" must have a 
+      a color of brown, a font-family of serif, and font-size of 30px, and a 
+      and a font-weight of 900.`,
+      function() {
+        const className = 'sporty';
+        const elem = document.querySelector('p.' + className);
+
+        assert.equal(
+          window.getComputedStyle(elem)['color'],
+          'rgb(165, 42, 42)',
+          `The paragraph with class ${className} does not have ` +
+          'a color of "brown".'
+        );
+
+        assert.equal(
+          window.getComputedStyle(elem)['font-family'],
+          'serif',
+          `The paragraph with class ${className} does not have ` +
+          'its font-family set to "serif".'
+        );
+
+        assert.equal(
+          window.getComputedStyle(elem)['font-size'],
+          '30px',
+          `The paragraph with class ${className} does not have ` +
+          'a font-size of "30px"'
+        );
+
+        assert.equal(
+          window.getComputedStyle(elem)['font-weight'],
+          '900',
+          `The paragraph with class ${className} does not have ` +
+          'a font-weight of "900"'
+        );
+      });
+
+      // .funny {
+      //   color: green;
+      //   font-family: Comic sans, sans;
+      //   font-size: 45px;
+      //   font-weight: 100;
+      // }
+      reqNum++;
+      it(`${reqNum}. The <p> element with a class of "funny" must have a 
+      a color of green, a font-family of sans, and font-size of 45px, and a 
+      and a font-weight of 100.`,
+      function() {
+        const className = 'funny';
+        const elem = document.querySelector('p.' + className);
+
+        assert.equal(
+          window.getComputedStyle(elem)['color'],
+          'rgb(0, 128, 0)',
+          `The paragraph with class ${className} does not have ` +
+          'a color of "green".'
+        );
+
+        assert.equal(
+          window.getComputedStyle(elem)['font-family'],
+          'sans',
+          `The paragraph with class ${className} does not have ` +
+          'its font-family set to "sans".'
+        );
+
+        assert.equal(
+          window.getComputedStyle(elem)['font-size'],
+          '45px',
+          `The paragraph with class ${className} does not have ` +
+          'a font-size of "45px"'
+        );
+
+        assert.equal(
+          window.getComputedStyle(elem)['font-weight'],
+          '100',
+          `The paragraph with class ${className} does not have ` +
+          'a font-weight of "100"'
+        );
+      });
+
+    // END Layout tests
     });
 
   // END FontsAsFriendsTests
