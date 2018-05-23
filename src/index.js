@@ -32,10 +32,11 @@ import fCCTestUIStyles from // eslint-disable-line no-unused-vars
   '!style-loader!css-loader!./stylesheets/fcc-test-ui.css';
 import mochaModalStyles from // eslint-disable-line no-unused-vars
   '!style-loader!css-loader!./stylesheets/mocha-modal.css';
+
 import createFontsAsFriendsTests from
   './project-tests/fonts-as-friends';
-import fCCTestTogglerStyles from // eslint-disable-line no-unused-vars
-  '!style-loader!css-loader!./stylesheets/fcc-test-toggler.css';
+import createCSSBoxModelTests from
+  './project-tests/css-box-model';
 import createInformationalArticleTests from
   './project-tests/informational-article';
 import createProductLandingPageHTMLTests from
@@ -353,6 +354,9 @@ export function FCCInitTestRunner() {
     : projectNameLocal;
   // create tests
   switch (hardCodedProjectName || localStorage.getItem('project_selector')) {
+    case 'css-box-model':
+      createCSSBoxModelTests();
+      break;
     case 'fonts-as-friends':
       createFontsAsFriendsTests();
       break;
