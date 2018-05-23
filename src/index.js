@@ -14,6 +14,8 @@ import testSuiteFCCStylesIgnored from
   '!style-loader!css-loader!./stylesheets/style.css';
 import createFontsAsFriendsTests from
   './project-tests/fonts-as-friends';
+import createCSSBoxModelTests from
+  './project-tests/css-box-model';
 import createInformationalArticleTests from
   './project-tests/informational-article';
 import createProductLandingPageHTMLTests from
@@ -292,6 +294,9 @@ export function FCCInitTestRunner() {
     : projectNameLocal;
   // create tests
   switch (hardCodedProjectName || localStorage.getItem('project_selector')) {
+    case 'css-box-model':
+      createCSSBoxModelTests();
+      break;
     case 'fonts-as-friends':
       createFontsAsFriendsTests();
       break;

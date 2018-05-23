@@ -83,33 +83,39 @@ var FCC_Global =
 
 	var _fontsAsFriends2 = _interopRequireDefault(_fontsAsFriends);
 
-	var _informationalArticle = __webpack_require__(50);
+	var _cssBoxModel = __webpack_require__(50);
+
+	var _cssBoxModel2 = _interopRequireDefault(_cssBoxModel);
+
+	var _informationalArticle = __webpack_require__(51);
 
 	var _informationalArticle2 = _interopRequireDefault(_informationalArticle);
 
-	var _productLandingPageHtmlOnly = __webpack_require__(51);
+	var _productLandingPageHtmlOnly = __webpack_require__(52);
 
 	var _productLandingPageHtmlOnly2 = _interopRequireDefault(_productLandingPageHtmlOnly);
 
-	var _tributePageTestsHtmlOnly = __webpack_require__(52);
+	var _tributePageTestsHtmlOnly = __webpack_require__(53);
 
 	var _tributePageTestsHtmlOnly2 = _interopRequireDefault(_tributePageTestsHtmlOnly);
 
-	var _tributePageTests = __webpack_require__(53);
+	var _tributePageTests = __webpack_require__(54);
 
 	var _tributePageTests2 = _interopRequireDefault(_tributePageTests);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	// Webpack is configured to load those files with the .html extension as Strings
+	/* global projectName */
+	/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "[iI]gnored" }]*/
+
+	var assert = exports.assert = _chai2.default.assert;
 	// the !- prefixes are for process arguments respective of plugins
 	// Example: https://stackoverflow.com/a/42440360/3530394
 	// style-loader injects css loaded by css-loader through this import statement.
 
 	/* eslint import/no-unresolved: [2, { ignore: ['!style-loader.*$'] }] */
-	var assert = exports.assert = _chai2.default.assert;
-	// Webpack is configured to load those files with the .html extension as Strings
-	/* global projectName */
-	/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "[iI]gnored" }]*/
+
 
 	var projectNameLocal = false;
 
@@ -334,6 +340,9 @@ var FCC_Global =
 	  var hardCodedProjectName = !projectNameLocal ? null : projectNameLocal;
 	  // create tests
 	  switch (hardCodedProjectName || localStorage.getItem('project_selector')) {
+	    case 'css-box-model':
+	      (0, _cssBoxModel2.default)();
+	      break;
 	    case 'fonts-as-friends':
 	      (0, _fontsAsFriends2.default)();
 	      break;
@@ -19008,7 +19017,7 @@ var FCC_Global =
 /* 42 */
 /***/ (function(module, exports) {
 
-	module.exports = "<div id=\"fcc_test_suite_indicator_wrapper\"></div>\n<div id=\"fcc_foldout_toggler\">\n\t<span id=\"hamburger_top\" class=\"fcc_hamburger transform_top\"></span>\n\t<span id=\"hamburger_middle\" class=\"fcc_hamburger transform_middle\"></span>\n\t<span id=\"hamburger_bottom\" class=\"fcc_hamburger transform_bottom\"></span>\n</div>\n<input id=\"toggle\" onclick=\"FCC_Global.hamburgerTransform()\" type=\"checkbox\"\n\ttitle=\"CTRL + SHIFT + O\">\n<div id=\"fcc_foldout_menu\">\n\t<div id=\"fcc_foldout_menu_inner\">\n\t\t<label for=\"test-suite-selector\">Select Test Suite: </label>\n\t\t<select name=\"Test Suite Selector\" id=\"test-suite-selector\"\n\t\t\tonchange=\"FCC_Global.selectProject(this.value)\">\n\t\t\t<option id=\"placeholder\" value=\"\">- - -</option>\n\t\t\t<option value=\"informational-article\">Informational Article</option>\n\t\t\t<option value=\"product-landing-page-html-only\">Product Landing Page I</option>\n\t\t\t<option value=\"tribute-page-html-only\">Tribute Page I</option>\n\t\t\t<option value=\"fonts-as-friends\">Fonts as Friends</option>\n\t\t\t<option value=\"product-landing-page\">Product Landing Page II</option>\n\t\t\t<option value=\"tribute-page\">Tribute Page II</option>\n\t\t</select>\n\t\t<button id=\"fcc_test_message-box-rerun-button\" type=\"button\"\n\t\t\tclass=\"fcc_foldout_buttons\" title=\"CTRL + SHIFT + ENTER\"\n\t\t\tonclick=\"FCC_Global.FCCRerunTests()\">\n\t\t\tRun Tests\n\t\t</button>\n\t\t<button id=\"fcc_test_button\" type=\"button\"\n\t\t\tclass=\"fcc_foldout_buttons fcc_test_btn-default\"\n\t\t\ttitle=\"CTRL + SHIFT + T\" onclick=\"FCC_Global.FCCOpenTestModal()\">\n\t\t\tTests\n\t\t</button>\n\t\t<div id=\"fcc_legend_wrapper\">\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Test(s) Failed</span>\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Tests Passed</span>\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Tests Executing</span>\n\t\t</div>\n\t\t<span id=\"fcc_report-bug\"><a\n\t\t\thref=\"https://github.com/freeCodeCamp/testable-projects-fcc/issues/new\"\n\t\t\ttarget=\"_blank\">Report Bug</a>\n\t\t</span>\n\t</div>\n</div>\n<div id=\"fcc_test_message-box\" class=\"fcc_test_message-box-hidden\"\n\tonclick=\"FCC_Global.FCCclickOutsideToCloseModal(event)\">\n\t<div class=\"fcc_test_message-box-content\">\n\t\t<div class=\"fcc_test_message-box-header\">\n\t\t\t<div class=\"title\">Unit tests</div>\n\t\t</div>\n\t\t<div class=\"fcc_test_message-box-body\">\n\t\t\t<div id=\"mocha\">Run Test Suite to See Unit Tests!</div>\n\t\t</div>\n\t\t<div class=\"fcc_test_message-box-footer\">\n\t\t\t<div class=\"fcc_test_message-box-close-btn\"\n\t\t\t\tonclick=\"FCC_Global.FCCCloseTestModal()\">Close</div>\n\t\t</div>\n\t</div>\n</div>\n";
+	module.exports = "<div id=\"fcc_test_suite_indicator_wrapper\"></div>\n<div id=\"fcc_foldout_toggler\">\n\t<span id=\"hamburger_top\" class=\"fcc_hamburger transform_top\"></span>\n\t<span id=\"hamburger_middle\" class=\"fcc_hamburger transform_middle\"></span>\n\t<span id=\"hamburger_bottom\" class=\"fcc_hamburger transform_bottom\"></span>\n</div>\n<input id=\"toggle\" onclick=\"FCC_Global.hamburgerTransform()\" type=\"checkbox\"\n\ttitle=\"CTRL + SHIFT + O\">\n<div id=\"fcc_foldout_menu\">\n\t<div id=\"fcc_foldout_menu_inner\">\n\t\t<label for=\"test-suite-selector\">Select Test Suite: </label>\n\t\t<select name=\"Test Suite Selector\" id=\"test-suite-selector\"\n\t\t\tonchange=\"FCC_Global.selectProject(this.value)\">\n\t\t\t<option id=\"placeholder\" value=\"\">- - -</option>\n\t\t\t<option value=\"informational-article\">Informational Article</option>\n\t\t\t<option value=\"product-landing-page-html-only\">Product Landing Page I</option>\n\t\t\t<option value=\"tribute-page-html-only\">Tribute Page I</option>\n\t\t\t<option value=\"fonts-as-friends\">Fonts as Friends</option>\n\t\t\t<option value=\"css-box-model\">CSS Box Model</option>\n\t\t\t<option value=\"product-landing-page\">Product Landing Page II</option>\n\t\t\t<option value=\"tribute-page\">Tribute Page II</option>\n\t\t</select>\n\t\t<button id=\"fcc_test_message-box-rerun-button\" type=\"button\"\n\t\t\tclass=\"fcc_foldout_buttons\" title=\"CTRL + SHIFT + ENTER\"\n\t\t\tonclick=\"FCC_Global.FCCRerunTests()\">\n\t\t\tRun Tests\n\t\t</button>\n\t\t<button id=\"fcc_test_button\" type=\"button\"\n\t\t\tclass=\"fcc_foldout_buttons fcc_test_btn-default\"\n\t\t\ttitle=\"CTRL + SHIFT + T\" onclick=\"FCC_Global.FCCOpenTestModal()\">\n\t\t\tTests\n\t\t</button>\n\t\t<div id=\"fcc_legend_wrapper\">\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Test(s) Failed</span>\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Tests Passed</span>\n\t\t\t<div class=\"fcc_legend key\"></div>\n\t\t\t<span class=\"fcc_legend\">Tests Executing</span>\n\t\t</div>\n\t\t<span id=\"fcc_report-bug\"><a\n\t\t\thref=\"https://github.com/freeCodeCamp/testable-projects-fcc/issues/new\"\n\t\t\ttarget=\"_blank\">Report Bug</a>\n\t\t</span>\n\t</div>\n</div>\n<div id=\"fcc_test_message-box\" class=\"fcc_test_message-box-hidden\"\n\tonclick=\"FCC_Global.FCCclickOutsideToCloseModal(event)\">\n\t<div class=\"fcc_test_message-box-content\">\n\t\t<div class=\"fcc_test_message-box-header\">\n\t\t\t<div class=\"title\">Unit tests</div>\n\t\t</div>\n\t\t<div class=\"fcc_test_message-box-body\">\n\t\t\t<div id=\"mocha\">Run Test Suite to See Unit Tests!</div>\n\t\t</div>\n\t\t<div class=\"fcc_test_message-box-footer\">\n\t\t\t<div class=\"fcc_test_message-box-close-btn\"\n\t\t\t\tonclick=\"FCC_Global.FCCCloseTestModal()\">Close</div>\n\t\t</div>\n\t</div>\n</div>\n";
 
 /***/ }),
 /* 43 */
@@ -19802,6 +19811,244 @@ var FCC_Global =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.default = createCSSBoxModelTests;
+
+	var _chai = __webpack_require__(2);
+
+	var _sharedTestStrings = __webpack_require__(49);
+
+	function createCSSBoxModelTests() {
+
+	  // Tests for pen https://codepen.io/tchaffee/pen/xjmgor
+
+
+	  /* Provides the class name and content for each div that is required.
+	     Please keep the content as one long string, since it is far easier to
+	     maintain than if strings are broken up when they exceed 80 columns. The
+	     ESLint rule is turned off for this section to make ESLint happy.
+	  */
+	  /* eslint-disable max-len */
+	  var divTests = [{
+	    cssClassName: 'box-one',
+	    content: 'Box one. Left and right margins default to 0px if you don\'t specify them. An element with left and right margins of 0px takes up the entire width of its container. This is true even if the content is very long. If there is not enough horizontal space for the content, the box will grow vertically to fit the content. We can see this by using some lorem ipsum. Lorem ipsum dolor sit amet consectetur adipiscing elit placerat penatibus duis, ac fermentum a phasellus aliquam lobortis mi montes natoque. Lectus laoreet potenti pulvinar urna sem egestas fermentum cum cubilia blandit elementum.'
+	  }, {
+	    cssClassName: 'box-two',
+	    content: 'Box two. Still takes up the entire width, even if the content is short.'
+	  }, {
+	    cssClassName: 'box-three',
+	    content: 'Box three. Left margin only. Notice the box become smaller.'
+	  }, {
+	    cssClassName: 'box-four',
+	    content: 'Box four. Right margin only. Also makes the box smaller.'
+	  }, {
+	    cssClassName: 'box-five',
+	    content: 'Box five. Left and right margins are different.'
+	  }, {
+	    cssClassName: 'box-six',
+	    content: 'Box six. Left and right margins are equal. This is an important one to pay attention to. Notice that the box is centered. Equal left and right margins are an important way to center things. We will learn an even better way to keep the margins always equal in a future lesson.'
+	  }, {
+	    cssClassName: 'box-seven',
+	    content: 'Box seven. The margins are the same as the box above, but the border is very large. Did the width of the box change or is it the same as the box above? Does the content have less space because a bigger border takes up some space where the content is?'
+	  }, {
+	    cssClassName: 'box-eight',
+	    content: 'Box eight. The margins are the same as the box above, and the border is the same too. We just added some padding. Is the box still the same width as the box above? Does the content have less space?'
+	  }];
+	  /* eslint-enable max-len */
+
+	  /* Runs tests for each div to make sure the required class and required
+	     content are there. The approach for checking the content is not obvious.
+	     The students might have line breaks in their html content, along with
+	     leading whitespace. We remove that to make sure their content matches the
+	     expected content while not being overly strict about indenting and
+	     whitespace.
+	   */
+	  var divTest = function divTest(reqNum, cssClassName, contents) {
+	    it(reqNum + '. Your page must have a <div> element with \n    a class attribute of "' + cssClassName + '". Set the contents to "' + contents + '".', function () {
+	      var elem = document.querySelector('div.' + cssClassName);
+
+	      _chai.assert.isNotNull(elem, 'Could not find an <div> element with a class of "' + cssClassName + '"');
+
+	      // Normalize by removing newlines and leading and trailing whitespace.
+	      var elemText = elem.textContent.trim().replace(/\r?\n|\r/g, ' ');
+	      _chai.assert.equal(elemText, contents,
+	      // eslint-disable-next-line max-len
+	      'No regex: The <div> element with a class of "' + cssClassName + '" does not contain the text "' + contents);
+	    });
+	  };
+
+	  var marginTest = function marginTest(elem, margin, className, direction) {
+	    return _chai.assert.equal(window.getComputedStyle(elem)['margin-' + direction], margin, 'The div with class "' + className + '" does not have a ' + direction + ' margin of \n    ' + margin + '.');
+	  };
+
+	  describe('CSS Box Model page tests', function () {
+
+	    describe('Technology Stack', function () {
+	      it(_sharedTestStrings.beginnerWebProgrammingStack, function () {
+	        _chai.assert.ok(true);
+	      });
+	    });
+
+	    describe('Additional Instructions', function () {
+	      // eslint-disable-next-line max-len
+	      it('This project will give you more practice with margins and how they affect layout. For now we will focus on left and right margins. Read the content of each box carefully for some important things to notice about the layout. After each layout test passes, try changing the size of your browser window to different widths so you can see how that affects the layout.\n      ', function () {
+	        _chai.assert.ok(true);
+	      });
+	    });
+
+	    describe('Content', function () {
+	      var reqNum = 0;
+
+	      // Div tests
+	      divTests.forEach(function (test) {
+	        reqNum++;
+	        divTest(reqNum, test.cssClassName, test.content);
+	      });
+
+	      // END Content tests
+	    });
+
+	    describe('Layout', function () {
+	      var reqNum = 0;
+
+	      reqNum++;
+	      var marginTop = '40px';
+	      it(reqNum + '. Every <div> element must have a top margin of ' + marginTop + '.\n      This requirement is just to give some vertical space between elements. \n      It isn\'t important other than to help you see things better.\n      ', function () {
+	        // The selector says to find all divs with a class that begins with
+	        // the string "box-". This ensures we don't get divs that are not a
+	        // part of the student project, for example, the divs in the test suite.
+	        var elems = document.querySelectorAll('div[class^=box-]');
+
+	        elems.forEach(function (elem) {
+	          _chai.assert.equal(window.getComputedStyle(elem)['margin-top'], marginTop, 'The div with class "' + elem.className + '" does not have a top margin\n            of ' + marginTop + '.');
+	        });
+	      });
+
+	      reqNum++;
+	      var borderWidth = '1px';
+	      it(reqNum + '. Unless otherwise specified, every <div> element must \n      have a solid black border of ' + borderWidth + '. This requirement helps you \n      see the width of elements. It isn\'t important other than that.\n      ', function () {
+	        var elems = document.querySelectorAll('div[class^=box-]:not(.box-seven):not(.box-eight)');
+
+	        elems.forEach(function (elem) {
+	          _chai.assert.equal(window.getComputedStyle(elem)['border'], borderWidth + ' solid rgb(0, 0, 0)', 'The div with class "' + elem.className + '" does not have ' + ('a ' + borderWidth + ' solid black border'));
+	        });
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. The <div> element with a class of "box-one" must have \n      a margin-left of 0px and a margin-right of 0px. \n      Margins default to 0px, so this test should pass without you having to\n      create a style.\n      ', function () {
+	        var className = 'box-one';
+	        var elem = document.querySelector('div.' + className);
+	        var marginLeft = '0px';
+	        var marginRight = '0px';
+
+	        marginTest(elem, marginLeft, className, 'left');
+	        marginTest(elem, marginRight, className, 'right');
+	      });
+
+	      reqNum++;
+
+	      it(reqNum + '. The <div> element with a class of "box-two" must have \n      a margin-left of 0px and a margin-right of 0px.\n      ', function () {
+	        var className = 'box-two';
+	        var elem = document.querySelector('div.' + className);
+	        var marginLeft = '0px';
+	        var marginRight = '0px';
+
+	        marginTest(elem, marginLeft, className, 'left');
+	        marginTest(elem, marginRight, className, 'right');
+	      });
+
+	      reqNum++;
+
+	      it(reqNum + '. The <div> element with a class of "box-three" must have \n      a margin-left of 300px. The margin-right must be 0px.\n      Remember that 0px is the default, so you do not need to specify the \n      margin-right.\n      ', function () {
+	        var className = 'box-three';
+	        var elem = document.querySelector('div.' + className);
+	        var marginLeft = '300px';
+	        var marginRight = '0px';
+
+	        marginTest(elem, marginLeft, className, 'left');
+	        marginTest(elem, marginRight, className, 'right');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. The <div> element with a class of "box-four" must have \n      a margin-right of 400px.\n      ', function () {
+	        var className = 'box-four';
+	        var elem = document.querySelector('div.' + className);
+	        var marginLeft = '0px';
+	        var marginRight = '400px';
+
+	        marginTest(elem, marginLeft, className, 'left');
+	        marginTest(elem, marginRight, className, 'right');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. The <div> element with a class of "box-five" must have \n      a margin-left of 50px and a margin-right of 300px.\n      ', function () {
+	        var className = 'box-five';
+	        var elem = document.querySelector('div.' + className);
+	        var marginLeft = '50px';
+	        var marginRight = '300px';
+
+	        marginTest(elem, marginLeft, className, 'left');
+	        marginTest(elem, marginRight, className, 'right');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. The <div> element with a class of "box-six" must have \n      a margin-left of 200px and a margin-right of 200px.\n      ', function () {
+	        var className = 'box-six';
+	        var elem = document.querySelector('div.' + className);
+	        var marginLeft = '200px';
+	        var marginRight = '200px';
+
+	        marginTest(elem, marginLeft, className, 'left');
+	        marginTest(elem, marginRight, className, 'right');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. The <div> element with a class of "box-seven" must have \n      a margin-left of 200px, a margin-right of 200px, and a solid black border\n      of 40px.\n      ', function () {
+	        var className = 'box-seven';
+	        var elem = document.querySelector('div.' + className);
+	        var marginLeft = '200px';
+	        var marginRight = '200px';
+
+	        marginTest(elem, marginLeft, className, 'left');
+	        marginTest(elem, marginRight, className, 'right');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['border'], '40px solid rgb(0, 0, 0)', 'The div with class "' + elem.className + '" does not have ' + 'a 40px solid black border');
+	      });
+
+	      reqNum++;
+	      it(reqNum + '. The <div> element with a class of "box-eight" must have \n      a margin-left of 200px, a margin-right of 200px, a solid black border\n      of 40px, and a left and right padding of 150px.\n      ', function () {
+	        var className = 'box-eight';
+	        var elem = document.querySelector('div.' + className);
+	        var marginLeft = '200px';
+	        var marginRight = '200px';
+
+	        marginTest(elem, marginLeft, className, 'left');
+	        marginTest(elem, marginRight, className, 'right');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['border'], '40px solid rgb(0, 0, 0)', 'The div with class "' + elem.className + '" does not have ' + 'a 40px solid black border');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['padding-left'], '150px', 'The div with class "' + elem.className + '" does not have ' + 'a padding-left of 150px');
+
+	        _chai.assert.equal(window.getComputedStyle(elem)['padding-right'], '150px', 'The div with class "' + elem.className + '" does not have ' + 'a padding-right of 150px');
+	      });
+
+	      // END Layout tests
+	    });
+
+	    // END FontsAsFriendsTests
+	  });
+
+	  // END createFontsAsFriendsTests()
+	}
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	exports.default = createInformationalArticleTests;
 
 	var _chai = __webpack_require__(2);
@@ -19872,7 +20119,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20006,7 +20253,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -20129,7 +20376,7 @@ var FCC_Global =
 	}
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
