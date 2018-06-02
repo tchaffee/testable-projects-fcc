@@ -19822,15 +19822,36 @@ var FCC_Global =
 	    var audioElements = document.querySelectorAll('.drum-pad .clip');
 
 	    // functions:
-	    function __triggerKeyboardEvent(el, keyCode) {
+
+	    // As of React 15.6, we need a workaround that allows continued use of
+	    // el.dispatchEvent()
+	    // SEE: https://github.com/facebook/react/issues/10135
+	    // Make <audio> Object configurable so that we can programmatically hit play
+	    function configureAudioElement() {
+	      var d = configureAudioElement.d || (configureAudioElement.d = {
+	        enumerable: false,
+	        writable: true,
+	        configurable: true
+	      });
+	      return d;
+	    }
+	    // Parameters called from tests are either for click or keydown events
+	    function __triggerEvent(el, eventType, keyCode) {
 	      var eventObj = document.createEventObject ? document.createEventObject() : document.createEvent('Events');
 	      if (eventObj.initEvent) {
-	        eventObj.initEvent('keydown', true, true);
+	        eventObj.initEvent(eventType, true, true);
 	      }
 	      eventObj.keyCode = keyCode;
 	      eventObj.which = keyCode;
 	      /* eslint no-unused-expressions: ["error", { "allowTernary": true }] */
-	      el.dispatchEvent ? el.dispatchEvent(eventObj) : el.fireEvent('onkeydown', eventObj);
+	      el.dispatchEvent ? el.dispatchEvent(eventObj) : el.fireEvent('on' + eventType, eventObj);
+	    }
+	    // This is to accommodate projects using both click and mousedown/up Events
+	    // All three are fired in order
+	    function __triggerClickEventCaller(el) {
+	      __triggerEvent(el, 'mousedown', 0);
+	      __triggerEvent(el, 'click', 0);
+	      __triggerEvent(el, 'mouseup', 0);
 	    }
 
 	    describe('#Technology Stack', function () {
@@ -19842,6 +19863,16 @@ var FCC_Global =
 	    describe('#Tests', function () {
 	      var reqNum = 0;
 
+	      before(function () {
+	        audioElements.forEach(function (el) {
+	          Object.defineProperty(el, 'paused', configureAudioElement);
+	        });
+	      });
+	      after(function () {
+	        audioElements.forEach(function (el) {
+	          el.pause();
+	        });
+	      });
 	      reqNum++;
 	      it(reqNum + '. I should be able to see an outer container with a\n      corresponding id="drum-machine" that contains all other elements', function () {
 	        _chai.assert.isNotNull(document.getElementById('drum-machine'));
@@ -19882,8 +19913,8 @@ var FCC_Global =
 	      it(reqNum + '. When I click on a .drum-pad element, the audio clip\n      contained in its child <audio> element should be triggered.', function () {
 	        _chai.assert.isAtLeast(audioElements.length, 9, 'Audio elements do not exist ');
 	        audioElements.forEach(function (el) {
-	          document.getElementById(el.parentElement.id).click();
-	          _chai.assert.isNotOk(document.getElementById(el.id).paused, 'The <audio> element with id="' + el.id + '" does not play when the ' + el.id + ' .drum-pad is clicked ');
+	          __triggerClickEventCaller(el.parentElement);
+	          _chai.assert.isNotOk(el.paused, 'The <audio> element with id="' + el.id + '" does not play when the ' + el.id + ' .drum-pad is clicked ');
 	        });
 	      });
 
@@ -19895,7 +19926,7 @@ var FCC_Global =
 	        return new Promise(function (resolve) {
 	          setTimeout(function () {
 	            audioElements.forEach(function (el, i) {
-	              __triggerKeyboardEvent(document.getElementById(el.parentElement.id), keyCodes[i]);
+	              __triggerEvent(el.parentElement, 'keydown', keyCodes[i]);
 	              _chai.assert.isNotOk(document.getElementById(el.id).paused, 'No audio plays when the ' + el.id + ' key is pressed ');
 	            });
 	            resolve();
@@ -19910,7 +19941,7 @@ var FCC_Global =
 	        return new Promise(function (resolve, reject) {
 	          setTimeout(function () {
 	            drumPads.forEach(function (pad) {
-	              document.getElementById(pad.id).click();
+	              __triggerClickEventCaller(pad);
 	              displayText.push(document.getElementById('display').innerText);
 	            });
 	            displayText = displayText.filter(function (str, i) {
@@ -20106,7 +20137,9 @@ var FCC_Global =
 	        _chai.assert.notStrictEqual(markdown.search(/(?:[-+*]|\d\.)\s[^|\s-*].+/), -1, 'write some markdown representing an <li> item ');
 
 	        // blockquote
-	        _chai.assert.notStrictEqual(markdown.search(/>\s.+/), -1, 'write some markdown representing a <blockquote> ');
+	        // Amended 5/18 to test for the > character at the beginning of a line,
+	        // with or without whitespace
+	        _chai.assert.notStrictEqual(markdown.search(/^>.+/m), -1, 'write some markdown representing a <blockquote> ');
 
 	        // image
 	        _chai.assert.notStrictEqual(markdown.search(/!\[.*\]\(.+\..+\)/), -1, 'write some markdown representing an <image> ');
@@ -21049,14 +21082,14 @@ var FCC_Global =
 
 	      reqNum++;
 	      it(reqNum + '. The audio element with id of "beep" must stop playing and\n      be rewound to the beginning when the element with the id of "reset" is\n      clicked.', function () {
-	        var audioElem = document.getElementById('beep');
-
-	        audioElem.play();
+	        // Call document.getElementById('beep') each time to overcome framework
+	        // cache
+	        document.getElementById('beep').play();
 	        resetTimer();
 
-	        _chai.assert.isTrue(audioElem.paused, 'Audio element was not stopped when reset was clicked.');
+	        _chai.assert.isTrue(document.getElementById('beep').paused, 'Audio element was not stopped when reset was clicked.');
 
-	        _chai.assert.equal(0, audioElem.currentTime, 'Audio element was not rewound when reset was clicked. HINT: use ' + 'the currentTime property of the audio element to rewind.');
+	        _chai.assert.equal(0, document.getElementById('beep').currentTime, 'Audio element was not rewound when reset was clicked. HINT: use ' + 'the currentTime property of the audio element to rewind.');
 	      });
 	      // END #Audio
 	    });
@@ -42240,7 +42273,7 @@ var FCC_Global =
 
 	        var axis = document.querySelector('#y-axis');
 	        var coordAttr = 'y';
-	        var cellsCollection = document.querySelectorAll('.cell');
+	        var cellsCollection = document.querySelectorAll('rect.cell');
 	        var ticksCollection = axis.querySelectorAll('.tick');
 	        var shapeAttr = 'data-month';
 	        // options are 'minute', 'month', 'thousand', and 'year'
