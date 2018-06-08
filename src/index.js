@@ -43,7 +43,8 @@ import createProductLandingPageHTMLTests from
   './project-tests/product-landing-page-html-only';
 import createTributePageHTMLTests from
   './project-tests/tribute-page-tests-html-only';
-import createTributePageTests from './project-tests/tribute-page-tests';
+import createTributePageTests from
+  './project-tests/tribute-page-tests-II';
 
 export const assert = chai.assert;
 
