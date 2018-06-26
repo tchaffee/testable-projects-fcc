@@ -32,6 +32,8 @@ import fCCTestUIStyles from // eslint-disable-line no-unused-vars
   '!style-loader!css-loader!./stylesheets/fcc-test-ui.css';
 import mochaModalStyles from // eslint-disable-line no-unused-vars
   '!style-loader!css-loader!./stylesheets/mocha-modal.css';
+import fCCTestTogglerStyles from // eslint-disable-line no-unused-vars
+  '!style-loader!css-loader!./stylesheets/fcc-test-toggler.css';
 
 import createFontsAsFriendsTests from
   './project-tests/fonts-as-friends';

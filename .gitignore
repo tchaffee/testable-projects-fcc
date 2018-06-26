@@ -36,6 +36,7 @@ config/server.crt
 config/server.csr
 config/server.key
 test/setup.js
+.env
 
 # Optional npm cache directory
 .npm
